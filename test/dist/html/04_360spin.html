@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>이미지 360도 회전</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+<div id="wrap" class="spin_wrap">
+   <div class="threesixty car">
+      <div class="spinner">
+       <span>0%</span>
+      </div>
+      <ol class="threesixty_images">
+      </ol>
+   </div>
+
+   <div id='mySpriteSpin'></div>
+
+   <img src="../img/spin/f1-ccw-reel.jpg" width="276" height="126" class="reel" id="image"
+      data-image="../img/spin/f1-ccw-reel.jpg"
+      data-frames="35"
+      data-opening="0"
+      data-entry="1">
+   <button id="left">stepLeft</button>
+   <button id="right">stepRight</button>
+</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script src="../js/libs/threesixty.min.js"></script>
+<script src="../js/libs/spritespin.js"></script>
+<script src="../js/libs/jquery.mousewheel-min.js"></script>
+<script src="../js/libs/jquery.reel-min.js"></script>
+<script type="text/javascript">
+   $(document).on('ready', function() {
+      $("#left").click(function(){
+      $("#image").trigger("stepLeft");
+      });
+
+      $("#right").click(function(){
+      $("#image").trigger("stepRight");
+      });
+
+      window.onload = init;
+
+      var car;
+         function init(){
+         car = $('.car').ThreeSixty({
+            totalFrames: 20, // Total no. of image you have for 360 slider
+            endFrame: 20, // end frame for the auto spin animation
+            currentFrame: 1, // This the start frame for auto spin
+            imgList: '.threesixty_images', // selector for image list
+            progress: '.spinner', // selector to show the loading progress
+            imagePath:'../img/spin/', // path of the image assets
+            filePrefix: '', // file prefix if any
+            ext: '.jpg', // extention for the assets
+
+            navigation: true
+         });
+      }
+
+      $("#mySpriteSpin").spritespin({
+         scrollThreshold   : 100,
+         animate           : false,
+         source: [
+         "../img/spin/1.jpg",
+         "../img/spin/2.jpg",
+         "../img/spin/3.jpg",
+         "../img/spin/4.jpg",
+         "../img/spin/5.jpg",
+         "../img/spin/6.jpg",
+         "../img/spin/7.jpg",
+         "../img/spin/8.jpg",
+         "../img/spin/9.jpg",
+         "../img/spin/10.jpg",
+         "../img/spin/11.jpg",
+         "../img/spin/12.jpg",
+         "../img/spin/13.jpg",
+         "../img/spin/14.jpg",
+         "../img/spin/15.jpg",
+         "../img/spin/16.jpg",
+         "../img/spin/17.jpg",
+         "../img/spin/18.jpg",
+         "../img/spin/19.jpg",
+         "../img/spin/20.jpg"         
+         ],
+         width   : 320,  // width in pixels of the window/frame
+         height  : 220,  // height in pixels of the window/frame
+      });
+   });
+</script>
+</html>

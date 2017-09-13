@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>브라우저 해상도 체크</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+<div id="wrap" class="browser_display_info">
+	<div id="displayInfo" style="display:none">
+		<h1>Browser Resolution Info</h1>
+		<p>W : <span id="dpWidth"></span> / H : <span id="dpHeight"></span></p>
+		<div>
+			<button type="button" class="btn_test">test</button>
+		</div>
+	</div>
+	<iframe src="http://hsvn.hivelab.co.kr/naverlabs/showroom/content/autonomous_driving.html" frameborder="0" style="width:100%;height:100%;"></iframe>
+</div>
+
+<script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
+<script>
+(function($, win, doc) {
+    'use strict';
+
+	win.project = win.project || {};
+	
+    win.project.displayInfo = function() {
+        this.init();
+    };
+    win.project.displayInfo.prototype = {
+        init: function() {
+            this.setElements();
+            this.bindEvent();
+            this.createStyle();
+            this.onLoadFunc();
+        },
+        setElements: function() {
+            this.obj = $('body');
+            this.infoElements = $('#displayInfo');
+            this.objWidth = $('#dpWidth');
+            this.objHeight = $('#dpHeight');
+            this.test = $('.btn_test');
+        },
+        bindEvent: function() {
+            this.test.on('click', $.proxy(this.testFunc, this));
+        },
+        onLoadFunc: function() {
+            this.getDisplayInfo();
+            this.objWidth.html(this.displaySize.width + ' px');
+            this.objHeight.html(this.displaySize.height + ' px');
+        },
+        createStyle: function() {
+            var boxCssStyle = {
+                display: 'block',
+                position: 'fixed',
+                top: '0',
+                left: '50%',
+                zIndex: '9999',
+                width: '280px',
+                padding: '10px',
+                marginLeft: '-150px',
+                backgroundColor: 'red',
+                textAlign: 'center'
+            };
+            var titleCss = {
+                fontSize: '16px',
+                fontWeight: 'bold'
+            };
+            var textCss = {
+                marginTop: '6px',
+                fontSize: '16px'
+            };
+            this.infoElements.css(boxCssStyle);
+            this.infoElements.find('h1').css(titleCss);
+            this.infoElements.find('p').css(textCss);
+        },
+        getDisplayInfo: function() {
+            this.displaySize = {
+                width: window.innerWidth || document.body.clientWidth,
+                height: window.innerHeight || document.body.clientHeight
+            };
+        },
+        
+        testFunc: function() {
+            javascript: void(document.getElementsByTagName('body')[0].style.width = '1024px');
+        }
+    };
+
+
+    $(window).on('load', function() {
+        win.displayInfo = new win.project.displayInfo();
+    });
+
+})(jQuery, window, document);
+</script>
+
+</body>
+</html>

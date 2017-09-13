@@ -1,0 +1,21 @@
+/* mobile_video_auto */
+.mobile_video_auto{
+	max-width:640px;
+	.video_section{
+		background:url(../img/bg_autoplay.jpg) no-repeat 50% 0;
+		background-size:auto 100%;
+	}
+	.video_area{
+		position:relative;
+		max-width:640px;
+		height:360px;
+		font-size:0;
+		video{
+			position:absolute;
+			top:0;
+			left:50%;
+			height:100%;
+			transform:translate(-50%, 0);
+		}
+	}
+}

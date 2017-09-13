@@ -1,0 +1,61 @@
+.spin_wrap{
+   .threesixty {
+      position: relative;
+      overflow: hidden;
+      .threesixty_images {
+         display: none;
+         list-style: none;
+         margin: 0;
+         padding: 0;
+         img{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: auto;
+            &.previous-image{
+               visibility: hidden;
+               width: 0;
+            }
+            &.current-image{
+               visibility: visible;
+               width: 100%;
+            }
+         }
+      }
+      .spinner {
+         width: 60px;
+         display: block;
+         margin: 0 auto;
+         height: 30px;
+         background: #333;
+         background: rgba(0, 0, 0, 0.7);
+         -webkit-border-radius: 5px;
+         -moz-border-radius: 5px;
+         border-radius: 5px;
+         span{
+            font-size: 12px;
+            font-weight: bolder;
+            color: #FFF;
+            text-align: center;
+            line-height: 30px;
+            display: block;
+         }
+      }
+      .nav_bar{
+         position: absolute;
+         bottom: 10px;
+         right: 10px;
+         z-index: 11;
+         a{
+            display: block;
+            width: 70px;
+            height: 32px;
+            margin-left: 10px;
+            float: left;
+            border:1px solid #000;
+            line-height:34px;
+            text-align:center;
+         }
+      }
+   }
+}
