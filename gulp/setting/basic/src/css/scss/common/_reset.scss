@@ -1,0 +1,104 @@
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+table,
+th,
+td,
+form,
+fieldset,
+legend,
+textarea,
+input,
+select,
+textarea,
+button{
+   margin:0;
+   padding:0
+}
+
+html,
+body{
+   width:100%
+}
+
+body,
+input,
+select,
+textarea,
+button,
+th,
+td{
+   font-family:'돋움', dotum, tahoma, sans-serif;
+   font-size:12px;
+   color:#000
+}
+
+fieldset,
+img{
+    border:0 none
+}
+
+ul,
+ol,
+dl,
+li{
+   list-style:none
+}
+
+input,
+select,
+textarea,
+button{
+   vertical-align:top
+}
+
+button,
+input[type="button"]{
+   overflow:visible;
+   background-color:transparent;
+   cursor:pointer
+}
+
+button::-moz-focus-inner{
+   padding:0;
+   border:0
+}
+
+button{
+   -webkit-appearance:none;
+   border:0 none;
+   border-radius:0
+}
+
+address,
+caption,
+em{
+   font-style:normal
+}
+
+a{
+   color:#000
+}
+
+a,
+a:active,
+a:hover{
+   text-decoration:none
+}
+
+table{
+   border-collapse:collapse;
+   border-spacing:0
+}
