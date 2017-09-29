@@ -1,0 +1,44 @@
+// tab
+#wrap.uio_tab{
+ max-width:900px;
+ margin:0 auto;
+}
+.tab_wrap,.tab_wrap2{
+	border: 1px solid #777;
+	.tab{
+		@include clearfix;
+		border-bottom:1px solid #777;
+		li{
+			float:left;
+			width:25%;
+			border-left:1px solid #777;
+			box-sizing:border-box;
+			&:first-child{
+				border-left:0;
+			}
+		}
+		a{
+			display:block;
+			padding:10px 15px;
+			text-align:center;
+		}
+		.active{
+			background:#777;
+			a{
+				color:#fff;
+			}
+		}
+	}
+	.tab_content{
+		.article{
+			display:none;
+			height:250px;
+			padding:15px;
+			color: #fff;
+			&.active{
+				display: block;
+				background:#777;
+			}
+		}
+	}
+}
