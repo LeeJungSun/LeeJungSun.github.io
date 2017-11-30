@@ -1,0 +1,17 @@
+<style>
+  .ly_msgwrap .ly_btn_area.btn_type .u_btn{width:18rem}
+  .ly_msgwrap .ly_btn_area .u_td a>span{margin-top:1rem}
+</style>
+<div class="lay_wrap ly_emsg">
+  <div class="ly_msgwrap">
+    <div class="ly_msgct">
+      <strong class="tit">본 이벤트는 CJ ONE 통합회원만<br>참여하실 수 있습니다.</strong>
+    </div>
+    <div class="ly_btn_area btn_type">
+      <div class="btn_in_wrap">
+        <div class="u_td"><a href="#" class="u_btn btn_chk"><span class="txt">통합회원 가입하러 가기</span></a></div>
+      </div>
+    </div>
+    <a href="#" class="btn_lyclr">레이어 닫기</a>
+  </div>
+</div>
