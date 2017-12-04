@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
+var cheerio = require('cheerio');
 var fs = require("fs");
 
 app.use(bodyParser.json());
@@ -14,95 +15,65 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static('public'));
 app.use('/public', express.static(path.join(__dirname + '/public')));
 
-// 생성
-app.get('/new', function (req, res) {
-	fs.readdir('data', function (err, files) {
-		if (err) {
-			console.log(err)
-			res.status(500).send('Internal Server Error');
-		}
-		res.render('new', {topics:files});
-	});
+
+app.get('/guide/new', function (req, res) {
+	res.render('new');
 });
 
-// app.get(['/', '/:id'], function (req, res) {
-// 	fs.readdir('data', function (err, files) {
-// 		if (err) {
-// 			console.log(err)
-// 			res.status(500).send('Internal Server Error');
-// 		}
-// 		var id = req.params.id;	
-
-// 		if (id) {
-// 			fs.readFile('data/'+id, 'utf8', function (err, data) {
-
-// 				if (err) {
-// 					console.log(err)
-// 					res.status(500).send('Internal Server Error');
-// 				}
-// 				res.render('index.html', {topics:files, title:id, desciption:data})
-// 			})
-// 		} else {
-// 			res.render('index.html', {topics:files, title:'Welcome', desciption:'Hello,Hello,Hello,Hello'})
-// 		}
-// 	})
-// });
-
-app.get(['/', '/:id'], function (req, res) {
-	var docFolder = 'data',
-		 docFiles = [];
-
+app.get(['/guide', '/guide/:id'], function (req, res) {
+		var docFolder = 'data',
+		 	 docFiles = [];
 	fs.readdir(docFolder, function (err, files) {
 		if (err) {
 			console.log(err)
 			res.status(500).send('Internal Server Error');
 		}
 
-		files.forEach(function (file) {
-			var nfileData = '';
+		files.forEach(function (files) {
+			var nfileData = {};
+			var fileInnerData = fs.readFileSync('data/'+files, 'utf8');
+			$ = cheerio.load(fileInnerData);
 
-			
+			nfileData.htmlcode = fileInnerData;
 
 			docFiles.push(nfileData);
 		})
+		projectObj = {
+         nfiles: docFiles
+		};
+		projectObjStr = JSON.stringify(projectObj);
+		projectObjJson = JSON.parse(projectObjStr);
 
-		// console.log(files)
-		console.log(docFiles)
 
 		var id = req.params.id;
 
 		if (id) {
 			fs.readFile('data/'+id, 'utf8', function (err, data) {
-
 				if (err) {
 					console.log(err)
 					res.status(500).send('Internal Server Error');
 				}
-				res.render('index.html', {topics:files, title:id, desciption:data})
-			})
+				res.render('index.html', {obj:files, title:id, description:data});
+			});
 		} else {
-			res.render('index.html', {topics:files, title:'Welcome', desciption:'Hello,Hello,Hello,Hello'})
+			res.render('index.html', {obj:files, title:'Welcome', description:'Hello'});
 		}
-		
-	})
+	});
 });
 
-app.post('/', function (req, res) {
-	var title = req.body.title,
-		 desciption = req.body.desciption;
+app.post('/guide', function (req, res) {
+	var title = req.body.title;
+	var description = req.body.description;
 
-	fs.writeFile('/'+title, desciption, function (err) {
+	fs.writeFile('data/'+title, description, function (err) {
 		if (err) {
-			console.log(err)
+			console.log(err);
 			res.status(500).send('Internal Server Error');
 		}
-		res.redirect('/'+title);
-	})
-})
+		res.redirect('/guide/'+title);
+	});
+});
 
 app.listen(3000, function(){
     console.log("Express server has started on port 3000")
 });
-
-
-

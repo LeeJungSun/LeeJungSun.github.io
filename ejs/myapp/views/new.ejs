@@ -6,27 +6,16 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-  <main>
-  		<h1><a href="/">Server Side JavaScript</a></h1>
-		<ul>
-		<% for(var i=0 ; i<topics.length ; i++) { %>
-        <li>
-            <a href='/<%= topics[i] %>'>
-                <%= topics[i] %>
-            </a>
-        </li>
-    	<% } %>
-		</ul>
-		
+  <main>		
 		<article>
-			<form action="/" method="post">
+			<form action="/guide" method="post">
 			<fieldset>
 				<legend><span></span></legend>
 				<div>
-					<input type="text" name="title" placeholder="title">    			
+					<input type="text" name="title" placeholder="title">
 				</div>
 				<div>
-					<textarea name="desciption"></textarea>
+					<textarea name="description"></textarea>
 				</div>
 				<div>
 					<input type="submit">
