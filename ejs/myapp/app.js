@@ -4,6 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cheerio = require('cheerio');
 var fs = require("fs");
+var ejs = require("ejs");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,8 +22,28 @@ app.get('/guide/new', function (req, res) {
 });
 
 app.get(['/guide', '/guide/:id'], function (req, res) {
-		var docFolder = 'data',
-		 	 docFiles = [];
+	var docFolder = 'data',
+	 	 docFiles = [];
+
+	// function ejs2html(path, information) {
+	// 	fs.readFile('views/index.html', 'utf8', function (err, data) {
+	// 		var ejs_string = data,
+	// 			 template = ejs.compile(ejs_string),
+	// 			 html = template(information);
+	// 		fs.writeFile(path + '.html', html, function(err) {
+ //            if(err) { console.log(err); return false }
+ //            return true;
+ //        	});
+	// 	})		
+	// }
+	// ejs2html(__dirname+"/index.ejs")
+	// console.log(ejs2html)
+
+	fs.readFile('views/index.html', 'utf8', function (err, data) {
+		var ejs_string = data,
+			 template = ejs.compile(ejs_string)
+	})		
+
 	fs.readdir(docFolder, function (err, files) {
 		if (err) {
 			console.log(err)
@@ -43,6 +64,16 @@ app.get(['/guide', '/guide/:id'], function (req, res) {
 		};
 		projectObjStr = JSON.stringify(projectObj);
 		projectObjJson = JSON.parse(projectObjStr);
+
+
+
+		
+		// fs.readFile('views/index.html', 'utf8', function (err, data) {
+		// 	fs.writeFile('@index.html', data, 'utf8', function(err){
+		// 		console.log('write end')
+		// 	});
+		// })
+		
 
 
 		var id = req.params.id;
