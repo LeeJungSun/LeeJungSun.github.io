@@ -62,12 +62,14 @@ app.get(['/guide', '/guide/:id'], function (req, res) {
 		}
 	});
 
+	// http 소스 crawling 후 creeping, parsing
 	var url = req.protocol + '://' + req.get('host') + req.originalUrl;
 	request(url, function (err, res, body) {
 		if (!err) {
-			var $ = cheerio.load(body);
+			var $ = cheerio.load(body); //받아온 데이터에서 필요한 데이터 추출
 			fs.writeFile('@index.html', body, 'utf8', function(err){
 				console.log(body)
+				// 응답받은 html문서 내용 출력
 			});
 		}
 	})
@@ -77,8 +79,6 @@ app.get(['/guide', '/guide/:id'], function (req, res) {
 app.post('/guide', function (req, res) {
 	var title = req.body.title;
 	var description = req.body.description;
-
-	console.log(req.body.title)
 
 	fs.writeFile('data/'+title, description, function (err) {
 		if (err) {
