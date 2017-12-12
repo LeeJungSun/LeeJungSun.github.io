@@ -8,6 +8,7 @@
     "ejs-compile": "0.0.1",
     "ejs-compiled-loader": "^1.1.0",
     "express": "^4.16.2",
-    "express-session": "~1.13.0"
+    "express-session": "~1.13.0",
+    "request": "^2.83.0"
   }
 }

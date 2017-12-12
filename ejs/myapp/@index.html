@@ -9,26 +9,45 @@
   <main>
 		<h1><a href="/guide">Guide</a></h1>
 		<ul>
-		<% for(var i=0 ; i<obj.length ; i++) { %>
-        <li>
-            <a href='/guide/<%= obj[i] %>'>
-                <%= obj[i] %>
-            </a>
-        </li>
-    	<% } %>
+      <li><a href="/guide/test">test</a></li>
+      <li><a href="/guide/test2">test2</a></li>
+      <li><a href="/guide/test3">test3</a></li>
+      <li><a href="/guide/test4">test4</a></li>
 		</ul>
 
 		<article>
-			<h2><%= title %></h2>
-			<p><%- description %></p>
+			<h2>test4</h2>
+			<div>
+				testtesttesttesttesttest
+			</div>
+
 			<ul>
-			<% for(var i=0 ; i<obj.length ; i++) {
-				var nfilesList = projectObj.nfiles[i].htmlcode; %>
-				<li>
-			      <%= obj[i] %>
-			      <%- nfilesList %>
-			   </li>
-			<% } %>
+			<li>
+				
+		      test
+		      <div style="width:300px;height:50px;background:red">
+	<h1>테스트입니당</h1>
+</div>
+		   </li>
+			<li>
+				
+		      test2
+		      <div style="width:300px;height:50px;background:yellow">
+  test33333333
+</div>
+		   </li>
+			<li>
+				
+		      test3
+		      <div style="width:300px;height:100px;background:green">
+ 테스트
+</div>
+		   </li>
+			<li>
+				
+		      test4
+		      testtesttesttesttesttest
+		   </li>			
 			</ul>	
 		</article>
 

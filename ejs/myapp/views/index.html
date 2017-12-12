@@ -8,27 +8,23 @@
 <body>
   <main>
 		<h1><a href="/guide">Guide</a></h1>
-		<ul>
-		<% for(var i=0 ; i<obj.length ; i++) { %>
-        <li>
-            <a href='/guide/<%= obj[i] %>'>
-                <%= obj[i] %>
-            </a>
-        </li>
-    	<% } %>
+		<ul><% for(var i=0 ; i<obj.length ; i++) { %>
+      <li><a href="/guide/<%= obj[i] %>"><%= obj[i] %></a></li><% } %>
 		</ul>
 
 		<article>
-			<h2><%= title %></h2>
-			<p><%- description %></p>
-			<ul>
-			<% for(var i=0 ; i<obj.length ; i++) {
-				var nfilesList = projectObj.nfiles[i].htmlcode; %>
-				<li>
-			      <%= obj[i] %>
-			      <%- nfilesList %>
-			   </li>
-			<% } %>
+			<h2><%- title %></h2>
+			<div>
+				<%- description %>
+			</div>
+
+			<ul><% for(var i=0 ; i<obj.length ; i++) { 
+				var nfilesTitle = projectObj.nfiles[i].title,
+					 nfilesList = projectObj.nfiles[i].htmlcode; %>
+			<li>
+		      <%- nfilesTitle %>
+		      <%- nfilesList %>
+		   </li><% } %>			
 			</ul>	
 		</article>
 
