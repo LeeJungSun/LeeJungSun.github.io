@@ -22,8 +22,10 @@
 				var nfilesTitle = projectObj.nfiles[i].title,
 					 nfilesList = projectObj.nfiles[i].htmlcode; %>
 			<li>
-		      <%- nfilesTitle %>
-		      <%- nfilesList %>
+		      <strong><%- nfilesTitle %></strong>
+		      <div>
+		      	<%- nfilesList %>
+		      </div>
 		   </li><% } %>
 			</ul>	
 		</article>

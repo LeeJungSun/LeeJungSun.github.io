@@ -33,14 +33,20 @@ app.get(['/guide', '/guide/:id'], function (req, res) {
 		}
 
 		files.forEach(function (files) {
-			var nfileData = {};
-			var fileInnerData = fs.readFileSync('data/'+files, 'utf8');
-			$ = cheerio.load(fileInnerData);
+			var extname = path.extname(files);
+			// console.log(extname)
 
-			nfileData.title = files;
-			nfileData.htmlcode = fileInnerData;
+			if (extname == '.html') {
+				var nfileData = {};
+				var fileInnerData = fs.readFileSync('data/'+files, 'utf8');			
+				$ = cheerio.load(fileInnerData);
 
-			docFiles.push(nfileData);
+
+				nfileData.title = files;
+				nfileData.htmlcode = fileInnerData;
+
+				docFiles.push(nfileData);
+			}			
 		})
 		projectObj = {
          nfiles: docFiles
@@ -68,8 +74,8 @@ app.get(['/guide', '/guide/:id'], function (req, res) {
 		if (!err) {
 			var $ = cheerio.load(body); //받아온 데이터에서 필요한 데이터 추출
 			fs.writeFile('@index.html', body, 'utf8', function(err){
-				console.log(body)
-				// 응답받은 html문서 내용 출력
+				// console.log(body)
+				// 추출한 html문서 내용 출력
 			});
 		}
 	})
@@ -79,14 +85,37 @@ app.get(['/guide', '/guide/:id'], function (req, res) {
 app.post('/guide', function (req, res) {
 	var title = req.body.title;
 	var description = req.body.description;
+	var menuListDepth1 = req.body.menuListDepth1;
 
-	fs.writeFile('data/'+title, description, function (err) {
+
+	// fs.mkdir('data/'+menuListDepth1, function(err) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 		res.status(500).send('Internal Server Error');
+	// 	}
+	// });
+
+	// if (menuListDepth1 === 'test1') {
+
+	// 	fs.writeFile('data/'+menuListDepth1+'/'+title, description, function (err) {
+	// 		if (err) {
+	// 			console.log(err);
+	// 			res.status(500).send('Internal Server Error');
+	// 		}
+	// 	});
+	// } else {
+			
+	// }
+
+
+	fs.writeFile('data/'+title+'.html', description, function (err) {
 		if (err) {
 			console.log(err);
 			res.status(500).send('Internal Server Error');
 		}
-		res.redirect('/guide/'+title);
-	});
+		res.redirect('/guide');
+	})
+
 });
 
 app.listen(3000, function(){
