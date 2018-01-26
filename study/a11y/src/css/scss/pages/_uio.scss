@@ -1,0 +1,161 @@
+#wrap{
+	max-width:770px;
+	margin:0 auto;
+}
+
+.code,.code2{
+	margin:0 2px;
+	padding:3px 5px 2px;
+	border:1px solid #e1e4e6;
+	border-radius:4px;
+	background:#f3f5f6;
+	font-family:'Hack',Avenir,'Lato','애플 SD 산돌고딕 Neo','Apple SD Gothic Neo','나눔바른고딕',NanumBarunGothic,'나눔고딕',NanumGothic,'맑은 고딕','Malgun Gothic','돋움',dotum,AppleGothic,sans-serif !important;
+	font-size:14px;
+	color:#4d5256;
+}
+.code2{
+	border-color:#3f86a5;
+	background:#bcdbe8;
+}
+
+
+.main{
+	&__title{
+		margin:30px 0 15px;
+		padding:0;
+		font-size:36px;
+		color:#4d5256;
+		word-break:keep-all;
+		-webkit-font-smoothing:antialiased
+	}
+}
+.sub{
+	&__title{
+		margin:50px 0 15px;
+		padding:0 0 10px;
+		border-bottom:1px solid #ccc;
+		font-size:30px;
+		color:#4d5256;
+		word-break:keep-all;
+		-webkit-font-smoothing:antialiased;
+	}
+	&__text{
+		margin:20px 0;
+		padding:0;
+		font-size:17px;
+		color:#4d5256;		
+		line-height:32px;
+	}
+}
+
+
+
+.list{
+	margin-top:20px;
+	padding-left:30px;
+	list-style-type:disc;
+	&:first-child{
+		margin-top:0
+	}
+	li{
+		&:first-child{
+			margin-top:0
+		};			
+		margin-top:10px;
+		font-size:20px;
+		color:#4d5256;
+		line-height:30px;
+	}
+	&.number_type{			
+		list-style-type:decimal;
+	}
+	&__title{
+		display:block;
+	}
+}
+
+.quote{
+	margin:30px 0 25px;
+	padding-left:25px;
+	border-left:3px solid #e1e4e6;
+	color:#777;
+	&.type2{
+		padding:15px 15px 15px 25px;
+		border-left:5px solid #3f87a6;
+		background:#e4f0f5;
+	}
+	&__title{
+		display:block;
+		margin-bottom:20px;
+		font-size:20px;
+	}
+	&__text{
+		margin:10px 0;
+		color:#4d5256;
+		font-size:15px;
+		line-height:26px;
+	}
+	&__image{
+		padding:15px;
+		border:1px solid #ddd;
+		border-radius:3px;
+		background:#f8f8f8;
+		img{
+			width:100%;
+			max-width:550px;
+		}
+	}
+	.list{
+		li{
+			font-size:16px
+		}
+	}
+}
+
+.definition{
+	color:#4d5256;
+	dt{
+		margin-top:20px;
+		font-size:17px;
+		font-weight:bold;
+		color:#4d5256;
+		&:first-child{
+			margin-top:0;
+		}
+	}
+	dd{
+		padding-left:24px;
+		font-size:16px;
+		line-height:30px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .quote{
+// 	&__wrap{
+// 		margin:30px 0 25px;
+// 		padding-left:25px;
+// 		border-left:3px solid #e1e4e6;
+// 		color:#777;
+// 		&.type2{
+// 			padding:15px 15px 15px 25px;
+// 			border-left:5px solid #3f87a6;
+// 			background:#e4f0f5;
+// 		}
+// 		
+// 	}
+
+// }
