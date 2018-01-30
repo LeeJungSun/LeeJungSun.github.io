@@ -10,35 +10,35 @@
 <body>
 <div id="wrap">
 	<div class="alert_form_wrap">
-		<!-- <div class="input__wrap">
-		   <label for="user_name" class="input__label">이름</label>
-		   <div class="input__text text01">
+		<div class="input_wrap">
+		   <label for="user_name" class="input_label">이름</label>
+		   <div class="input_text">
 		   	<input type="text" id="user_name">
 		   </div>
-		   <p class="alert_text" role="alert" aria-live="assertive" aria-atomic="true"></p>
+		   <p class="alert_text" role="alert" aria-live="assertive" style="display:none">필수 입력값 입니다.</p>
 		</div>
-		<div class="input__wrap">
-			<label for="user_id" class="input__label">아이디</label>
-			<div class="input__text">
+		<div class="input_wrap">
+			<label for="user_id" class="input_label">아이디</label>
+			<div class="input_text">
 		   	<input type="text" id="user_id">				
-			</div>
+			</div>			
 		</div>
-		<div class="input__wrap">
-			<label for="user_password" class="input__label">비밀번호</label>
-			<div class="input__text">
+		<div class="input_wrap">
+			<label for="user_password" class="input_label">비밀번호</label>
+			<div class="input_text">
 				<input type="password" id="user_password">
 			</div>
 		</div>
-		<div class="input__wrap">
-		   <label for="user_password2" class="input__label">비밀번호 확인</label>
-		   <div class="input__text">
+		<div class="input_wrap">
+		   <label for="user_password2" class="input_label">비밀번호 확인</label>
+		   <div class="input_text">
 		   	<input type="password" id="user_password2">		   	
 		   </div>
-		</div> -->
+		   <p class="alert_text" role="alert" aria-live="polite" aria-atomic="false" style="display:none">
+		   	비밀번호 안전성 : <span class="level">위험</span>
+		   </p>
+		</div>
 
-
-		<button type="button" class="btn"><span>button</span></button>
-		<p class="alert_text2" role="alert" aria-live="assertive" aria-atomic="true">올바른 이메일 주소를 입력하십시오.</p>
 	</div>
 </div>
 </body>
@@ -50,44 +50,34 @@
 		var inputAlertFunc = {
 			init : function () {
 				this.setElements();
-				this.alertFunc();
+				this.bindEvent();
 			}, 
 			setElements : function () {
-				this.inputWrap = $('.input__wrap');
-				this.inputTextBox = $('.input__text');
+				this.inputWrap = $('.input_wrap');
+				this.inputTextBox = $('.input_text');
+				this.alertText = $('.alert_text');
 				this.inputText = this.inputTextBox.find('input');
 			},
-			alertFunc : function () {
-				var input = $('.text01').find('input');
-				setTimeout(function () {
-					var _this = this;
-					input.parents(_this.inputWrap).find('.alert_text').text('필수 입력란 입니다.');
-				}, 4000)
-			}
-		};
-
-		var buttonAlertFunc = {
-			init : function () {
-				this.setElements();
-				this.alertFunc();
-			}, 
-			setElements : function () {
-				this.inputWrap = $('.input__wrap');
-				this.inputTextBox = $('.input__text');
-				this.inputText = this.inputTextBox.find('input');
+			bindEvent : function () {
+				this.inputText.on('keydown', $.proxy(this.byteCheck, this));
 			},
-			alertFunc : function () {
-				var input = $('.text01').find('input');
-				setTimeout(function () {
-					var _this = this;
-					input.parents(_this.inputWrap).find('.alert_text').text('필수 입력란 입니다.');
-				}, 4000)
+			alertFunc : function (e) {
+				var input = $(e.currentTarget),
+					 inputWrap = input.closest(this.inputWrap);				
+
+				if (input.val().length <= 6) {
+					inputWrap.find(this.inputTextBox).addClass('error');
+					inputWrap.find(this.alertText).show();
+				} else if (input.val().length > 6 && input.val().length <= 12) {
+					inputWrap.find(this.alertText).find('.level').text('안전');
+				} else if (input.val().length > 12) {
+					inputWrap.find(this.inputTextBox).removeClass('error');
+					inputWrap.find(this.alertText).hide();
+				}
 			}
 		};
-
 		$(function () {
 			inputAlertFunc.init();
-			buttonAlertFunc.init();
 		})
     
 
@@ -95,3 +85,14 @@
 
 </script>
 </html>
+
+
+<p role="alert" aria-live="assertive">필수 입력값 입니다.</p>
+<p role="alert" aria-live="polite">필수 입력값 입니다.</p>
+
+<p role="alert" aria-live="polite" aria-atomic="true">
+	비밀번호 안전성 : <span class="level">위험</span>
+</p>
+<p role="alert" aria-live="polite" aria-atomic="false">
+	비밀번호 안전성 : <span class="level">위험</span>
+</p>
