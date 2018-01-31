@@ -1,3 +1,5 @@
+<!-- $theme: gaia -->
+
 # Alert
 
 ## Alert란
@@ -32,8 +34,13 @@ https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/i
 		- browser
 	- 스크린리더
 		- NVDA, voiceover
+		- 
 - 테스트 결과
-	- 표 형식
+	- 크롬 NVDA (X)
+	- IE NVDA (O)
+	- 갤4 5.0.1 talkback (O)
+	- 아이폰X 11.2.2 voiceover (X)
+
 - 이슈사항
 
 

@@ -15,7 +15,7 @@
 		   <div class="input_text">
 		   	<input type="text" id="user_name">
 		   </div>
-		   <p class="alert_text" role="alert" aria-live="assertive" style="display:none">필수 입력값 입니다.</p>
+		   <p class="alert_text" role="alert" aria-live="assertive" style="display:none">비밀번호 안전성 : <span class="level">위험</span></p>
 		</div>
 		<div class="input_wrap">
 			<label for="user_id" class="input_label">아이디</label>
@@ -59,7 +59,7 @@
 				this.inputText = this.inputTextBox.find('input');
 			},
 			bindEvent : function () {
-				this.inputText.on('keydown', $.proxy(this.byteCheck, this));
+				this.inputText.on('keydown', $.proxy(this.alertFunc, this));
 			},
 			alertFunc : function (e) {
 				var input = $(e.currentTarget),
@@ -87,7 +87,7 @@
 </html>
 
 
-<p role="alert" aria-live="assertive">필수 입력값 입니다.</p>
+<!-- <p role="alert" aria-live="assertive">필수 입력값 입니다.</p>
 <p role="alert" aria-live="polite">필수 입력값 입니다.</p>
 
 <p role="alert" aria-live="polite" aria-atomic="true">
@@ -95,4 +95,4 @@
 </p>
 <p role="alert" aria-live="polite" aria-atomic="false">
 	비밀번호 안전성 : <span class="level">위험</span>
-</p>
+</p> -->
