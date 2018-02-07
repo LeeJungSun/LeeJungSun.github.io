@@ -2,8 +2,8 @@
 
 # Alert
 
-## Alert란
-간략하고 중요한 메시지를 표시
+## Alert 이란
+사용자의 작업을간략하고 중요한 메시지를 표시
 
 **예시 이미지**
 https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/img/example01.png
@@ -12,17 +12,29 @@ https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/i
 https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/img/example03.png
 
 
-## WAI-ARIA 역할(Roles), 속성(Properties), 상태(States)
-- aria-live
-- aria-atomic
+## WAI-ARIA
+aria-live
+사용자가 페이지의 어느부분을 탐색하는 것과 상관없이 새롭게 업데이트된 정보를 사용자에게 즉시 알릴 수 있습니다.
+[Values]
+- off (default)
+  해당 영역을 사용자가 탐색하는 중이 아닐 경우 변경사항을 사용자에게 제공하지않습니다.
+- assertive
+  사용자가 진행하던 작업을 중단하고 변경사항을 사용자에게 즉시 알리도록 하는 역할을 합니다.
+  페이지에 오류가 발생했을 경우나 사용자가 작업한 입력란이 업데이트 되는 경우와 같이 중요하거나 긴급하게 알려야할 경우 사용하는 것을 권고합니다.
+- polite
+  사용자가 진행하던 작업을 마치면 변경사항을 알리도록하는 역할을 합니다.
+  중요하지만 긴급하지 않은 변경 사항일 경우에 적합합니다.
 
 
-## 유의할점 note~
-- 현재로서는 화면 판독기가 페이지로드가 완료되기 전에 페이지에있는 경고를 사용자에게 알리지 않는다는 점에 유의해야합니다.
-- 키보드 포커스에 영향을주지 않는 것이 중요합니다. (포커스가 어디에 있는지 상관 없이 자동으로 알리기 때문)
-- 자동으로 사라지는 경고를 디자인하지 않는 것이 중요합니다.
-- 경고로 인한 중단 빈도 빈번한 중단은 시각 및인지 장애를 가진 사람들의 유용성을 저해
-
+aria-atomic
+변경사항을 사용자에게 전달할 때 변경된 영역만 제공할지 변경된 영역 포함하여 전체 영역을 제공할지 여부를 나타냅니다.
+[Values]
+- false (default)
+  변경된 사항만 표시합니다.
+    
+- true
+  변경된 사항을 포함한 전체 영역을 표시합니다.
+  
 
 ## TEST
 - 테스트 환경
@@ -42,6 +54,13 @@ https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/i
 	- 아이폰X 11.2.2 voiceover (X)
 
 - 이슈사항
+
+
+## 유의할점 note~
+- 현재로서는 화면 판독기가 페이지로드가 완료되기 전에 페이지에있는 경고를 사용자에게 알리지 않는다는 점에 유의해야합니다.
+- 키보드 포커스에 영향을주지 않는 것이 중요합니다. (포커스가 어디에 있는지 상관 없이 자동으로 알리기 때문)
+- 자동으로 사라지는 경고를 디자인하지 않는 것이 중요합니다.
+- 경고로 인한 중단 빈도 빈번한 중단은 시각 및인지 장애를 가진 사람들의 유용성을 저해
 
 
 ## 참고 사이트
