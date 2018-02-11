@@ -3,13 +3,24 @@
 # Alert
 
 ## Alert 이란
-사용자의 작업을간략하고 중요한 메시지를 표시
+사용자의 작업을 방해하지 않고 사용자에게 간략하고 중요한 메시지를 표시하는 요소입니다.
+
+동적으로 렌더링된 Alert는 대부분의 스크린리더기에서 자동으로 사용자에게 메시지를 알리고 일부 운영체제에서는 경고음을 울릴 수 있습니다.
+
 
 **예시 이미지**
 https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/img/example01.png
 https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/img/example01_01.png
 https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/img/example02.png
 https://github.com/LeeJungSun/LeeJungSun.github.io/blob/master/study/a11y/dist/img/example03.png
+
+*고려사항
+1. 자동으로 사라지는 Alert를 디자인하지 않는 것이 중요합니다. 너무 빨리 사라지는 경고는 WCAG 2.0 / 2.2.3을 충족시키지 못하게 될 수 있습니다.
+2. Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 WCAG 2.0 / 2.2.4의 요구 사항을 충족시키지 못하게합니다.
+
+
+Alert은 포커스가 이동할 필요가 없기 때문에 컨텐츠 작업자는 사용자가 Alert을 닫을 것을 요구해서는 안됩니다. 닫아야하는 Alert을 사용할 경우 작업자는 role="alertdialog"를 사용해야합니다.
+
 
 
 ## WAI-ARIA ~~~
