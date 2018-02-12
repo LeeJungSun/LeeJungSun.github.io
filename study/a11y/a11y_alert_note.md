@@ -76,8 +76,6 @@ aria-atomic
 
 
 
-
-
 ## 참고 사이트
 https://www.w3.org/TR/wai-aria-1.1/#alert
 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role

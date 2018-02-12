@@ -1,7 +1,10 @@
 #wrap{
 	max-width:770px;
 	margin:0 auto;
-	padding:50px 0;
+	padding:50px 20px;
+}
+.edit{
+	color:#f00 !important;
 }
 .code,.code2{
 	margin:0 2px;
@@ -107,7 +110,11 @@
 		font-family:Malgun Gothic;
 	}
 	.text{
+		margin-top:10px;
 		line-height:24px;
+		&:first-child{
+			margin-top:0;
+		}
 	}
 }
 .notice{
@@ -207,6 +214,8 @@
 	margin:40px 20px;
 	table{
 		width:100%;
+		table-layout:fixed;
+		word-break:break-all;
 	}
 	caption span{
 		display:block;

@@ -12,7 +12,7 @@
 	<h1 class="main__title">Alert</h1>
 
 	<h2 class="sub__title">Alert 이란?</h2>
-	<p class="sub__text">사용자의 작업을 방해하지 않고 간략하고 중요한 메시지를 표시하는 요소입니다.<br> 동적으로 렌더링 된 Alert은 대부분의 보조 기술에서 자동으로 사용자에게 메시지를 알리고 일부 운영체제에서는 경고음을 울릴 수 있습니다.</p>
+	<p class="sub__text">Alert은 사용자의 작업을 방해하지 않고 간략하고 중요한 메시지를 표시하는 요소입니다.<br> 동적으로 렌더링 된 Alert은 대부분의 보조 기술에서 자동으로 사용자에게 메시지를 알리고 일부 운영체제에서는 경고음을 울릴 수 있습니다.</p>
 	<div class="img_wrap">
 		<div class="img">
 			<img src="../img/alert/example01.png" alt="">
@@ -30,13 +30,16 @@
 
 	<h3 class="article__title">Alert 사용 시 고려사항 :</h3>
 	<ul class="list">
-	<li><strong>자동으로 사라지는 Alert을 디자인하지 않는 것이 중요합니다.</strong> 너무 빨리 사라지는 경고는 WCAG 2.0 / 2.2.3 항목을 충족시키지 못할 수 있습니다.</li>
-	<li><strong>Alert으로 빈번한 중단을 주지 않아야 합니다.</strong> Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 WCAG 2.0 / 2.2.4의 요구 사항을 충족시키지 못하게 합니다.</li>
-	<li><strong>사용자가 Alert을 닫을 것을 요구해서는 안됩니다.</strong> Alert은 포커스가 이동할 필요가 없기 때문에 콘텐츠 작업자는 닫아야 하는 Alert을 사용해야 할 경우 작업자는 <span class="code">role="alertdialog"</span>를 사용해야 합니다.</li>
+	<li><strong>자동으로 사라지는 Alert을 디자인하지 않는 것이 중요합니다.</strong> 너무 빨리 사라지는 경고는 <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html" target="_blank">WCAG 2.0 / 2.2.3</a> 항목을 충족시키지 못할 수 있습니다.</li>
+	<li><strong>Alert으로 사용자에게 빈번한 중단을 주지 않아야 합니다.</strong> Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html" target="_blank">WCAG 2.0 / 2.2.4</a>의 요구 사항을 충족시키지 못하게 합니다.</li>
+	<li class="edit"><strong>사용자가 Alert을 닫을 것을 요구해서는 안됩니다. - 인터렉티브</strong> Alert은 포커스가 이동할 필요가 없기 때문에 콘텐츠 작업자는 닫아야 하는 Alert을 사용해야 할 경우 작업자는 <span class="code">role="alertdialog"</span>를 사용해야 합니다.</li>
 	</ul>
 
-	<h2 class="sub__title">WAI-ARIA 속성(Properties) 및 상태(States)</h2>
+	<h2 class="sub__title">WAI-ARIA 역할(Roles), 속성(Properties) 및 상태(States)</h2>
 	<ul class="list">
+	<li>
+		role="alert"
+	</li>
 	<li>
 		<dl>
 		<dt class="list__title"><span class="code">aria-live</span></dt>
@@ -72,16 +75,18 @@
 				<strong class="list__title">false (default)</strong>
 				<p>변경된 사항만 표시합니다.</p>
 				<div class="example_area">
-					<p class="text">'안전' 텍스트가 변경될때 변경된 텍스트만 불러줍니다.</p>
-					<code>&lt;p role="alert" aria-live="false"&gt;비밀번호 안전성 : <strong>&lt;span&gt;안전&lt;/span&gt;</strong>&lt;/p&gt;</code>
+					<p class="text">'보통' 텍스트가 변경될때 변경된 텍스트만 불러줍니다.</p>
+					<code>&lt;p role="alert" aria-live="polite" aria-atomic="false"&gt;비밀번호 안전성 : <strong>&lt;span&gt;보통&lt;/span&gt;</strong>&lt;/p&gt;</code>
+					<p class="text">NVDA 음성출력 뷰어 예시)<br> 경고 비밀번호 안전성 : 위험<br> <strong>보통</strong></p>
 				</div>
 			</li>
 			<li>
 				<strong class="list__title">true</strong>
 				<p>변경된 사항을 포함한 전체 영역을 표시합니다.</p>
 				<div class="example_area">
-					<p>'안전' 텍스트가 변경될 경우 role="alert"이 선언된 태그 내 텍스트를 모두 읽어줍니다.</p>
-					<code>&lt;p role="alert" aria-live="true"&gt;<strong>비밀번호 안전성 : &lt;span&gt;안전&lt;/span&gt;</strong>&lt;/p&gt;</code>
+					<p class="text">'보통' 텍스트가 변경될 경우 role="alert"이 선언된 태그 내 텍스트를 모두 읽어줍니다.</p>
+					<code>&lt;p role="alert" aria-live="polite" aria-atomic="true"&gt;<strong>비밀번호 안전성 : &lt;span&gt;보통&lt;/span&gt;</strong>&lt;/p&gt;</code>
+					<p class="text">NVDA 음성출력 뷰어 예시)<br> 경고 비밀번호 안전성 : 위험<br> <strong>경고 비밀번호 안전성 : 보통</strong></p>
 				</div>
 			</li>
 			</ul>			
@@ -89,11 +94,15 @@
 	</li>
 	</ul>	
 
-	<h2 class="sub__title">브라우저 지원율 Test</h2>
+	<h2 class="sub__title">브라우저 및 스크린리더 Test</h2>
 	<p class="sub__text">Alert 메시지를 사용자에게 제공하는 방법은 여러가지가 있습니다. 그 중 대표적으로 DOM에 그려져 있는 상태에서 제공하는 방식과 Javascript로 DOM에 직접 그려주는 방식으로 테스트하였습니다.</p>
 	<p class="sub__text">* Mobile의 경우 해당 디바이스 기본 브라우저로 테스트 진행하였습니다.</p>
 
 	<h3 class="article__title">1. DOM에 있는 요소를 display:none/block으로 노출하는 경우</h3>
+	<div>
+		HTML/JS 코드 및 테스트 링크 적용
+		<a href="01_alert_sample01.html" target="_blank"></a>
+	</div>
 	<div class="table_wrap">
 		<table>
 		<caption><span>PC</span></caption>
@@ -167,7 +176,7 @@
 		</table>
 	</div>
 
-	<h3 class="article__title">2. innerHTML을 사용하여 DOM에 그려주는 경우</h3>
+	<h3 class="article__title">2. 스크립트로 DOM을 생성하는 경우</h3>
 	<div class="table_wrap">
 		<table>
 		<caption><span>PC</span></caption>
