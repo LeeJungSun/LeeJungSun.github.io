@@ -12,7 +12,7 @@
 	<h1 class="main__title">Alert</h1>
 
 	<h2 class="sub__title">Alert 이란?</h2>
-	<p class="sub__text">사용자의 작업을 방해하지 않고 사용자에게 간략하고 중요한 메시지를 표시하는 요소입니다.<br> 동적으로 렌더링 된 Alert은 대부분의 스크린리더기에서 자동으로 사용자에게 메시지를 알리고 일부 운영체제에서는 경고음을 울릴 수 있습니다.</p>
+	<p class="sub__text">사용자의 작업을 방해하지 않고 간략하고 중요한 메시지를 표시하는 요소입니다.<br> 동적으로 렌더링 된 Alert은 대부분의 보조 기술에서 자동으로 사용자에게 메시지를 알리고 일부 운영체제에서는 경고음을 울릴 수 있습니다.</p>
 	<div class="img_wrap">
 		<div class="img">
 			<img src="../img/alert/example01.png" alt="">
@@ -30,12 +30,12 @@
 
 	<h3 class="article__title">Alert 사용 시 고려사항 :</h3>
 	<ul class="list">
-	<li><strong>자동으로 사라지는 Alert을 디자인하지 않는 것이 중요합니다.</strong> 너무 빨리 사라지는 경고는 WCAG 2.0 / 2.2.3을 충족시키지 못할 수 있습니다.</li>
-	<li><strong>빈번한 중단을 주지 않아야 합니다.</strong> Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 WCAG 2.0 / 2.2.4의 요구 사항을 충족시키지 못하게 합니다.</li>
+	<li><strong>자동으로 사라지는 Alert을 디자인하지 않는 것이 중요합니다.</strong> 너무 빨리 사라지는 경고는 WCAG 2.0 / 2.2.3 항목을 충족시키지 못할 수 있습니다.</li>
+	<li><strong>Alert으로 빈번한 중단을 주지 않아야 합니다.</strong> Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 WCAG 2.0 / 2.2.4의 요구 사항을 충족시키지 못하게 합니다.</li>
 	<li><strong>사용자가 Alert을 닫을 것을 요구해서는 안됩니다.</strong> Alert은 포커스가 이동할 필요가 없기 때문에 콘텐츠 작업자는 닫아야 하는 Alert을 사용해야 할 경우 작업자는 <span class="code">role="alertdialog"</span>를 사용해야 합니다.</li>
 	</ul>
 
-	<h2 class="sub__title">aria-*</h2>
+	<h2 class="sub__title">WAI-ARIA 속성(Properties) 및 상태(States)</h2>
 	<ul class="list">
 	<li>
 		<dl>
@@ -89,10 +89,15 @@
 	</li>
 	</ul>	
 
-	<h2 class="sub__title">스크린 리더기 Test</h2>
+	<h2 class="sub__title">브라우저 지원율 Test</h2>
+	<p class="sub__text">Alert 메시지를 사용자에게 제공하는 방법은 여러가지가 있습니다. 그 중 대표적으로 DOM에 그려져 있는 상태에서 제공하는 방식과 Javascript로 DOM에 직접 그려주는 방식으로 테스트하였습니다.</p>
+	<p class="sub__text">* Mobile의 경우 해당 디바이스 기본 브라우저로 테스트 진행하였습니다.</p>
+
+	<h3 class="article__title">1. DOM에 있는 요소를 display:none/block으로 노출하는 경우</h3>
 	<div class="table_wrap">
 		<table>
 		<caption><span>PC</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
 		<thead>
 		<tr>
 		<th scope="col">OS</th>
@@ -103,16 +108,22 @@
 		</thead>
 		<tbody>
 		<tr>
-		<td>Window</td>
-		<td>chrome</td>
+		<td>Window 10</td>
+		<td>Chrome</td>
 		<td>NVDA</td>
-		<td>X</td>
+		<td>초기 Alert 메시지 노출시에만 '경고'로 표시되며,<br> 이후 Alert내 메시지 업데이트시 '경고' 노출되지 않습니다.</td>
 		</tr>
 		<tr>
-		<td>Window</td>
+		<td>Window 10</td>
+		<td>Firefox</td>
+		<td>NVDA</td>
+		<td>'경고'로 표시됩니다.</td>
+		</tr>
+		<tr>
+		<td>Window 10</td>
 		<td>IE</td>
 		<td>NVDA</td>
-		<td>O</td>
+		<td>초기 Alert 메시지 노출시에만 '경고'로 표시되며,<br> 이후 Alert내 메시지 업데이트시 '경고' 노출되지 않습니다.</td>
 		</tr>
 		</tbody>
 		</table>
@@ -120,6 +131,47 @@
 	<div class="table_wrap">
 		<table>
 		<caption><span>Mobile</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
+		<thead>
+		<tr>
+		<th scope="col">OS</th>
+		<th scope="col">Device</th>
+		<th scope="col">Version</th>
+		<th scope="col">Screen reader</th>
+		<th scope="col">지원 유무</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S4</td>
+		<td>5.0.1</td>
+		<td>TalkBack</td>
+		<td>'Alert'로 표시됩니다.</td>
+		</tr>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S8</td>
+		<td>7.0</td>
+		<td>Voice Assistant</td>
+		<td>X</td>
+		</tr>
+		<tr>
+		<td>iOS</td>
+		<td>아이폰X</td>
+		<td>11.2.2</td>
+		<td>VoiceOver</td>
+		<td>X</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+
+	<h3 class="article__title">2. innerHTML을 사용하여 DOM에 그려주는 경우</h3>
+	<div class="table_wrap">
+		<table>
+		<caption><span>PC</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
 		<thead>
 		<tr>
 		<th scope="col">OS</th>
@@ -130,34 +182,74 @@
 		</thead>
 		<tbody>
 		<tr>
-		<td>Android</td>
-		<td>갤럭시 s4</td>
-		<td>Talkback</td>
-		<td>O</td>
+		<td>Window 10</td>
+		<td>Chrome</td>
+		<td>NVDA</td>
+		<td></td>
 		</tr>
 		<tr>
-		<td>IOS</td>
+		<td>Window 10</td>
+		<td>Firefox</td>
+		<td>NVDA</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>Window 10</td>
+		<td>IE</td>
+		<td>NVDA</td>
+		<td></td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="table_wrap">
+		<table>
+		<caption><span>Mobile</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
+		<thead>
+		<tr>
+		<th scope="col">OS</th>
+		<th scope="col">Device</th>
+		<th scope="col">Version</th>
+		<th scope="col">Screen reader</th>
+		<th scope="col">지원 유무</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S4</td>
+		<td>5.0.1</td>
+		<td>TalkBack</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S8</td>
+		<td>7.0</td>
+		<td>Voice Assistant</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>iOS</td>
 		<td>아이폰X</td>
-		<td>Voiceover</td>
-		<td>X</td>
+		<td>11.2.2</td>
+		<td>VoiceOver</td>
+		<td></td>
 		</tr>
 		</tbody>
 		</table>
 	</div>
 	
-	<!-- <blockquote class="quote">
-		<strong class="quote__title">제목제목제목제목제목</strong>
-		<ul class="list">
-		<li>리스트리스트리스트</li>
-		</ul>
-	</blockquote> -->
+	<h2 class="sub__title">마치며</h2>
+	<p class="sub__text">생각했던 것, 고민한 것 등등</p>
 
 	<h2 class="sub__title">참고 사이트</h2>
 	<ul class="list">
 	<li><a href="https://www.w3.org/TR/wai-aria-1.1/#alert">https://www.w3.org/TR/wai-aria-1.1/#alert</a></li>
-	<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role">https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role</a></li>
 	<li><a href="https://www.w3.org/TR/wai-aria-1.1/#aria-live">https://www.w3.org/TR/wai-aria-1.1/#aria-live</a></li>
 	<li><a href="https://www.w3.org/TR/wai-aria-1.1/#aria-atomic">https://www.w3.org/TR/wai-aria-1.1/#aria-atomic</a></li>
+	<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role">https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role</a></li>
 	<li><a href="https://developers.google.com/web/fundamentals/accessibility/semantics-aria/hiding-and-updating-content?hl=ko">https://developers.google.com/web/fundamentals/accessibility/semantics-aria/hiding-and-updating-content?hl=ko</a></li>
 	<li><a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html">https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html</a></li>
 	<li><a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html">https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html</a></li>

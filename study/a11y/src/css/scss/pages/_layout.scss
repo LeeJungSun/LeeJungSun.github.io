@@ -1,6 +1,7 @@
 #wrap{
 	max-width:770px;
 	margin:0 auto;
+	padding:50px 0;
 }
 .code,.code2{
 	margin:0 2px;
@@ -18,7 +19,7 @@
 }
 .main{
 	&__title{
-		margin:30px 0 15px;
+		margin-bottom:15px;
 		padding:0;
 		font-size:36px;
 		color:#333;
@@ -47,8 +48,15 @@
 	&__title{
 		margin:50px 0 15px;
 		font-size:19px;
+		color:#000;
+	}
+	&__text{
+		margin:20px 0;
+		padding:0;
+		font-size:15px;
 		color:#4d5256;
-	}	
+		line-height:28px;
+	}
 }
 .list{
 	margin-top:20px;
@@ -196,7 +204,7 @@
 	}
 }
 .table_wrap{
-	margin:50px 0;
+	margin:40px 20px;
 	table{
 		width:100%;
 	}
