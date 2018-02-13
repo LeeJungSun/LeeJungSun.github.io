@@ -1,8 +1,22 @@
-.alert_example{
+.example_wrap{
 	.main{
 		&__title{
 			font-size:27px;
 		}
+	}
+	.sub{
+		&__title{
+			margin-top:50px;
+			font-size:20px;
+			border-bottom:0;
+		}
+	}
+	.btn_submit{
+		float:right;
+		width:80px;
+		height:30px;
+		margin-top:30px;
+		font-size:14px;
 	}
 }
 .alert_article{
@@ -14,13 +28,16 @@
 }
 
 .alert_form_wrap{
-	margin:50px 0;
+	overflow:hidden;
 	.input{
 		&_wrap{
-			margin-top:30px;
+			margin-top:40px;
+			&:first-of-type{
+				margin-top:0
+			}
 		}
 		&_text{
-			margin-top:5px;
+			margin-top:8px;
 		}
 	}
 	.btn{
@@ -58,7 +75,7 @@
 	}
 	&_label{
 		display:block;
-		font-size:14px;
+		font-size:13px;
 	}
 	&_text{
 		border:1px solid #c3c3c3;
@@ -70,7 +87,7 @@
 			-moz-appearance:none;
 			-webkit-appearance:none;
 			border:none;
-			font-size:14px;
+			font-size:13px;
 			box-sizing:border-box;
 		}
 		&.error{
