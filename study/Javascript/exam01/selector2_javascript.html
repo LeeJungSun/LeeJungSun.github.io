@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 처음으로 일치하는 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :first / .first()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막으로 일치하는 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :last / .last()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 첫번째 자식 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :first-child</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막 자식 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :last-child</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 2번째 자식 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2<div>child1</div></div>
+				<div>3<div>child1</div><div>child2</div></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :nth-child(n)</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 3번째로 일치하는 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :eq(n) / .eq(n)</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 3번째 엘리먼트 이후의 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :gt(n) / .nextAll()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 3번째 엘리먼트 이전의 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :lt(n) / .prevAll()</p>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script>
+
+//  .childNodes : 직계 자속 요소 추출 및 줄바꿈된 것도 하나의 자식으로 인식
+
+window.onload = function(){
+	var pagewrap = window.document.getElementsByClassName("exam_q");
+	var page = pagewrap[0];
+	var page2 = pagewrap[1];
+	var page3 = pagewrap[2];
+	var page4 = pagewrap[3];
+	var page5 = pagewrap[4];
+	var page6 = pagewrap[5];
+	var page7 = pagewrap[6];
+
+
+	// 처음 요소가 주석으로 되어있어 스타일이 적용되지 않음
+	var exam = page.firstChild;
+	// console.log(exam);
+	// exam.style.background = 'yellow';
+
+	var exam_01 = page.querySelectorAll('div:first-of-type');
+	for(var i=0;i<exam_01.length;i++){
+		var node = exam_01.item(i);
+			node.style.background = "yellow";
+	}
+
+	// 마지막 요소가 텍스트로 되어있어 스타일이 적용되지 않음
+	var exam2 = page2.lastChild;
+	// console.log(exam2);
+	// exam2.style.background = 'yellow';
+
+	var exam2_01 = page2.querySelectorAll('div:last-of-type');
+	for(var i=0;i<exam2_01.length;i++){
+		var node2 = exam2_01.item(i);
+			node2.style.background = "yellow";
+	}
+
+	var exam3 = page3.querySelectorAll('em:first-child, div:first-child');
+	for(var i=0;i<exam3.length;i++){
+		var node3 = exam3.item(i);
+			node3.style.background = "yellow";
+	}
+
+	var exam4 = page4.querySelectorAll('em:last-child, div:last-child');
+	for(var i=0;i<exam4.length;i++){
+		var node4 = exam4.item(i);
+			node4.style.background = "yellow";
+	}
+
+	var exam5 = page5.querySelectorAll('div:nth-child(2)');
+	for(var i=0;i<exam5.length;i++){
+		var node5 = exam5.item(i);
+			node5.style.background = "yellow";
+	}
+
+	var exam6 = page6.querySelectorAll('div:nth-child(3)');
+	for(var i=0;i<exam6.length;i++){
+		var node6 = exam6.item(i);
+			node6.style.background = "yellow";
+	}
+
+
+}
+</script>
+</body>
+</html>

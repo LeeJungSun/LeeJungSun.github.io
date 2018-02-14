@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 모든 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("*")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 태그명이 span 인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. em의 자손이면서 태그명이 span 인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 부모의 바로 아래 자식이면서 태그명이 span 인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E>F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. div의 형제 엘리먼트로 바로 다음에 나오는 p와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E+F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. div의 형제 엘리먼트로 다음에 나오는 모든 엘리먼트 span과 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E~F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 클래스명 active를 가지는 모든 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<div class="active">div</div>
+				<p class="active">p</p>
+				<span class="active">span</span>
+				<span>span</span>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E.C") E의 생략은 *.C와 동일함.</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 아이디가 active인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div id="active">div</div>
+				<div class="active">div</div>
+				<p class="active">p</p>
+				<span class="active">span</span>
+				<span>span</span>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E#I") E의 생략은 *#I와 동일함.</p>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script>
+
+//  .childNodes : 직계 자속 요소 추출 및 줄바꿈된 것도 하나의 자식으로 인식
+
+window.onload = function(){
+	var pagewrap = window.document.getElementsByClassName("exam_q");
+	var page = pagewrap[0];
+	var page2 = pagewrap[1];
+	var page3 = pagewrap[2];
+	var page4 = pagewrap[3];
+	var page5 = pagewrap[4];
+	var page6 = pagewrap[5];
+	var page7 = pagewrap[6];
+
+	var exam = page.childNodes;
+	for(var i=0;i<exam.length;i++){
+		var node = exam.item(i);
+		if(node.nodeType==1){
+			node.style.background = "yellow";
+		}
+	}
+
+	var exam2 = page2.getElementsByTagName('span');
+	for(var i=0;i<exam2.length;i++){
+		var node2 = exam2.item(i);
+			node2.style.background = "yellow";
+	}
+
+	var exam3 = page3.querySelectorAll('em span');
+	for(var i=0;i<exam3.length;i++){
+		var node3 = exam3.item(i);
+			node3.style.background = "yellow";
+	}
+
+	var exam4 = page4.querySelectorAll('.exam_q>span');
+	for(var i=0;i<exam4.length;i++){
+		var node4 = exam4.item(i);
+			node4.style.background = "yellow";
+	}
+
+	var exam5 = page5.querySelectorAll('div+p');
+	for(var i=0;i<exam5.length;i++){
+		var node5 = exam5.item(i);
+			node5.style.background = "yellow";
+	}
+
+	var exam6 = page6.querySelectorAll('div~span');
+	for(var i=0;i<exam6.length;i++){
+		var node6 = exam6.item(i);
+			node6.style.background = "yellow";
+	}
+
+	var exam7 = page7.getElementsByClassName('active');
+	for(var i=0;i<exam7.length;i++){
+		var node7 = exam7.item(i);
+			node7.style.background = "yellow";
+	}
+
+	var exam8 = window.document.getElementById("active");
+	exam8.style.background = "yellow";	
+}
+</script>
+</body>
+</html>

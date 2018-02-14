@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="css/common.css" >
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 모든 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("*")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 태그명이 span 인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. em의 자손이면서 태그명이 span 인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 부모의 바로 아래 자식이면서 태그명이 span 인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E>F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. div의 형제 엘리먼트로 바로 다음에 나오는 p와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E+F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. div의 형제 엘리먼트로 다음에 나오는 모든 엘리먼트 span과 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<p>p</p>
+				<span>span</span>
+				<em>em<span>span</span></em>
+				<span>span</span>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E~F")</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 클래스명 active를 가지는 모든 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>div</div>
+				<div class="active">div</div>
+				<p class="active">p</p>
+				<span class="active">span</span>
+				<span>span</span>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E.C") E의 생략은 *.C와 동일함.</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 아이디가 active인 엘리먼트와 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div id="active">div</div>
+				<div class="active">div</div>
+				<p class="active">p</p>
+				<span class="active">span</span>
+				<span>span</span>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) $("E#I") E의 생략은 *#I와 동일함.</p>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script>
+	$(function(){
+
+		// .children()- 직계 자식 요소만 추출, 텍스트노드 제외
+		// .find() - 전체 자식 요소 찾음
+		// .contents() - 직계 자식 요소만 추출, 텍스트 노드 포함 -> 줄바꿈된 것도 하나의 텍스트로 인식한다.
+
+		var exam01 = function(){ 
+			var $elementObject01= $('.exam_wrap:eq(0) .exam_q').find('*');
+			$elementObject01.css('background', 'pink');
+		}
+		var exam02 = function(){
+			var $elementObject02 = $('.exam_wrap:eq(1) .exam_q').find('span');
+			$elementObject02.css('background', 'pink');
+		}
+		var exam03 = function(){
+			var $elementObject03 = $('.exam_wrap:eq(2) .exam_q').find('em span');
+			$elementObject03.css('background', 'pink');
+		}
+		var exam04 = function(){
+			var $elementObject04 = $('.exam_wrap:eq(3) .exam_q').children('span');
+			$elementObject04.css('background', 'pink');
+		}
+		var exam05 = function(){
+			var $elementObject05 = $('.exam_wrap:eq(4) .exam_q').children('div + p');
+			$elementObject05.css('background', 'pink');
+		}
+		var exam06 = function(){
+			var $elementObject06 = $('.exam_wrap:eq(5) .exam_q').find('div ~ span');
+			$elementObject06.css('background', 'pink');
+		}
+		var exam07 = function(){
+			var $elementObject07 = $('.exam_wrap:eq(6) .exam_q').children('.active');
+			$elementObject07.css('background', 'pink');
+		}
+		var exam08 = function(){
+			var $elementObject08 = $('.exam_wrap:eq(7) .exam_q').children('#active');
+			$elementObject08.css('background', 'pink');
+		}
+
+		$('button').on({
+			click : function(){
+				var $index = $('button').index(this);
+				if ($index == '0'){
+					exam01();
+				} else if($index == '1'){
+					exam02();
+				} else if($index == '2'){
+					exam03();
+				} else if($index == '3'){
+					exam04();
+				} else if($index == '4'){
+					exam05();
+				} else if($index == '5'){
+					exam06();
+				} else if($index == '6'){
+					exam07();
+				} else if($index == '7'){
+					exam08();
+				}
+			}
+		})
+	})
+</script>
+</body>
+</html>

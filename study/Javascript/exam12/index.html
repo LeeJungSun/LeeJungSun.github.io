@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/railscasts.css">
+</head>
+<body>
+	<div id="wrap">
+		<div id="header">
+			<h1><span class="hlt">JS 스터디 회고</span></h1>
+			<p>2017년 05월 08일 (월) - UI개발1팀 이정선</p>
+		</div>
+		<main id="content" role="main">
+			<section>
+				<h2 class="section_title">1. jQuery / javascript</h2>
+				<div class="section_content">
+					<article class="article_area">
+						<h3 class="article_title">1) Selector</h3>
+						<div class="article_content">
+							<h4 class="article_subtitle">■ javascript</h4>
+							<div class="article_content">
+								<ul class="description">
+								<li>특정 브라우저에서 구현되지않는 선택자가 있으며, 크로스브라우징 제한이 있다.</li>
+								<li>jquery.js를 사용하지 않아도 실행이 가능하다.</li>
+								</ul>
+							</div>
+							<h4 class="article_subtitle">■ jQuery</h4>
+							<div class="article_content">
+								<ul class="description">
+								<li>모든태그를 손쉽게 접근할 수 있다.</li>
+								<li>간단하게 선택자 사용이 가능하다.</li>
+								<li>크로스브라우징 지원 폭이 크다.</li>
+								<li>jquery.js가 기본적으로 선언하고 작업이 되어야한다.</li>
+								<li>html이 먼저 읽히고 jquery가 실행이 되어야 하기 때문에 html 밑에서 작업한다 -> 성능 이슈</li>
+								</ul>
+							</div>
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : 태그 선택</h3>
+						<div class="article_content">
+							<p class="description">javascript, jQuery selector를 활용하여 태그 선택하기</p>
+							<div class="img"><img src="img/img.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>특정 브라우저에서 실행되지않는 javascript 선택자를 찾아보자</dd>
+							</dl>
+						</div>
+					</article>
+				</div>
+			</section>
+			<section>
+				<h2 class="section_title">2. 조건문</h2>
+				<div class="section_content">
+					<ul class="description">
+					<li>특정 조건 만족시 해당 구문을 실행하고 싶을때 사용하는 구문.</li>
+					<li>조건이 참이냐, 거짓이냐에 따라 문장을 실행하거나 실행하지 않을 수 있음.</li>
+					</ul>
+					<article class="article_area">
+						<h3 class="article_title">1) if</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>if 단독문을 사용할 경우 참일때만 실행한다.</li>
+							<li>else if / else 로 분기처리하여 다중 조건문으로 사용 가능하다.</li>
+							</ul>
+							<pre><code class="js">$(function(){
+   var a = 3;
+   if (a === 1) {
+      alert('aaa');
+   } else if (a === 2) {
+      alert('bbb');
+   } else {
+      alert('ccc');
+   }
+});
+</code></pre>							
+						</div>
+						<h3 class="article_title">2) switch</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>break문 : 반드시 넣어 주어야한다.(넣지 않는 경우 하단 조건문까지 실행)</li>
+							<li>default문 : 해당 사항이 없을때 기본값으로 실행되며, 생략가능</li>
+							<li></li>
+							</ul>
+							<pre><code class="js">$(function(){
+   var a = 21;
+   switch (a) {
+      case 10 :
+         alert('10');
+         break;
+      case 21 :
+         alert('21');
+         break;
+      default :
+         alert('default');
+         break;
+   }
+});
+</code></pre>
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : 박스 활성화</h3>
+						<div class="article_content">
+							<p class="description">각 조건에 맞추어 박스들을 버튼 누를때 마다 활성화 시킨다.</p>
+							<div class="img"><img src="img/img01.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>순차적으로 index를 증감하여 구현</dd>
+							<dd>index 개념을 이해하기 + oldindex로 활용</dd>
+							</dl>
+						</div>
+					</article>
+				</div>			
+			</section>
+			<section>
+				<h2 class="section_title">3. 반복문</h2>
+				<div class="section_content">
+					<p class="description">특정 구문을 반복적으로 실행하고자 할 때 사용하는 구문</p>
+					<article class="article_area">
+						<h3 class="article_title">1) for</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>특정 조건이 거짓으로 판별될 때까지 반복 실행된다.</li>
+							<li>조건관련된 값은 초기값에 선언해준다. (성능이슈)</li>
+							</ul>
+							<pre><code class="js">$(function(){
+   for (var i = 0 ; i < 9 ; i++) {
+      alert('aaa');
+   }
+});
+</code></pre>	
+						</div>
+						<h3 class="article_title">2) while</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>조건이 참일 경우 문장을 반복 실행하며, 해당 조건문이 거짓으로 판별된다면 실행을 멈춘 후 다음 문장으로 넘어간다.</li>
+							</ul>
+							<pre><code class="js">$(function(){
+   var a = 0;
+   var b = 0;
+
+   while (a < 3) {
+      a++;
+      b += a;
+   }
+});
+</code></pre>	
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : 구구단, 태그 생성</h3>
+						<div class="article_content">
+							<p class="description">반복문을 활용하여 구구단 및 태그 만들기</p>
+							<div class="img"><img src="img/img02.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>for/while문을 사용하여 반복적인 구문 활용 이해하기</dd>
+							<dd>.push, .innerHTML을 사용한 태그 삽입</dd>
+							</dl>
+						</div>
+					</article>
+				</div>
+			</section>
+			<section>
+				<h2 class="section_title">4. 함수 및 객체</h2>
+				<div class="section_content">
+					<article class="article_area">
+						<h3 class="article_title">1) 함수</h3>
+						<div class="article_content">
+							<p class="description">하나의 로직을 재실행하여 코드의 재사용성을 높여준다.</p>
+							<h4 class="article_subtitle">■ 익명함수</h4>
+							<div class="article_content">
+								<p class="description">호출을 먼저해도 불러와지지 않음</p>
+								<pre><code class="js">$(function(){
+   abc(); //호출
+   var abc = funciton(){
+    
+   }
+});
+</code></pre>	
+								
+							</div>
+							<h4 class="article_subtitle">■ 선언적함수</h4>
+							<div class="article_content">
+								<p class="description">호출을 먼저해도 호출이 되지만, 호이스팅이 발생하므로 가급적 사용하지 않는다.</p>
+								<pre><code class="js">$(function(){
+   def(); //호출
+   function def(){
+    
+   }
+});
+</code></pre>	
+							</div>
+							<h4 class="article_subtitle">■ 즉시실행함수</h4>
+							<div class="article_content">
+								<p class="description">호출시 한번만 실행하고 버려지는 함수로 충돌이 방지된다.</p>
+								<pre><code class="js">(function (win, $){ //즉시 실행 구문
+    $(function(){
+
+    });
+})(window, window.jQuery)
+</code></pre>	
+							</div>
+						</div>
+						<h3 class="article_title">2) 객체지향 프로그래밍</h3>
+						<div class="article_content">
+							<pre><code class="js">(function (win, $){ //즉시 실행 구문
+   'use strict';
+   win.examProject = win.examProject || {};
+   win.examProject.common = win.examProject.common || {};
+
+   var UTIL = win.examProject.common.util;
+
+   win.examProject.layerPopup = function () {
+      this.init();
+   };
+
+   win.examProject.layerPopup.prototype = {
+      init : function () {
+         this.setElements();
+         this.bindEvents();
+      },
+      setElements : function () {
+         this.btn = $('.btn');
+      },
+      bindEvents : function () {
+         this.btn.on('click', $.proxy(this.viewFunc, this));
+      },
+      viewFunc : function (e) {
+         $(e.currentTarget).parent().addClass('active');
+      }
+   }
+   $(function () {
+        win.examLayerPopup = new win.examProject.layerPopup();
+    });
+})(window, window.jQuery)
+</code></pre>
+						</div>
+					</article>
+				</div>
+			</section>
+			<section>
+				<h2 class="section_title">5. 배열</h2>
+				<div class="section_content">
+					<ul class="description">
+					<li>연관된 데이터를 모아서 통으로 관리하기 위해서 사용하는 데이터 타입으로 여러 개의 데이터를 하나의 변수에 저장하기 위한 것</li>
+					<li>숫자, 문자열, 불린, 함수, 객체, 배열 모두 하나의 배열로 구성이 가능하다.
+						<p class="ex_code">var arrayObj2 = [273, 'string', true, function() {}, {}, [273, 103]];</p>
+					</li>
+					</ul>
+					<article class="article_area">
+						<h3 class="article_title">1) 배열 생성</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>대괄호를 사용하여 생성 후 쉼표로 구분하여 배열한다.</li>
+							<li>var arrayObj = []; 리터럴 방식으로 사용하는 것을 권장</li>
+							</ul>
+							<pre><code class="js">var arrayObj = ['사과', '오렌지', '수박']</code></pre>	
+						</div>
+						<h3 class="article_title">2) 배열 추가</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>순차적으로 배열을 추가하기위해 push를 활용하여 배열을 추가하는것을 권장.</li>
+							</ul>
+							<pre><code class="js">var arrayObj = [];
+array[0] = 데이터1;
+array[1] = 데이터2;
+
+// push로 넣기
+var arrayObj2 = [];
+arrayObj2.push(데이터1);
+arrayObj2.push(데이터2);
+</code></pre>	
+						</div>
+						<h3 class="article_title">3) 배열 메소드</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>join - 문자열로 리턴</li>
+							<li>reverse - 거꾸로 변경</li>
+							<li>sort - 배열 정렬</li>
+							<li>concat - 배열 이어 붙임</li>
+							<li>slice - 부분 배열 반환</li>
+							<li>splice - 삭제/추가</li>
+							<li>push, pop - 맨뒤 추가/삭제</li>
+							<li>shift, unshift - 맨앞 추가/삭제</li>
+							</ul>
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : 라인플레이 랜덤 아바타</h3>
+						<div class="article_content">
+							<ul class="description">
+							<li>라인플레이 아바타 5개 랜덤 노출</li>
+							<li>총 5개의 이미지가 한번씩 노출되며, 5개가 모두 노출된 경우 다시 처음부터 5개 랜덤 노출</li>
+							<li>다시 처음부터 랜덤으로 시작할때에, 바로 전에 나왔던 이미지와 중복이 되지 않도록 한다.</li>
+							</ul>
+							<div class="img"><img src="img/img03.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>splice를 사용하여 배열을 삭제</dd>
+							<dd>index 순서를 헷갈리지 말아야함.</dd>
+							</dl>
+						</div>
+					</article>
+				</div>
+			</section>
+			<section>
+				<h2 class="section_title">6. 그 외 예제</h2>
+				<div class="section_content">
+					<ul class="description">
+					<li>레이어팝업 : outside event</li>
+					<li>tab/slide : index/hashChange</li>
+					<li>checkbox/radio/selectbox : 플러그인화</li>
+					<li>anchor navigation/sticky menu : scrollTop</li>
+					</ul>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : 레이어팝업</h3>
+						<div class="article_content">
+							<p class="description">Outside Event를 활용하여 요소 바깥을 클릭하였을때 레이어가 닫히게끔 만들기 (+ 키보드 tab focus 접근성까지 적용)</p>
+							</ul>
+							<div class="img"><img src="img/img04.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>키보드 포커스 이동을 위한 빈태그를 레이어 팝업 전 후에 생성</dd>
+							<dd>시간차로 스크립트가 실행될 경우 setTimeout을 활용</dd>
+							<dd>keycord를 활용하여 shift가 눌린 경우 안눌린 경우 체크 (파이어폭스 작동 안되므로 e.which 같이 사용)</dd>
+							</dl>
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : Tab / Slide</h3>
+						<div class="article_content">
+							<p class="description">hashChange를 활용하여 동일한 구조의 tab/slide 만들기</p>
+							</ul>
+							<div class="img"><img src="img/img05.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>.location.hash 와 UIO의 id값을 매칭하여 해당 tab/slide를 활성화시킨다.</dd>
+							<dd>브라우저 새로고침되어도 활성화된 영역이 고정 노출되도록 적용</dd>
+							</dl>
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : Checkbox / Radio / Selectbox</h3>
+						<div class="article_content">
+							<p class="description">플러그인화 하여 만들기</p>
+							</ul>
+							<div class="img"><img src="img/img06.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>checkbox/radio/selectbox의 변환 체크는 click으로 체크하지말고 change로 사용한다.</dd>
+							<dd>prop -> 불린으로 반영(체크가 되었느냐 안되었느냐로 체크) -> 명확함<br>attr -> 문자열로 받아와서 오타가 생길 경우 버그가 생길 수 있음</dd>
+							</dl>
+							<pre><code class="js">// 플러그인화
+
+var selectCustom = function (obj) { // new로 호출하면 객체로 전환이 됨
+   this.obj = obj; //this는 selectCustom을 바라봄
+   this.init(); // 객체를 호출
+}
+selectCustom.prototype = { //window.studyPj로 변환해서 사용함
+
+}
+$.fn.selectCustomPlugin = function () { //fn은 jquery에서 제공해주는 구문임
+   for (var i = 0, max = this.length; i < max; i++){
+      new selectCustom(this.eq(i)); // 함수만 호출
+   }
+}
+$(function () {
+   $('.select_box').selectCustomPlugin();
+})
+</code></pre>	
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : Anchor navigation</h3>
+						<div class="article_content">
+							<p class="description">특정 컨텐츠 영역에 위치하였을때 메뉴 활성화 및 top버튼 만들기</p>
+							</ul>
+							<div class="img"><img src="img/img07.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>scrollTop 사용하여 스크롤의 위치 파악하여 제어</dd>
+							<dd>컨텐츠 id값과 navigation 메뉴의 id값을 서로 매칭 시킴</dd>
+							<dd>스크롤이 끝났을 때 구문이 한번만 실행되도록 clearTimeout()을 사용한다.</dd>
+							</dl>
+						</div>
+					</article>
+					<article class="article_area type2">
+						<h3 class="article_title">■ 활용 예제 : Sticky menu</h3>
+						<div class="article_content">
+							<p class="description">특정 UIO가 브라우저 상단에 위치하였을때 상단에 고정되도록 만들기</p>
+							</ul>
+							<div class="img"><img src="img/img08.jpg" alt=""></div>
+							<dl class="notice">
+							<dt>Keypoint</dt>
+							<dd>scrollTop 사용하여 스크롤의 위치 파악하여 제어</dd>
+							<dd>.offset() 활용하여 좌표를 찾아준다.</dd>
+							<dd>sticky되는 순간 특정 클래스명을 추가한다. (css 적용 필요)</dd>
+							</dl>
+						</div>
+					</article>
+				</div>
+			</section>
+
+		</main>
+	</div>
+	<script src="../js/libs/jquery-1.12.4.min.js"></script>
+	<script src="../js/libs/highlight.pack.js" type="text/javascript"></script>
+	<script>
+	hljs.initHighlightingOnLoad();
+	$(document).ready(function() {
+		$('pre code').each(function(i, block) {
+			hljs.highlightBlock(block);
+		});
+	});
+	</script>
+</body>
+</html>

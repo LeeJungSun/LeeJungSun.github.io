@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 처음으로 일치하는 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :first / .first()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막으로 일치하는 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :last / .last()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 첫번째 자식 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :first-child</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막 자식 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1<em>em</em></div>
+				<div>2<em>em</em></div>
+				<div>3<em>em</em></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :last-child</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 2번째 자식 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2<div>child1</div></div>
+				<div>3<div>child1</div><div>child2</div></div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :nth-child(n)</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 3번째로 일치하는 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :eq(n) / .eq(n)</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 3번째 엘리먼트 이후의 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :gt(n) / .nextAll()</p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 3번째 엘리먼트 이전의 엘리먼트를 반환하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+			</div>
+			<button type="button">view</button>
+			<p>Tip) :lt(n) / .prevAll()</p>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script>
+	$(function(){
+
+		// *자식 노드 찾기
+		// 1. 모든 자식 노드 찾기
+		// 	1) .children() - 직계 자식 요소만 추출, 텍스트노드 제외
+		// 	2) .contents() - 직계 자식 요소만 추출, 텍스트노트 포함(줄바꿈된 것도 하나의 텍스트로 인식!!)
+		// 	3) .find() - 전체 자식 요소중 추출
+		// 2. 첫번째 자식 노드 찾기
+		// 	1) $('body').contents('n:first') - 전체 동일 요소 중 가장 첫번째만 (n:first-of-type 과 비슷)
+		// 	2) $('body').contents().first()
+		// 	3) $('body').contents('n:first-child') - 동일 요소 중 모든 첫번째만
+		// 	4) $('body').contents().eq(0) - 0부터 첫번째로 인식함, 특정 순서 인식 가능
+		// 	5) $('body').contents('n:eq(0)')
+		// 	6) $('body').contents('n:nth-child(1)')  - 해당 자식 요소중 첫번째 순서 번호를 넣어줘야함.
+		// 3. 마지막 자식 노드 찾기
+		// 	1) $('body').contents('n:last') - 전체 동일 요소 중 가장 마지막만 (n:first-of-type 과 비슷)
+		// 	2) $('body').contents().last()
+		// 	3) $('body').contents('n:last-child') - 동일 요소 중 모든 마지막째만
+		// 	4) $('body').contents().eq(9) - 해당 자식 요소중 마지막 순서 번호를 넣어줘야함.
+		// 	5) $('body').contents('n:eq(9)')
+		// 	6) $('body').contents('n:nth-child(9)') - 해당 자식 요소중 마지막 순서 번호를 넣어줘야함.
+
+		// * 노드 모두 선택
+		// 1. 특정노드 이전 노드 모두 선택
+		// 	1) .prevAll - $(n:nth-child(3)).prevAll() -> 앞에 셀렉터가 들어가야 원하는 번째대로 선택됨
+		// 	2) :lt(n) - $('div:lt(n)')
+		// 2. 특정 노드 다음 노드 모두 선택
+		// 	1) .nextAll - $(n:nth-child(3)).nextAll() -> 앞에 셀렉터가 들어가야 원하는 번째대로 선택됨
+		// 	2) :gt(n) - $('div:gt(n)')
+
+		// * 형제 노드 선택
+		// 1) .sibling()
+		// 	-> A.sibling(B) : A의 형제요소인 B를 찾음
+
+
+		// * 노드 생성
+		// 1) .append() - 자식 요소중 첫번째로 들어감
+		// 2) .prepend() - 자식 요소중 마지막번째로 들어감
+		// 3) .after() - 형제요소로 바로 다음 요소로 들어감
+		// 4) .before() - 형제요소로 바로 이전 요소로 들어감
+		// 5) html(value) - 지정한 요소 내부에 새로운 html문자열(value)을 추가 -> 태그 통째로!
+		// 6) text(value) – 지정한 요소 내부에 새로운 text문자열(value)을 추가
+		// 	-> 기존 문자열에서 해당 문자열로 변경됨
+		// 	-> 기존 문자열을 유지한채 텍스트 추가만 하고싶은거라면 .append또는 .prepend사용
+		// 7) val() - 인풋에 정의된 value값
+		// 8) .clone() - 선택된 요소의 모든 자식요소들과 텍스트 요소를 복사함
+			
+		// 	*동일한 기능을 수행하지만, 삽입될 내용과 타겟의 위치가 다른것
+		// 	#.append()와 .appendTo() / .prepend()와 .prependTo()
+		// 		A.append(B) - A에 B를 추가
+		// 		A.appendTo(B) – B에 A를 추가
+
+		// 		$('#content').append('내용추가') 는 가능하나
+		// 		$('내용추가').appendTo('#content') 는 불가함
+		//		$('<p>내용추가</p>').appendTo('#content')는 가능
+		// 			=> 단순 text 문자열만 추가하는건 안되나?
+
+		// 	# .after()와 .insertAfter() / .before()와 .insertBefore()
+		// 		A.after(B) – A 뒤에 B를 추가
+		// 		A.insertAfter(B) – B 뒤에 A를 추가
+
+		// * 노드 제거
+		// 1) .remove() - 지정한 요소를 포함한 하위 요소 모두 제거 및 요소와 관련된 이벤트, 데이터 모두 제거
+		// 	A.remove() - A 노드를 제거
+		// 2) .detach() – 지정한 요소를 포함 하위 요소 모두 제거
+		// 3) .empty() – 지정한 요소의 하위 요소를 제거
+
+
+		var exam01 = function(){ 
+			var $elementObject01= $('.exam_wrap:eq(0) .exam_q').children('div').first();
+			$elementObject01.css('background', 'pink');
+		}
+		var exam02 = function(){
+			var $elementObject02 = $('.exam_wrap:eq(1) .exam_q').children('div').last();
+			$elementObject02.css('background', 'pink');
+		}
+		var exam03 = function(){
+			var $elementObject03 = $('.exam_wrap:eq(2) .exam_q').find('div em:first-child');
+			$elementObject03.css('background', 'pink');
+		}
+		var exam04 = function(){
+			var $elementObject04 = $('.exam_wrap:eq(3) .exam_q').find('div em:last-child');
+			$elementObject04.css('background', 'pink');
+		}
+		var exam05 = function(){
+			var $elementObject05 = $('.exam_wrap:eq(4) .exam_q').find('div:nth-child(2)');
+			$elementObject05.css('background', 'pink');
+		}
+		var exam06 = function(){
+			var $elementObject06 = $('.exam_wrap:eq(5) .exam_q').find('div').eq(2);
+			$elementObject06.css('background', 'pink');
+		}
+		var exam07 = function(){
+			var $elementObject07 = $('.exam_wrap:eq(6) .exam_q').find('div:gt(2)');
+			$elementObject07.css('background', 'pink');
+		}
+		var exam08 = function(){
+			var $elementObject08 = $('.exam_wrap:eq(7) .exam_q').find('div:nth-child(3)').prevAll();
+			$elementObject08.css('background', 'pink');
+		}
+
+		$('button').on({
+			click : function(){
+				var $index = $('button').index(this);
+				if ($index == '0'){
+					exam01();
+				} else if($index == '1'){
+					exam02();
+				} else if($index == '2'){
+					exam03();
+				} else if($index == '3'){
+					exam04();
+				} else if($index == '4'){
+					exam05();
+				} else if($index == '5'){
+					exam06();
+				} else if($index == '6'){
+					exam07();
+				} else if($index == '7'){
+					exam08();
+				}
+			}
+		})
+	})
+</script>
+</body>
+</html>

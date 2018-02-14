@@ -1,0 +1,56 @@
+2017 04 10(월)
+
+*과제 : checkbox, radio, selectbox까지 플러그인으로 월요일까지 제출
+
+checkbox/radio/selectbox -> 변환체크는 click으로 체크하지말고 change로 사용
+prop -> 불린으로 반영(체크가 되었느냐 안되었느냐로 체크) -> 명확함
+attr -> 문자열로 받아와서 오타가 생길 경우 버그가 생길 수 있음
+
+var arrayName = {
+	init : function () { // 메소드(호출 값이 있는 것)
+		$(win) // 윈도우 자체도 객체
+		console.log(window) //윈도우에서 사용할 수 있는 메소드값을 확인 가능 함
+		console.log(Array.prototype) //배열에서 사용할 수 있는 메소드값을 확인 가능 함
+	}
+};
+window.studyPj = window.studyPj || {}; // window.studyPj값이 있으면 
+window.studyPj.arrayName = {
+	// 윈도우 객체의 변수로 삽입 studyPj라는 객체에 arrayName객체를 편입 시킴
+}
+
+$(function () {
+	arrayName.init();
+});
+
+*생성자함수
+var selectCustom = function (obj) {
+	return{
+
+	}
+}
+$(function () {
+	new -> this.오브젝트 함수를 따로 생성해줌
+	var select1 = new selectCusthom($('.select_box').eq(0));
+	select.init(); // 계속 호출해야함
+
+	$('.select_box').selectCustomPlugin();
+})
+
+*플러그인
+var selectCustom = function (obj) { // new로 호출하면 객체로 전환이 됨
+	this.obj = obj; //this는 selectCustom을 바라봄
+	this.init(); // 객체를 호출
+}
+selectCustom.prototype = { //window.studyPj로 변환해서 사용함
+
+}
+$.fn.selectCustomPlugin = function () { //fn은 jquery에서 제공해주는 구문임
+	for (var i = 0, max = this.length; i < max; i++){
+		new selectCustom(this.eq(i)); // 함수만 호출
+	}
+}
+$(function () {
+	$('.select_box').selectCustomPlugin();
+})
+
+

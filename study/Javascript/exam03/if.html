@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="common.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 처음부터 순서대로 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+					<li>eight</li>
+				</ul>
+			</div>
+			<button type="button">plus</button>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막부터 역순대로 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+				</ul>
+			</div>
+			<button type="button">minus</button>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 순서대로 일치하게 하시고, 바로 전에 일치됐던 엘리먼트는 색을 지우시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li style="background-color:red">one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+					<li>eight</li>
+					<li>nine</li>
+				</ul>
+			</div>
+			<button type="button" class="btn_plus">plus</button>
+			<button type="button" class="btn_minus">minus</button>
+		</div>
+      <div class="exam_wrap">
+         <h1>Q. 순서대로 일치하게 하시고, 바로 전에 일치됐던 엘리먼트는 색을 지우시오.(클래스 제어)</h1>
+         <div class="exam_q"><!-- 부모 -->
+            <ul>
+            <li class="active">one</li>
+            <li>two</li>
+            <li>three</li>
+            <li>four</li>
+            <li>five</li>
+            <li>six</li>
+            <li>seven</li>
+            <li>eight</li>
+            <li>nine</li>
+            </ul>
+         </div>
+         <button type="button" class="btn_plus">plus</button>
+			<button type="button" class="btn_minus">minus</button>
+      </div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script>
+	// 1. exam2 에 진행했던 산출물로 가지고, if 문을 추가해서 exam3 으로 만들기 (exam2 는 그대로 놔두세요_히스토리로 참고합니다.)
+	// 2. exam3 point 통독 (속독 빼고 아무거나 하세요.)
+	// 3. https://oscarotero.com/jquery/ 의 SELECTORS / ATTRIBUTES,CSS / MANIPULATION / TRAVERSING / EVENTS / EFFECTS 모두 확인하기. (페이지 내에 예제가 있는데, 예제까지 필수 확인)
+	// 4. 3번중 이해가 안되는 것만 리스트업하기
+	// 제출 : 3/20 10:00
+	
+	$(function(){
+		var  container = $('.exam_wrap');
+
+		var examFunc01 = function () {
+			var examWrap = container.eq(0),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 color = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+				 colorCnt = 0,
+				 colorIndex = color[colorCnt],
+				 index = 0;				 
+
+			var colorReset = function() {
+				colorCnt ++;
+				colorIndex = color[colorCnt];
+				if(colorCnt >= color.length){
+					colorCnt = 0;
+					colorIndex = color[colorCnt]
+				}
+			}
+			var btnEvent = function () {
+				examList.eq(index).css('background', colorIndex);
+				index++;
+				if(index >= examList.length){
+					index = 0;
+					colorReset();
+				}
+			}
+			examButton.on('click', btnEvent);
+		}
+		examFunc01();
+
+		var examFunc02 = function() {
+			var examWrap = container.eq(1),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 listIndex = examList.length - 1;
+				 color = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+				 colorCnt = 0,
+				 colorIndex = color[colorCnt],
+				 index = 0;
+
+			var colorReset = function() {
+				colorCnt ++;
+				colorIndex = color[colorCnt];
+				if(colorCnt >= color.length){
+					colorCnt = 0;
+					colorIndex = color[colorCnt]
+				}
+			}
+			var btnEvent = function() {	
+				examList.eq(listIndex).css('background', colorIndex);
+				// console.log(listIndex);
+				listIndex--;
+				// console.log(listIndex);
+				if(listIndex < 0){
+					listIndex = examList.length - 1;
+					colorReset();
+				}
+				// console.log(listIndex)
+			}
+			examButton.on('click', btnEvent);
+		}
+		examFunc02();
+
+		var examFunc03 = function() {
+			var examWrap = container.eq(2),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 color = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+				 colorCnt = 0,
+				 colorIndex = color[colorCnt],
+				 index = 0,
+				 oldIndex = index;
+				 // console.log(oldIndex);
+
+			 var colorReset = function() {
+			 	colorCnt ++;
+			 	colorIndex = color[colorCnt];
+			 	if(colorCnt >= color.length){
+			 		colorCnt = 0,
+			 		colorIndex = color[colorCnt];
+			 	}
+			 }
+			 var btnEvent = function() {
+			 	if($(this).hasClass('btn_plus')){
+			 		index++;
+			 		if(index >= examList.length){
+			 			index = 0;
+			 			colorReset();
+			 		};
+			 	} else if($(this).hasClass('btn_minus')){
+			 		index--;
+			 		if(index < 0){
+			 			index = examList.length - 1;
+			 			colorReset();
+			 		}
+			 	};
+			 	// console.log(oldIndex);
+			 	// console.log(index);
+			 	examList.eq(oldIndex).css('background', '');
+			 	examList.eq(index).css('background', colorIndex);
+			 	oldIndex = index;
+			 }
+			 examButton.on('click', btnEvent);
+		}
+		examFunc03();
+
+		var examFunc04 = function() {
+			var examWrap = container.eq(3),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 index = 0,
+				 oldIndex = index;
+
+			 var btnEvent = function() {
+			 	if($(this).hasClass('btn_plus')){
+			 		index++;
+			 		if(index >= examList.length){
+			 			index = 0;
+			 		};
+			 	} else if($(this).hasClass('btn_minus')){
+			 		index--;
+			 		if(index < 0){
+			 			index = examList.length - 1;
+			 		}
+			 	};
+			 	examList.eq(oldIndex).removeClass('active');
+			 	examList.eq(index).addClass('active');
+			 	oldIndex = index;
+			 }
+			 examButton.on('click', btnEvent);
+		}
+		examFunc04();
+
+
+	})
+</script>
+</body>
+</html>

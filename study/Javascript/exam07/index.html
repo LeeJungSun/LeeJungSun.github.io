@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="common.css">
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script src="../js/libs/jquery.ba-outside-events.min.js"></script>
+<script src="common.js"></script>
+</head>
+<body>
+<div id="wrapper">
+	<button type="button" class="btn_layer js-btn_layer"><span>레이어 열기 버튼</span></button>
+	<div class="layer_wrap js-layer_area">
+		<span class="layer_dimmed">&nbsp;</span>
+		<div class="layer_area">
+			<ul class="lst">
+			<li>
+				<label for="input01">내용1</label>
+				<span class="input_text"><input type="text" id="input01"></span>
+			</li>
+			<li>
+				<label for="input02">내용2</label>
+				<span class="input_text"><input type="text" id="input02"></span>
+			</li>
+			<li>
+				<label for="input03">내용3</label>
+				<span class="input_select">
+					<select id="input03">
+					<option value="">aaa</option>
+					</select>
+				</span>
+			</li>
+			<li>
+				<label for="input04">내용4</label>
+				<span class="input_text"><input type="text" id="input04"></span>
+			</li>
+			</ul>
+			<ul class="lst2">
+			<li><input type="checkbox" id="input05"><label for="input05">체크박스</label></li>
+			<li><a href="#" class="link">링크영역</a></li>
+			</ul>
+			<button class="btn_layer_close"><span>레이어<br>닫기</span></button>
+		</div>
+	</div>
+</div>
+</body>
+</html>

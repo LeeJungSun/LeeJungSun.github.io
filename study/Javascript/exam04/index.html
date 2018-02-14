@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="common.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<style>
+	.exam_q{padding:10px;background:#eee}
+</style>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+	</div>
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 5개의 input 중 짝수는 text / 홀수는 checkbox 를 만들어보기 (태그 노출)</h1>
+			<div class="exam_q">
+				
+			</div>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 구구단 7단을 반복문을 이용해 만들어보기 (문자 노출)</h1>
+			<div class="exam_q">
+
+			</div>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 반복문 for문을 이용한 구구단</h1>
+			<div class="exam_q">
+				
+			</div>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 반복문 while문을 이용한 구구단</h1>
+			<div class="exam_q">
+				
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+	</div>
+</div>
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script>
+	// 1. 5개의 input 중 짝수는 text / 홀수는 checkbox 를 만들어보기
+	// 2. 구구단 7단을 반복문을 이용해 만들어보기
+	// 3. 반복문 for/while 문을 이용해 모든 구구단 만들어보기
+
+	// 1번은 태그가 노출되면 되고, 2번은 문자가 노출되게 해주세요
+
+	
+	$(function () {
+		var container = $('.exam_wrap');
+
+		var examFunc01 = function(){
+			var examWrap = container.eq(0),
+				 exambox = examWrap.find('.exam_q'),
+				 tagPush = [];
+
+			for(var i = 1 ; i < 6 ; i++){
+				tagPush.push('<div>');
+					// console.log(i%2)
+					if(i%2 === 0){ // 나머지값이 0인 경우 짝수
+						tagPush.push('<input type="text"></input>')
+					} else {
+						tagPush.push('<input type="checkbox"></input>')
+					}
+				tagPush.push('</div>');
+			}
+			exambox.get(0).innerHTML = tagPush.join('');
+
+		}
+		examFunc01();
+
+		var examFunc02 = function(){
+			var examWrap = container.eq(1),
+				 exambox = examWrap.find('.exam_q'),
+				 tagPush = [],
+				 i = 7;
+
+			tagPush.push('<div>')
+			tagPush.push('<strong>' + i + '단' + '</strong>')
+			for(var a = 1 ; a < 10 ; a++){
+				tagPush.push(i+' x '+a+' = '+i*a+'<br>')
+			}
+			tagPush.push('</div>')
+			exambox.get(0).innerHTML = tagPush.join('');
+			exambox.find('div').addClass('box');
+		}
+		examFunc02();
+
+		var examFunc03 = function(){
+			var examWrap = container.eq(2),
+				 exambox = examWrap.find('.exam_q'),
+				 tagPush = [];
+
+			for (var i = 2 ; i < 10 ; i++) {
+				tagPush.push('<div>')
+				tagPush.push('<strong>' + i + '단' + '</strong>')
+				for(var a = 1 ; a < 10 ; a++){
+					tagPush.push(i+' x '+a+' = '+i*a+'<br>')
+					// console.log(i*a)
+				}
+				tagPush.push('</div>')
+			}
+			exambox.get(0).innerHTML = tagPush.join('');
+			exambox.find('div').addClass('box');
+		}
+		examFunc03();
+
+		var examFunc04 = function(){
+			var examWrap = container.eq(3),
+				 exambox = examWrap.find('.exam_q'),
+				 tagPush = [];
+
+			i = 2;
+			while(i < 10){
+				// console.log(i);
+				tagPush.push('<div>');
+				tagPush.push('<strong>' + i + '단' + '</strong>');
+				a = 1;
+				while(a < 10){
+					// console.log(a)
+					tagPush.push(i+' x '+a+' = '+i*a+'<br>')
+					a++;
+				}
+				tagPush.push('</div>');
+				i++;
+			}
+			exambox.get(0).innerHTML = tagPush.join('');
+			exambox.find('div').addClass('box');
+		}
+		examFunc04();
+		
+	});
+</script>
+</body>
+</html>

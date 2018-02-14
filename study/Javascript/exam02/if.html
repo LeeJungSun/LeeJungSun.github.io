@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<link rel="stylesheet" href="common.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 처음부터 순서대로 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+					<li>eight</li>
+				</ul>
+			</div>
+			<button type="button">plus</button>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 마지막부터 역순대로 일치하게 하시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+				</ul>
+			</div>
+			<button type="button">minus</button>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 순서대로 일치하게 하시고, 바로 전에 일치됐던 엘리먼트는 색을 지우시오.</h1>
+			<div class="exam_q"><!-- 부모 -->
+				<ul>
+					<li style="background-color:yellow">one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>four</li>
+					<li>five</li>
+					<li>six</li>
+					<li>seven</li>
+					<li>eight</li>
+					<li>nine</li>
+				</ul>
+			</div>
+			<button type="button" class="btn_plus">plus</button>
+			<button type="button" class="btn_minus">minus</button>
+		</div>
+        <div class="exam_wrap">
+            <h1>Q. 순서대로 일치하게 하시고, 바로 전에 일치됐던 엘리먼트는 색을 지우시오.(클래스 제어)</h1>
+            <div class="exam_q"><!-- 부모 -->
+                <ul>
+                    <li class="active">one</li>
+                    <li>two</li>
+                    <li>three</li>
+                    <li>four</li>
+                    <li>five</li>
+                    <li>six</li>
+                    <li>seven</li>
+                    <li>eight</li>
+                    <li>nine</li>
+                </ul>
+            </div>
+            <button type="button" class="btn_plus">plus</button>
+		<button type="button" class="btn_minus">minus</button>
+        </div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script>
+	$(function(){
+		var index = 0,
+			 container = $('.exam_wrap');
+
+		var examFunc01 = function () {
+			var examWrap = container.eq(0),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li');
+			var colorEvent = function(){
+				examList.eq(index).css('background', 'yellow');
+				index ++;
+			}
+			examButton.on('click', colorEvent);
+		};
+		examFunc01();
+
+
+		var examFunc02 = function () {
+			var examWrap = container.eq(1),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 indexLength = examList.length - 1;
+			var colorEvent = function(){
+				examList.eq(indexLength).css('background', 'yellow');
+				indexLength = indexLength - 1;	
+			}
+			examButton.on('click', colorEvent);
+		};
+		examFunc02();
+
+		var examFunc03 = function () {
+			var examWrap = container.eq(2),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 index = 0,
+				 indexLength = examList.length;
+
+			var btnEvent = function () {
+				if ($(this).hasClass('btn_plus')) {
+					index ++;
+					examList.eq(index).css('background', 'yellow');
+					examList.eq(index - 1).css('background', 'none');
+
+				} else if($(this).hasClass('btn_minus')) {
+					index --;
+					examList.eq(index + 1).css('background', 'none');
+					examList.eq(index).css('background', 'yellow');
+				}
+			}
+			examButton.on('click', btnEvent);
+		};
+		examFunc03();
+
+		var examFunc04 = function () {
+			var examWrap = container.eq(3),
+				 examButton = examWrap.find('button'),
+				 examList = examWrap.find('li'),
+				 index = 0,
+				 indexLength = examList.length;
+
+			var btnEvent = function () {
+				if ($(this).hasClass('btn_plus')) {
+					index ++;
+					examList.eq(index).addClass('active');
+					examList.eq(index - 1).removeClass('active');
+
+				} else if($(this).hasClass('btn_minus')) {
+					index --;
+					examList.eq(index + 1).removeClass('active');
+					examList.eq(index).addClass('active');
+				}
+			}
+			examButton.on('click', btnEvent);
+		};
+		examFunc04();
+
+	})
+</script>
+</body>
+</html>

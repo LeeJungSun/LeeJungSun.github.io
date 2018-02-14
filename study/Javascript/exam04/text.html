@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+    <tbody id="data_tbody">
+    <tr>
+    <td>data1</td>
+    </tr>
+    <tr>
+    <td>data2</td>
+    </tr>
+    <tr>
+    <td>data3</td>
+    </tr>
+    <tr>
+    <td>data4</td>
+    </tr>
+    <tr>
+    <td>data5</td>
+    </tr>
+    </tbody>
+    </table>
+</body>
+<script src="../js/libs/jquery-1.9.1.js"></script>
+<script>
+    $(function(){
+        // for, 배열
+        var arrayObj = [['data1', 'data2', 'attribute2', 'attribute1',  'attribute20'], ['attribute19', 'data1', 'data2', 'attribute2', 'attribute1'],  ['attribute20', 'attribute19', 'data1', 'data2', 'attribute2'], ['attribute1',  'attribute20', 'attribute19', 'data1', 'data2']];
+        var tagPush = ''; // 문자열로 활용 하겠다 문자열을 담겠다 ( 숫자는 계산이되고 문자는 계속 추가가 됨, 개행도 가)
+        for (var i = 0, max = arrayObj.length; i < max ; i++){   
+                tagPush += '<tr>';
+                for (var td = 0, tmax = 5; td < tmax; td++){
+                     tagPush += '<td>' + arrayObj[i][td] + '</td>';
+                }
+                tagPush += '</tr>';
+            }
+        $('#data_tbody').html(tagPush);
+        $('#data_tbody').get(0).innerHTML = tagPush; // .get(0) 메소드를 붙이면 자바스크립트 선택자를 제이쿼리에서 사용이 가능하다. .html보다 해당 구문이 더 빠르다는 이야기가 있음
+
+
+        // 객체 = 오브젝트 : 속성과 값을 담을수 있는 구문 (유지보수에 좋음) - spaces:4로 체크하고 작업
+        var objFunc = {
+            // 속성 : 값
+           init : function () {
+                this.setElements(); // this는 objFunc를 바라봄 / this는 예약어임 / $this는 변수를 바라봄
+                this.bindEvents();
+                this.newObject.init();
+           },
+           setElements : function() {
+                this.obj = $('.btn');
+                this.btn = $('.obj');
+           },
+           bindEvents : function(){
+                this.obj.on('click', $proxy(this.viewFunc, this));
+           },
+           viewFunc : function(){
+                console.log(this);
+                console.log('click');
+           },
+           newObject : {
+                init : function () {
+
+                }
+           }
+        };
+        objFunc.init(); // 객체내 init가 실행 
+    });
+
+
+
+    // 스위치
+    var a = 74
+    switch (a) {
+        case 10 :
+            console.log('10');
+            break;
+        case 74 :
+            console.log('74');
+            break;
+        default : // 없을 경우 실행되는 값
+            console.log('default');
+            break;
+    }
+
+    // 반복하는 구문 while, for
+    // 1. while : 특정한 값을 구할때 까지 계속 돌림
+    var a= Math.random() + 10;
+    while (a === 5) {
+        console.log(a);
+        a++;
+    }
+
+    // 2. for : 초기값, 조건문, 증감연산자 - 조건관련된 값은 초기값에 선언해줌 (성능이슈 떄문임)
+    for (var a = 0, max = $('li').length ; a < max ; a++){
+        console.log(a);
+    }
+
+    var a = 0,
+          max = $('li').length;
+    for ( ; a < max ; ){
+        console.log(a);
+        a++;
+    }
+
+    // var arrayObj = [['data1', 'data2', 'attribute2', 'attribute1', 'attribute20'],
+        //     ['attribute19','data1', 'data2', 'attribute2', 'attribute1'],
+        //     ['attribute20', 'attribute19','data1', 'data2', 'attribute2'],
+        //     ['attribute1', 'attribute20', 'attribute19','data1','datalast'],
+        //     ['attribute1', 'attribute20']];
+
+        // push
+        // var tagPush = [];
+        // tagPush.push('<table>');
+        // tagPush.push('<tbody>');
+        // for (var i = 0, max = arrayObj.length; i < max; i++) {
+        //   tagPush.push('<tr>');
+        //   for (var td = 0, tmax = 5; td < tmax; td++) {
+        //       if (arrayObj[i][td]) {
+        //           tagPush.push('<td>' + arrayObj[i][td] + '</td>');
+        //       } else {
+        //           tagPush.push('<td>없음</td>');
+        //       }
+        //   }
+        //   tagPush.push('</tr>');
+        // }
+        // tagPush.push('</tbody>');
+        // tagPush.push('</table>');
+        // $('.push_html').get(0).innerHTML = tagPush.join('');
+
+        //+=
+        // var tagPlus = '';
+        // tagPlus += '<table>';
+        // tagPlus += '<tbody>';
+        // for (var i = 0, max = arrayObj.length; i < max; i++) {
+        //   tagPlus += '<tr>';
+        //   for (var td = 0, tmax = 5; td < tmax; td++) {
+        //       if (arrayObj[i][td]) {
+        //           tagPlus += '<td>' + arrayObj[i][td] + '</td>';
+        //       } else {
+        //           tagPlus += '<td>없음</td>';
+        //       }
+        //   }
+        //   tagPlus += '</tr>';
+        // }
+        // tagPlus += '</tbody>';
+        // tagPlus += '</table>';
+        // $('.plus_html').get(0).innerHTML = tagPlus;
+
+
+
+</script>
+</html>

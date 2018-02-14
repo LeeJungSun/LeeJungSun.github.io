@@ -1,0 +1,27 @@
+2017 04 06(목)
+
+*부모로 인덱스 체크
+('li').index();
+
+*클릭한 놈으로 인덱스 체크
+var tabobj = $('.cast_tab ul li a');
+click, function (e) {
+	var target = $(e.currentTarget);
+	tabboj.index(target);
+}
+
+*클릭한 놈을 인덱스로 가져와서 보여줌
+현재 보여지는건 이전 인덱스로 저장
+이전 인덱스로 해당하는 컨텐츠가 left이동 이동은 animate
+현재(뒤쪽에서 올놈) 컨텐츠는 left:100%
+
+
+*해쉬
+$(location.hash) -> 이미 자바스크립트에 있음
+
+location.hash = '#' + 'attr 값';
+hashchange -> hash가 바뀔때 같이 바뀜
+
+처음 없을땐 0 있으면 그 해쉬에 대한 index값을 가져옴
+
+클릭할때마다 그것에 대한 인덱스값을 해쉬에 박아줌

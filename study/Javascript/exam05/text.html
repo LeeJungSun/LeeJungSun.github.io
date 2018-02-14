@@ -1,0 +1,51 @@
+과제 : 2~4회차 객체구문으로 바꿔오기
+
+
+*함수
+익명함수 -> 호출을 먼저해도 불러와지지 않음
+def();
+var def = funciton(){
+    
+}
+
+선언적함수 -> 호출을 먼저해도 호출이 됨 (호이스팅이 되버림) -> 쓰지망
+abc();
+function abc(){
+    
+}
+
+*인자
+function sum(a, b){  //a,b가 인자값
+    var c = a + b;
+}
+sum(3, 8) //내가 넣을 값을 넣어줌
+
+function sumb(a, b){
+    var c = a + b
+    return c;
+}
+var resultNum = sum(3, 8);
+
+
+*즉시 실행 함수 : 충돌방지, 한번만 실행하고 버리는 함수
+(function (win, $){ //즉시 실행 구문
+
+    $(function(){
+
+    })
+})(window, window.jQuery)
+
+
+*
+1. hasClass를 사용하지 않고 하나의 속성으로 분리한다.
+	- 버튼 이벤트가 두개이면 각각의 속성으로 분리
+2. 함수명에 맞는 것들만 넣어두자.
+3. jQuery 체이닝 메서드 명은 되도록 사용하지 말자 (ex: index)
+4. $(e.currentTarget)은 var _this로 선언하여 사용한다.
+4. text() 자체는 개발자들이 여백을 실수로 넣어놓을수도 있으니, $.trim을 사용하자
+	var _this = $(e.currentTarget);
+	$.trim(_this.text())
+
+
+
+
