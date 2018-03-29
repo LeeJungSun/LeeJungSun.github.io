@@ -1,7 +1,6 @@
 https://developers.google.com/web/fundamentals/accessibility/semantics-aria/hiding-and-updating-content?hl=ko
 
 
-
 aria-live
 https://www.w3.org/TR/wai-aria-1.1/#aria-live
 

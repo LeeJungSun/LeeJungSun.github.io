@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>Alert sample02</title>
 <link rel="stylesheet" href="../css/study-sass.css">
-<link rel="stylesheet" href="../css/railscasts.css">
 </head>
 <body>
 <div id="wrap" class="example_wrap">
@@ -69,88 +68,67 @@
 	(function($, win, doc) {
     'use strict';
 
-    	var formValidation = {
-    		init : function () {
-    			this.setElements();
-    			this.RegularExpression();
-    			this.submitAlertFunc();
-    		},
-    		setElements : function () {
- 				this.inputForm = $('.form');
-				this.userId = $('#user_id');
-				this.userPassword = $('#user_password');
-				this.input = this.inputForm.find('input');				
- 			},
- 			RegularExpression : function () {
- 				this.re_id = /^[a-z0-9]{3,12}$/;
+    	win.alertExample = win.alertExample || {};    	
+	   win.alertExample.formValidation = function (args) {
+	        var defParams = {
+	            form : '.form',
+	            id : '#user_id',
+	            password : '#user_password',
+	            inputWrap : '.input_wrap',
+	            inputText : '.input_text',
+	            alertText : '.alert_text',
+	            btnSubmit : '.btn_submit'
+	        };
+	        this.opts = $.extend({}, defParams, (args || {}));
+	        if (!(this.form = $(this.opts.form)).length) return;
+	        this.init();
+	    };
+	   win.alertExample.formValidation.prototype = {
+	    	init : function () {
+	    		this.setElements();
+	    		this.RegularExpression();
+	    		this.bindEvents();
+	    	},
+	    	setElements : function () {
+	    		this.inputForm = $(this.opts.form);
+	    		this.userId = $(this.opts.id);
+	    		this.userPassword = $(this.opts.password);
+	    		this.inputWrap = $(this.opts.inputWrap);
+				this.inputText = $(this.opts.inputText);
+				this.btnSubmit = $(this.opts.btnSubmit);
+				this.input = this.inputForm.find('input');
+	    	},
+	    	RegularExpression : function () {
+	    		this.re_id = /^[a-z0-9]{3,12}$/;
 				this.re_pw = /^[a-z0-9]{6,18}$/;
+	    	},
+	    	bindEvents : function () {
+				this.btnSubmit.on('click', $.proxy(this.submitAlertFunc, this));
  			},
- 			submitAlertFunc : function () {
- 				var _this = this
+ 			submitAlertFunc : function (e) {
+ 				e.preventDefault();
 
- 				this.inputForm.submit(function() {
-					if (_this.re_id.test(_this.userId.val()) != true) {
-						_this.userId.focus();
-						_this.userId.parent('.input_text').addClass('error')
-						_this.userId.parents('.input_wrap').append(
-							'<p class="alert_text" aria-live="assertive" aria-atomic="true">아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.</p>'
-						)
-						return false;
-					}
-				});
-				this.inputForm.submit(function() {
-					var inputWrap = _this.userPassword.parents('.input_wrap'),
-						 inputBox = inputWrap.find('.input_text');
+ 				this.inputText.removeClass('error');
+ 				$(this.opts.alertText).remove();
 
-					if (_this.re_pw.test(_this.userPassword.val()) != true) {
-						_this.userPassword.focus();
-						inputBox.addClass('error')
-						inputWrap.append(
-							'<p class="alert_text" aria-live="assertive" aria-atomic="true">비밀번호는 영문 소문자, 숫자 포함 6~18자를 입력해주세요.</p>'
-						)
-						return false;
-					} else {
-						inputBox.removeClass('error')
-						inputWrap.find('.alert_text').remove('.alert_text');						
-					}
-				});
+				if (this.re_id.test(this.userId.val()) != true) {
+					this.userId.parent(this.inputText).addClass('error');
+					this.userId.closest(this.inputWrap).append(
+						'<p class="alert_text" role="alert" aria-live="assertive">아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.</p>'
+					)
+				}
+				if (this.re_pw.test(this.userPassword.val()) != true) {
+					this.userPassword.parent(this.inputText).addClass('error');
+					this.userPassword.closest(this.inputWrap).append(
+						'<p class="alert_text" role="alert" aria-live="assertive">비밀번호는 영문 소문자, 숫자 포함 6~18자를 입력해주세요.</p>'
+					)
+				}
  			}
-    	}
+	   };
 
-
-		// var inputAlertFunc = {
-		// 	init : function () {
-		// 		this.setElements();
-		// 		this.bindEvent();
-		// 	}, 
-		// 	setElements : function () {
-		// 		this.inputWrap = $('.input_wrap');
-		// 		this.inputTextBox = $('.input_text');
-		// 		this.alertText = $('.alert_text');
-		// 		this.inputText = this.inputTextBox.find('input');
-		// 	},
-		// 	bindEvent : function () {
-		// 		this.inputText.on('keydown', $.proxy(this.alertFunc, this));
-		// 	},
-		// 	alertFunc : function (e) {
-		// 		var input = $(e.currentTarget),
-		// 			 inputWrap = input.closest(this.inputWrap);
-
-		// 		if (input.val().length <= 6) {
-		// 			inputWrap.find(this.inputTextBox).addClass('error');
-		// 			inputWrap.find(this.alertText).show();
-		// 		} else if (input.val().length > 6 && input.val().length <= 12) {
-		// 			inputWrap.find(this.alertText).find('.level').text('보통');
-		// 		} else if (input.val().length > 13 && input.val().length <= 20) {
-		// 			inputWrap.find(this.alertText).find('.level').text('안전');
-		// 		} else if (input.val().length > 21) {
-		// 			inputWrap.find(this.inputTextBox).removeClass('error');
-		// 			inputWrap.find(this.alertText).hide();
-		// 		}
-		// 	}
-		// };
 		$(function () {
-			formValidation.init();
+			// formValidation.init();
+			win.formValidation = new win.alertExample.formValidation();
 		})
     
 

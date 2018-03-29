@@ -6,12 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>Alert sample01</title>
 <link rel="stylesheet" href="../css/study-sass.css">
-<link rel="stylesheet" href="../css/railscasts.css">
 </head>
 <body>
 <div id="wrap" class="example_wrap">
 	<h1 class="main__title">1. DOM에 있는 요소를 display:none/block으로 노출하는 경우</h1>
-	http://naradesign.net/wp/2011/07/20/1663/
 
 	<h2 class="sub__title">1) Example</h2>
 	<div class="alert_form_wrap">
@@ -23,16 +21,15 @@
 				<div class="input_text">
 			   	<input type="text" id="user_id" placeholder="영문 소문자, 숫자 포함 3~12자">
 				</div>
-				<p class="alert_text" role="alert" aria-live="polite" aria-atomic="true" style="display:none"></p>
+				<p class="alert_text" role="alert" aria-live="polite" style="display:none">아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.</p>
 			</div>
 			<div class="input_wrap">
 			   <label for="user_password" class="input_label">비밀번호</label>
 			   <div class="input_text">
 			   	<input type="text" id="user_password" placeholder="영문 소문자, 숫자 포함 6~18자">
 			   </div>
-			   <p class="alert_text" role="alert" aria-live="polite" aria-atomic="true" style="display:none">비밀번호 안전성 : <span class="level">위험</span></p>
+			   <p class="alert_text" role="alert" aria-live="polite" style="display:none">비밀번호는 영문 소문자, 숫자 포함 6~18자를 입력해주세요.</p>
 			</div>
-			<input type="submit" value="전송" class="btn_submit">
 		</fieldset>
 		</form>		
 	</div>
@@ -46,18 +43,15 @@
       &lt;div class="input_text"&gt;
          &lt;input type="text" id="user_id" placeholder="영문 소문자, 숫자 포함 3~12자"&gt;
       &lt;/div&gt;
-      &lt;p class="alert_text" role="alert" aria-live="polite" aria-atomic="true" style="display:none"&gt;&lt;/p&gt;
+      &lt;p class="alert_text" role="alert" aria-live="polite" aria-atomic="true" style="display:none"&gt;아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.&lt;/p&gt;
    &lt;/div&gt;
    &lt;div class="input_wrap"&gt;
       &lt;label for="user_password" class="input_label"&gt;비밀번호&lt;/label&gt;
       &lt;div class="input_text"&gt;
          &lt;input type="text" id="user_password" placeholder="영문 소문자, 숫자 포함 6~18자"&gt;
       &lt;/div&gt;
-      &lt;p class="alert_text" role="alert" aria-live="polite" aria-atomic="true" style="display:none"&gt;
-         비밀번호 안전성 : &lt;span class="level"&gt;위험&lt;/span&gt;
-      &lt;/p&gt;
+      &lt;p class="alert_text" role="alert" aria-live="polite" aria-atomic="true" style="display:none"&gt;비밀번호는 영문 소문자, 숫자 포함 6~18자를 입력해주세요.&lt;/p&gt;
    &lt;/div&gt;
-   &lt;input type="submit" value="전송" class="btn_submit"&gt;
 &lt;/fieldset&gt;
 &lt;/form&gt;</code></pre>
 
@@ -72,10 +66,11 @@
 			hljs.highlightBlock(block);
 		});
 	});
-
-	(function($, win, doc) {
-    'use strict';
-    	win.alertExample = win.alertExample || {};
+</script>
+<script type="text/javascript">
+	;(function($, win, doc) {
+   	'use strict';   	
+    	win.alertExample = win.alertExample || {};    	
 	   win.alertExample.formValidation = function (args) {
 	        var defParams = {
 	            form : '.form',
@@ -89,10 +84,11 @@
 	        if (!(this.form = $(this.opts.form)).length) return;
 	        this.init();
 	    };
-	    win.alertExample.formValidation.prototype = {
+	   win.alertExample.formValidation.prototype = {
 	    	init : function () {
 	    		this.setElements();
 	    		this.RegularExpression();
+	    		this.bindEvents();
 	    	},
 	    	setElements : function () {
 	    		this.inputForm = $(this.opts.form);
@@ -100,7 +96,7 @@
 	    		this.userPassword = $(this.opts.password);
 	    		this.inputWrap = $(this.opts.inputWrap);
 				this.inputText = $(this.opts.inputText);
-				this.alertText =$(this.opts.alert_text);
+				this.alertText = $(this.opts.alertText);
 				this.input = this.inputForm.find('input');
 	    	},
 	    	RegularExpression : function () {
@@ -108,109 +104,80 @@
 				this.re_pw = /^[a-z0-9]{6,18}$/;
 	    	},
 	    	bindEvents : function () {
-				this.input.on('keyup', $.proxy(this.idFunc, this));
+				this.input.on('keyup', $.proxy(this.formValidationFunc, this));
  			},
- 			formValidationFunc : function () {
- 				this.idFunc();
- 				console.log(target)
- 			},
- 			idFunc : function (e) {
- 				var target = $(e.currentTarget);
-
-
-
- 			}
-	    }
-
-    	var formValidation = { 			
- 			inputFunc : function (e) {
+ 			formValidationFunc : function (e) {
  				var target = $(e.currentTarget),
- 				 	 inputWrap = target.parents('.input_wrap'),
- 				 	 inputBox = inputWrap.find('.input_text'),
- 					 alertText = inputWrap.find('.alert_text'),
- 					 level = alertText.find('.level');
+ 					 targetID = target.attr('id'),
+ 					 targetValue = target.val().length,
+ 					 inputWrap = target.parents(this.opts.inputWrap),
+ 					 inputBox = inputWrap.find(this.opts.inputText),
+ 					 alertText = inputWrap.find(this.opts.alertText);
 
- 					 console.log(inputWrap);
+ 				alertText.show();
+				inputBox.addClass('error');
 
-				alertText.show();
-				inputBox.addClass('error');				
-				
- 				if (target.attr('id') === this.userId.attr('id')) {
- 					// ID
- 					if (target.val().length === 0) {
-						alertText.hide().text('');
+				if (targetID === this.userId.attr('id')) {
+ 					if (targetValue === 0) {
+						alertText.css('display', 'none');
 						inputBox.removeClass('error');
-					} else if (target.val().length <= 3) {
-						alertText.text('아이디가 너무 짧습니다.');
-					} else if (target.val().length > 12) {
-						alertText.text('아이디가 너무 깁니다.');
+ 						target.removeAttr('aria-invalid');
 					} else if (this.re_id.test(target.val()) != true) {
-						alertText.text('아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.');
+						alertText.css('display', 'block');
+						target.attr('aria-invalid', 'true');
 					} else {
-						alertText.hide().text('');
+						alertText.css('display', 'none');
 						inputBox.removeClass('error');
-					}
- 				} else if (target.attr('id') === this.userPassword.attr('id')) {
- 					// Password
+						target.removeAttr('aria-invalid');
+					};
+ 				} else if (targetID === this.userPassword.attr('id')) {
  					if (target.val().length === 0) {
-						alertText.hide();
+						alertText.css('display', 'none');
 						inputBox.removeClass('error');
-					} else if (target.val().length <= 6) {
-						level.text('위험');
-					} else if (target.val().length > 18) {
-						level.text('비밀번호가 너무 길어요.');
+						target.removeAttr('aria-invalid');
 					} else if (this.re_pw.test(target.val()) != true) {
-						level.text('유효한 문자를 입력해 주세요.');
+						alertText.css('display', 'block');
+						target.attr('aria-invalid', 'true');
 					} else {
-						level.text('안전');
+						alertText.css('display', 'none');
 						inputBox.removeClass('error');
-					}
- 				}
- 			},
- 			submitAlertFunc : function () {
- 				var _this = this;
-
-				this.inputForm.submit(function() {
-					var inputWrap = _this.userId.parents(_this.inputWrap),
-						 inputBox = inputWrap.find(_this.inputText);
-
-					if (_this.re_id.test(_this.userId.val()) != true) {
-						inputWrap.find(_this.alertText).show();
-						inputBox.addClass('error');
-						inputWrap.find(_this.alertText).text('아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.');
-						_this.userId.focus();
-						return false;
-					} else {
-						console.log('aaa')
-						inputWrap.find(_this.alertText).hide();
-						inputWrap.find(_this.alertText).text('');
-					}
-				});
-				this.inputForm.submit(function() {
-					var inputWrap = _this.userPassword.parents(_this.inputWrap),
-						 inputBox = inputWrap.find(_this.inputText);
-
-					if(_this.re_pw.test(_this.userPassword.val()) != true) {
-						inputWrap.find(_this.alertText).show();
-						inputBox.addClass('error');
-						inputWrap.find(_this.alertText).text('비밀번호는 영문 소문자, 숫자 포함 6~18자를 입력해주세요.');
-						_this.userPassword.focus();
-						return false;
-					} else {
-						inputWrap.find(_this.alertText).hide();
-						inputWrap.find(_this.alertText).text('');
-						inputBox.removeClass('error');
-					}
-				});
+						target.removeAttr('aria-invalid');
+					};
+ 				};
  			}
-    	}
+ 			// submitAlertFunc : function (e) {
+ 			// 	e.preventDefault();
+
+ 			// 	for (var i = 0, imax = this.inputText.length ; i < imax ; i++ ) {
+ 			// 		var inputBox = this.inputText.eq(i),
+ 			// 			 inputWrap = inputBox.closest(this.inputWrap),
+ 			// 			 input = inputBox.find('input'),
+ 			// 			 alertText = inputWrap.find(this.alertText);
+
+
+ 			// 		if (input.attr('id') === this.userId.attr('id')) {
+ 			// 			if (this.re_id.test(input.val()) != true) {
+				// 			alertText.show();
+				// 			inputBox.addClass('error');
+				// 			inputWrap.find(this.alertText).text('아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.');
+				// 		} 				
+ 			// 		} else if (input.attr('id') === this.userPassword.attr('id')) {
+ 			// 			if (this.re_pw.test(input.val()) != true) {
+				// 			alertText.show();
+				// 			inputBox.addClass('error');
+				// 			inputWrap.find(this.alertText).text('아이디는 영문 소문자, 숫자 포함 3~12자를 입력해주세요.');
+				// 		} 				
+ 			// 		};
+ 			// 	};
+ 			// }
+	   };
+
 		$(function () {
 			win.formValidation = new win.alertExample.formValidation();
-			// formValidation.init();
-		})
+		});
     
 
-	})(jQuery, window, document);
-
+	})(jQuery, window, document);	
 </script>
+
 </html>
