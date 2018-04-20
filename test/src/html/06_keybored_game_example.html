@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>키보드 타자 게임</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+<div id="wrap" class="game_wrap">
+   <!-- <div class="keybored_game_wrap"></div> -->
+
+	<div class="container" style="position:relative;">
+		<div style="width:610px;height:300px;background:#000"></div>
+		<div class="TajaBack" id="tajaBackground" style="position:absolute;top:0;left:0;width:100%;height:300px"></div>
+		<div class="TajaControl">
+			<input type="button" id="tajaStart" value="시작">
+			<input type="text" id="tajaTyping" size="20" >
+		</div>
+	</div>
+</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script src="../js/apps/game.js"></script>
+<script type="text/javascript">
+	var movTime=900; //단어 움직임
+	var makeTime=1700; //화면에 단어가 만들어지는 시간차이
+	var endCnt=0;
+	var jsStudy = [ "abstract", "else", "instanceof", "super", "boolean",
+	                "enum" , "int", "switch", "break", "export",
+	                "interface", "synchronized", "byte", "extends", "let",
+	                "this", "case", "false", "long", "throw",
+	                "catch", "final", "native", "throws", "with",
+	                "char", "finally", "new", "transient", "static",
+	                "class", "float", "null", "true", "in",
+	                "const", "for", "package", "try", "double",
+	                "continue", "function", "private", "typeof", "while",
+	                "debugger", "goto", "protected", "var", "short",
+	                "default", "if", "public", "void", "import",
+	                "delete", "implements", "return", "volatile", "do"
+	              ]; 
+	var onDiv=[]; // 현재 화면에서 움직이는 div
+	/** jsStudy배열에서 단어 뽑아 화면에 보이기 **/
+	function wordsManufacture(){
+	    var wordRanId=Math.round(Math.random()*(jsStudy.length-1));
+	    var wordRanX=Math.round(Math.random()*480);
+	    var newDiv=eval("m"+wordRanId);
+	    var wordWidth=newDiv.innerHTML.length*11;
+	    newDiv.style.width=wordWidth+"px";
+	    newDiv.style.left=wordRanX+"px";
+	    newDiv.style.display="block";
+	    onDiv.push(newDiv);
+	    if(endCnt % 4 == 0) {
+	      tajaStart.value="멈춤";
+	    } else {
+	      setTimeout(wordsManufacture,makeTime);
+	      tajaStart.value="시작";
+	   }
+	}
+
+	/** 뽑은 단어 움직이기 **/
+	function wordsMove(){
+	  
+	  for(var i=0; i<onDiv.length; i++){
+	      if(onDiv[i]=="") continue;
+	         var speed=Math.round(Math.random()*20)+1;
+	         onDiv[i].style.top=(parseInt(onDiv[i].style.top)+speed)+"px";
+	       
+	         if(parseInt(onDiv[i].style.top) > 430){
+	            onDiv[i].style.display="none";
+	            onDiv[i].style.top="-30px";
+	            onDiv[i]="";
+	         }
+	      }
+	      if(endCnt % 4 == 0) {
+	        tajaStart.value="멈춤";
+	     } else {
+	        setTimeout(wordsMove,movTime);
+	        tajaStart.value="시작";
+	     }
+	}
+	/** 2개 함수 호출 **/
+	function tajaGoGo(){
+	  endCnt++;
+	  tajaTyping.focus();
+	  wordsManufacture();
+	  wordsMove();
+	}
+	/** 엔터키 입력 되었을 때 처리**/
+	function wordsCheck(evt){
+	  var wordAnswer=tajaTyping.value;
+	  if(evt.keyCode==13){
+	     for(var i=0; i<onDiv.length; i++){
+	       if(onDiv[i]=="") continue;
+	       if(onDiv[i].innerHTML==wordAnswer){
+	          onDiv[i].style.display="none";
+	          onDiv[i].style.top="-30px";
+	          onDiv[i]="";
+	       }
+	     }
+	     tajaTyping.value="";
+	  }
+	}
+	/**jsStudy 배열 만큼 div 태그 만들고,
+	시작 클릭과, 엔터키 입력 이벤트 함수에 연결 **/
+	function tajaInit(){
+	  var movDiv="";
+	  for(var i=0; i < jsStudy.length; i++)
+	  {
+	     movDiv=movDiv+"<DIV id=m" + i +
+	     " style='position:absolute;left:30px;top:-30px;width:50px;height:22px;" + 
+	     "background-color:#fff;z-index:1; color:#000;display:none;" +
+	     " text-align:center; padding: 3px; border:1px solid #0000ff;" + 
+	     "font-weight:bold; box-shadow:1px 1px 3px rgba(0,0,0,0.5);'>" + 
+	     jsStudy[i]+"</div>";
+	  }
+	  tajaBackground.innerHTML=movDiv; 
+	  tajaStart.onclick=tajaGoGo;
+	  tajaTyping.onkeypress=wordsCheck;
+	}
+	/** 로딩되면 자동으로 tajaInit 함수 호출 **/
+	window.onload=tajaInit;
+</script>
+</html>

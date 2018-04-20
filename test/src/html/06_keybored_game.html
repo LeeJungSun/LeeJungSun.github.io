@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>키보드 타자 게임</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+<div id="wrap" class="game_wrap">
+
+   <div class="keybored_game_wrap">
+   	<div class="start_area">
+   		<button type="button" class="btn_start">START</button>
+   	</div>
+   	<div class="end_area"></div>
+   	<p class="game_count_area">
+   		<span class="text">남은시간</span>
+   		<span class="min">01</span>
+   		<span>:</span>
+   		<span class="second">00</span>
+   	</p>
+      
+   	<div class="game_view_area">
+         <div class="message_true">True</div>  
+         <div class="message_false">False</div>  
+         <div class="word_area"></div>
+      </div>
+   	<div class="game_control_area">
+   		<span class="input_text"><input type="text"></span>
+   		<button type="button" class="btn_enter">Enter</button>
+   	</div>
+   </div>
+
+</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script src="../js/apps/game.js"></script>
+</html>
