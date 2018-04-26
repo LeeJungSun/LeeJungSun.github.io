@@ -1,121 +1,241 @@
 (function ($, win, doc) {
-    'use strict';
+  'use strict';
 
-    win.example = win.example || {}; //examProject 객체가 있으면 가져오고, 없으면 빈 객체 생성
-    win.example.keyboredGame = function (args) { //examProject 내 commonLayer 함수 생성
-        var defParams = { //파라미터 값 정의
-            gameWrap : '.keybored_game_wrap',
-            gameViewArea : '.game_view_area',
-            gameControlArea : '.game_control_area',
-            gameCountArea: '.game_count_area',
-            startLayout : '.start_area',
-            endLayout : '.end_area',
-            gameStartBtn : '.btn_start',
-            enterBtn : '.btn_enter'
-        };
-        this.opts = $.extend({}, defParams, (args || {})); //파라미터값을 this.opts에 저장
-        if (!(this.gameWrap = $(this.opts.gameWrap)).length) return; //this.btnObj에 this.opts.btnElements값을 저장하고, 값이 없는 경우 리턴
-        this.init(); //prototype 호출
+  win.cjmall = win.cjmall || {};
+  win.cjmall.keyboredGame = function (args) {
+    var defParams = { //파라미터 값 정의
+      gameWrap : '.keybored_game_wrap',
+      gameViewArea : '.game_view_area',
+      gameControlArea : '.game_control_area',
+      gameCountArea : '.game_count_area',
+      gameSoundArea : '.game_sound_area',
+      startLayout : '.start_area',
+      endLayout : '.end_area',
+      gameStartBtn : '.btn_start',
+      enterBtn : '.btn_enter',
+      soundBtn : '.btn_sound'
     };
-    win.example.keyboredGame.prototype = {
-        init : function () {
-            this.setElements();
-            this.bindEvents();
-        },
-        setElements : function () {
-            this.gameWrap = $(this.opts.gameWrap);
-            this.gameViewArea = this.gameWrap.find(this.opts.gameViewArea);
-            this.wordArea = this.gameViewArea.find('.word_area');
+    this.opts = $.extend({}, defParams, (args || {}));
+    if (!(this.gameWrap = $(this.opts.gameWrap)).length) return;
+    this.init();
+  };
+  win.cjmall.keyboredGame.prototype = {
+    init : function () {
+      this.setElements();
+      this.bindEvents();
+    },
+    setElements : function () {
+      this.gameWrap = $(this.opts.gameWrap);
+      this.gameViewArea = this.gameWrap.find(this.opts.gameViewArea);
+      this.wordArea = this.gameViewArea.find('.word_area');
+      this.trueMessage = this.gameViewArea.find('.message_true');
+      this.falseMessage = this.gameViewArea.find('.message_false');
+      this.gameoverMessage = this.gameViewArea.find('.message_gameover');
+      this.gameCountArea = this.gameWrap.find(this.opts.gameCountArea);
+      this.gameSoundArea = this.gameWrap.find(this.opts.gameSoundArea);
+      this.countMinutes = this.gameCountArea.find('.min');
+      this.countseconds = this.gameCountArea.find('.second');
+      this.gameControlArea = this.gameWrap.find(this.opts.gameControlArea);
+      this.textInput = this.gameControlArea.find('input');
+      this.startLayout = this.gameWrap.find(this.opts.startLayout);
+      this.endLayout = this.gameWrap.find(this.opts.endLayout);
+      this.gameStartBtn = this.gameWrap.find(this.opts.gameStartBtn);
+      this.enterBtn = this.gameWrap.find(this.opts.enterBtn);
+      this.soundBtn = this.gameSoundArea.find(this.opts.soundBtn);
+    },
+    bindEvents : function () {
+      this.gameStartBtn.on('click', $.proxy(this.gameEvent, this));
+      this.gameStartBtn.on('click', $.proxy(this.offsetTop, this));
+      this.textInput.on('click', $.proxy(this.offsetTop, this));
+      this.textInput.on('keypress', $.proxy(this.wordCheck, this));
+      this.enterBtn.on('click', $.proxy(this.wordCheck, this));
+      this.soundBtn.on('click', $.proxy(this.gameSoundFunc, this));
+    },
+    gameEvent : function () { // 게임 start 되었을때 실행
+      this.gameWrap.addClass('game_playing');
+      this.gameStartView();
+      this.gameSoundInitFunc();
+      this.wordView();
+      this.setTimer();
+    },
+    setTimer : function () {
+      var _this = this,
+      // 제한시간 제어
+      timer = 60;
 
-            this.trueMessage = this.gameViewArea.find('.message_true');
-            this.falseMessage = this.gameViewArea.find('.message_flase');
+      timer--;
 
-            this.gameCountArea = this.gameWrap.find(this.opts.gameCountArea);
-            this.countMinutes = this.gameCountArea.find('.min');
-            this.countseconds = this.gameCountArea.find('.second');
-            this.gameControlArea = this.gameWrap.find(this.opts.gameControlArea);
-            this.textInput = this.gameControlArea.find('input');
-            this.startLayout = this.gameWrap.find(this.opts.startLayout);
-            this.endLayout = this.gameWrap.find(this.opts.endLayout);
-            this.gameStartBtn = this.gameWrap.find(this.opts.gameStartBtn);
-            this.enterBtn = this.gameWrap.find(this.opts.enterBtn);
-        },
-        bindEvents : function () {
-            this.gameStartBtn.on('click', $.proxy(this.gameEvent, this));
-            this.textInput.on('keypress', $.proxy(this.wordCheck, this));
-            this.enterBtn.on('click', $.proxy(this.wordCheck, this));
-        },
-        gameEvent : function () {
-            this.gameStartView();
-            this.wordView();
-            this.setTimer(); // 남은 시간 카운트다운
-        },
-        setTimer : function () {
-            var _this = this,
-                timer = 60;
+      this.timeInterval = setInterval(function () {
+        var minutes = parseInt(timer / 60, 10),
+        seconds = parseInt(timer % 60, 10);
 
-            timer--;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            this.timeInterval = setInterval(function () {
-                var minutes = parseInt(timer / 60, 10),
-                    seconds = parseInt(timer % 60, 10);
+        _this.countMinutes.text(minutes);
+        _this.countseconds.text(seconds);
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                
-                _this.countMinutes.text(minutes);
-                _this.countseconds.text(seconds);
-
-                if (--timer < 0) {
-                    timer = 0;
-                    _this.gameEndView();
-                    clearInterval(_this.timeInterval);
-                }                
-            }, 1000);
-        },
-        gameStartView : function () {
-            this.startLayout.hide(); // dimmed 및 start 버튼 제거
-            this.textInput.focus(); // input focus 이동
-        },
-        gameEndView : function () {
-            this.endLayout.show();
-            this.textInput.blur();
-            // 팝업 노출
-        },
-        wordView : function () {
-            this.wordArrayCreate();
-            this.wordCreate();
-        },
-        wordArrayCreate : function () {
-            this.wordArray = ['가가가가', '나나나나', '다다다다', '라라라라', '마마마마', '바바바바']
-        },
-        wordCreate : function () {
-            for (var i = 0, imax = this.wordArray.length ; i < imax ; i++) {
-                var word = '<div class="word '+'type'+i+'">'+this.wordArray[i]+'</div>'
-
-                this.wordArea.append(word)
-            }
-        },
-        wordCheck : function (e) {
-            var typingText = this.textInput.val();
-            if (e.keyCode === 13 || e.type === 'click') { // 키보드 엔터 또는 버튼 클릭했을때
-                this.textInput.val('') // 인풋창 value 값 clear
-
-                for (var i = 0, imax = this.wordArray.length ; i < imax ; i++) {
-                    var onWord = this.wordArea.children().eq(i); // 생성된 텍스트 순서
-
-                    if (typingText === onWord.text()) { // 타이핑한 텍스트와 생성된 텍스트값이 일치할 경우
-                        onWord.remove(); // 제거
-                        this.trueMessage.show();
-                    }
-                }
-                console.log(typingText)
-            }
+        // 시간 종료 되었을 경우
+        if (--timer < 0) {
+          timer = 0;
+          _this.gameFailedFunc();
         }
-    };
+        // 시간 내 단어입력 모두 완료 되었을 경우
+        if (_this.wordArea.children().length === 0) {
+          // 마지막 단어 입력후 노출되는 WOW 메세지와 게임 종료 후 노출되는 메세지가 겹치는 이슈로 setTimeout 적용
+          setTimeout(_this.gameSuccessFunc(), 600);
+        }                      
+      }, 1000);
+    },
+    gameStartView : function () { // 게임 스타트 후 초기 노출되는 화면
+      this.startLayout.hide();
+      this.gameControlArea.show();
+      // 게임 스타트 후 단어 입력창에 포커스 이동
+      this.textInput.focus();
+    },
+    gameEndView : function () { // 게임 종료 후 노출되는 화면
+      this.gameWrap.removeClass('game_playing');
+      this.gameWrap.addClass('game_end');
+      this.endLayout.show();
+      this.soundOffFunc();
+      this.textInput.hide();
+      this.enterBtn.blur();
+    },
+    gameSuccessFunc : function () { // 게임 성공되었을때 호출
+      clearInterval(this.timeInterval); // 타이머 종료
+      clearInterval(this.wordMove);
+      this.gameEndView();
+      this.soundBtn.off();
+      this.gamePopupFunc();
+    },
+    gameFailedFunc : function () { // 게임 실패되었을때 호출
+      clearInterval(this.timeInterval);
+      this.gameEndView();
+      this.soundBtn.off();
+      this.gamePopupFunc();
+    },
+    gamePopupFunc : function () {
+      // [D] 팝업 노출 코드 넣어주세요.
+    },
+    gameSoundInitFunc : function () { // 게임 초기 스타트시 BGM 호출
+      this.gameAudio = document.getElementById('game_audio');
+      this.gameAudio.play();
 
-    $(function () {
-        win.exam = new win.example.keyboredGame();
-    });
+      if (this.soundBtn.hasClass('off')) {
+        this.soundBtn.addClass('off');
+        this.gameAudio.pause(); 
+      }
+    },
+    gameSoundFunc : function () { // 게임 중 BGM 버튼 클릭시 on/off 기능
+      this.gameAudio = document.getElementById('game_audio');
 
+      if (this.soundBtn.hasClass('off')) {
+        this.soundOnFunc();
+      } else {
+        this.soundOffFunc();                      
+      };                  
+    },
+    soundOnFunc : function () { // BGM ON
+      this.soundBtn.removeClass('off')
+      this.gameAudio.play();
+    },
+    soundOffFunc : function () { // BGM OFF
+      this.soundBtn.addClass('off');
+      this.gameAudio.pause();
+    },
+    wordView : function () { // 게임 시작 후 단어 노출되는 구문 호출
+      this.wordArrayCreate();
+      this.wordCreate();
+      this.speedInterval = [];
+      this.wordMove(0);                    
+      setTimeout($.proxy(this.wordMove, this, 1), 1000);  
+      setTimeout($.proxy(this.wordMove, this, 2), 3000);
+      setTimeout($.proxy(this.wordMove, this, 3), 5000);
+      setTimeout($.proxy(this.wordMove, this, 4), 7000);
+      setTimeout($.proxy(this.wordMove, this, 5), 9000);
+    },
+    wordArrayCreate : function () {
+      // [D] 랜덤하게 추출한 텍스트 배열로 넣어주세요.
+      this.wordArray = ['가가가가', '나나나나', '다다다다', '라라라라', '마마마마', '바바바바']
+    },
+    wordCreate : function () { // 배열에 담긴 단어 노드로 생성
+      for (var i = 0, imax = this.wordArray.length ; i < imax ; i++) {
+        var word = '<div class="word '+'type'+i+'"'+'style="top:-50px"'+'>'+this.wordArray[i]+'</div>'
+
+        this.wordArea.append(word);
+      };
+    },
+    wordMove : function (index) { // 노드로 생성된 단어 움직이는 인터렉션
+      var _this = this,
+          idx = index,
+          word = this.wordArea.children(),
+          speedInit = -50,
+          speed = word.innerHeight();
+
+      this.speedInterval[idx] = setInterval(function () {
+        speedInit = speedInit + speed;
+        word.eq(idx).css('top', speedInit);
+
+        if (speedInit >= _this.wordArea.innerHeight() - _this.gameControlArea.innerHeight()) { 
+          clearInterval(_this.speedInterval[idx])
+          word.eq(idx).css('top', '-50');
+          _this.wordMove(idx);
+        };
+        if (_this.gameWrap.hasClass('game_end')) {
+          clearInterval(_this.speedInterval[idx]);
+        };
+      }, 1000);
+    },
+    wordCheck : function (e) { // 단어 입력후 엔터 혹은 엔터 버튼 클릭하였을때 유효성 검사
+      var typingText = this.textInput.val();
+
+      if (e.keyCode === 13 || e.type === 'click') { 
+        this.textInput.val('');
+
+        for (var i = 0; i < this.wordArray.length; i++) {
+          // 생성된 텍스트 순서
+          var onWord = this.wordArea.children().eq(i); 
+
+          // 타이핑한 텍스트와 생성된 텍스트값이 일치할 경우
+          if (typingText === onWord.text() && typingText !== '') {
+              // 일치하는 텍스트 제거
+              onWord.remove();
+              // 일치할 경우 노출되는 메세지
+              this.wordTrueEffect();
+              return false;
+          };
+        };
+        // 일치하지 않을 경우 노출되는 메세지 (단어가 일치하지않거나 값이 없는 상태로 전송된 경우 실행)
+        this.wordFalseEffect(); 
+      };
+    },
+    wordTrueEffect : function () {
+      var _this = this;
+
+      this.trueMessage.show();
+      setTimeout(function () {
+        _this.trueMessage.hide();
+      }, 500);
+    },
+    wordFalseEffect : function () {
+      var _this = this;
+
+      this.falseMessage.show();
+      setTimeout(function () {
+        _this.falseMessage.hide();
+      }, 500);
+    },
+    offsetTop : function () { // 인풋에 포커스 갈 경우 키보드 노출되면서 컨텐츠 밀리는 이슈 대응하기 위한 코드 (해당 이벤트 섹션으로 스크롤바 강제 이동)
+      var gameOffsetTop = $('.game_section').offset().top;
+
+      if ($(window).innerWidth() <= 320) {
+        $('html, body').animate({scrollTop : gameOffsetTop + 20}, 100);
+      } else {
+        $('html, body').animate({scrollTop : gameOffsetTop}, 100);
+      };
+    }
+  };
+  $(function () {
+      win.cjoshopping = new win.cjmall.keyboredGame();
+  });
 })(jQuery, window, document);

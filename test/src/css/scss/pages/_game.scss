@@ -1,84 +1,171 @@
-.keybored_game_wrap{
-	position:relative;
+#wrap.game_wrap{
 	max-width:770px;
-	margin:0 auto;
-	.game{
-		&_view_area{
-			position:relative;
-			height:400px;
-			background:#333;
-			.word{
-				// @include position(absolute);
-				color:#fff;
-			}
-			.type0{
-
-			}
-			.message{
-				&_true,&_false{
-					@include position(absolute, $top:50%, $left:50%);
-					display:none;
-					width:200px;
-					height:200px;
-					margin:-100px 0 0 -100px;
-					background:#fff;
-				}
-			}
-		}
-		&_control_area{
-			position:relative;
-			padding:10px 50px 10px 10px;
-			background:#ccc;	
-		}
-		&_count_area{
-			padding:5px;
-			font-size:14px;
-			text-align:center;
-			.text{
-				margin-right:5px;
-			}
-		}
-	}
-	.start_area{
-		@include position(absolute, $top:0, $left:0);
-		z-index:10;
-		width:100%;
-		height:100%;
-		background:rgba(255,0,0,.5);
-	}
-	.end_area{
-		@include position(absolute, $top:0, $left:0);
-		display:none;
-		z-index:10;
-		width:100%;
-		height:100%;
-		background:rgba(0,0,0,.5);	
-	}
-	.btn_start{
-		@include position(absolute, $top:50%, $left:50%);
-		width:150px;
-		height:50px;
-		margin:-25px 0 0 -75px;
-		background:#fff;
-	}
-	.btn_enter{
-		@include position(absolute, $top:10px, $right:10px);
-		width:40px;
-		height:26px;
-		background:#666;
-		color:#fff;
-	}
-	.input_text{
-		display:block;
-		height:26px;
-		border:1px solid #666;
-		box-sizing:border-box;
-		input{
-			width:100%;
-			height:100%;
-			padding:5px;
-			border:0;
-			box-sizing:border-box;
-		}
-	}
 }
+.box{
+	background:pink;
+	padding-top:137.143%;
+}
+.box2{
+	position:relative;
+	background:skyblue;
+	padding-top:98.963%;
+}
+.box3{
+	position:relative;
+	background:gray;
+	padding-top:74.806%;
+}
+// .keybored_game_wrap{
+// 	@include position(absolute, $top:10.63%, $left:6.234%, $bottom:0);
+// 	width:88.053%;
+// 	height:89.372%;
+// 	max-width:770px;
+// 	margin:0 auto;
+// 	.game{
+// 		&_view_area{
+// 			position:relative;
+// 			height:100%;
+// 			background:#2b44a9;
+// 			.word{
+// 				@include position(absolute);
+// 				font-size:21px;
+// 				color:#fff;
+// 			}
+// 			.type0{
+// 				left:61.373%;
+// 				color:#effc16;
+// 			}
+// 			.type1{
+// 				left:15.385%;
+// 				color:#ff79ba;
+// 			}
+// 			.type2{
+// 				left:63%;
+// 			}
+// 			.type3{
+// 				left:33%;
+// 			}
+// 			.type4{
+// 				left:75%;
+// 			}
+// 			.type5{
+// 				left:8%;
+// 				color:#2fffff;
+// 			}
+// 			.message{
+// 				&_true,&_false{
+// 					@include position(absolute, $top:50%, $left:50%);
+// 					display:none;
+// 					width:200px;
+// 					height:200px;
+// 					margin:-100px 0 0 -100px;
+// 					background:#fff;
+// 				}
+// 			}
+// 		}
+// 		&_control_area{
+// 			@include position(absolute, $left:9.588%, $bottom:11.454%);
+// 			overflow:hidden;
+// 			width:80.533%;
+// 			height:9.253%;
+// 		}
+// 		&_count_area{
+// 			@include position(absolute, $top:-7.636%, $left:15.487%);
+// 			z-index:1;
+// 			width:65.192%;
+// 			height:19.972%;
+// 			background:rgba(255,0,0,.5);
+// 			font-size:14px;
+// 			text-align:center;
+// 			.text{
+// 				margin-right:5px;
+// 			}
+// 		}
+// 	}
+// 	.word_area{
+// 		@include position(absolute, $top:7.05%, $left:5.754%);
+// 		width:88.201%;
+// 		height:86.344%;
+// 		background:#031146;
+// 	}
+// 	.start_area{
+// 		@include position(absolute, $top:0, $left:0);
+// 		z-index:10;
+// 		width:100%;
+// 		height:100%;
+// 		background:rgba(255,0,0,.5);
+// 	}
+// 	.end_area{
+// 		@include position(absolute, $top:0, $left:0);
+// 		display:none;
+// 		z-index:10;
+// 		width:100%;
+// 		height:100%;
+// 		background:rgba(0,0,0,.5);	
+// 	}
+// 	.btn_start{
+// 		@include position(absolute, $top:50%, $left:50%);
+// 		width:150px;
+// 		height:50px;
+// 		margin:-25px 0 0 -75px;
+// 		background:#fff;
+// 	}
+// 	.btn_enter{
+// 		float:right;
+// 		width:28.023%;
+// 		height:100%;
+// 		background:#666;
+// 		color:#fff;
+// 	}
+// 	.input_text{
+// 		float:left;
+// 		width:69.965%;
+// 		height:100%;
+// 		border:3px solid #000;
+// 		box-sizing:border-box;
+// 		input{
+// 			width:100%;
+// 			height:100%;
+// 			padding:5px;
+// 			border:0;
+// 			box-sizing:border-box;
+// 		}
+// 	}
+// }
+
+.keybored_game_wrap{position:absolute;top:10.63%;bottom:0;left:6.234%;width:88.053%;height:89.372%;max-width:770px;margin:0 auto}
+.keybored_game_wrap .game_view_area{position:relative;height:100%}
+.keybored_game_wrap .game_view_area .word{position:absolute;font-size:21px;font-size:5.4vw;color:#fff}
+.keybored_game_wrap .game_view_area .type0{left:61%;color:#effc16}
+.keybored_game_wrap .game_view_area .type1{left:15%;color:#ff79ba}
+.keybored_game_wrap .game_view_area .type2{left:63%}
+.keybored_game_wrap .game_view_area .type3{left:33%}
+.keybored_game_wrap .game_view_area .type4{left:70%}
+.keybored_game_wrap .game_view_area .type5{left:8%;color:#2fffff}
+.keybored_game_wrap .message{display:none;position:absolute;top:18.796%;left:17.553%;z-index:1;width:63.127%;padding-top:46.313%;background-size:100% auto;background-repeat:no-repeat}
+.keybored_game_wrap .message_true{background-image:url(../img/word_check_true.png)}
+.keybored_game_wrap .message_false{background-image:url(../img/word_check_false.png)}
+.keybored_game_wrap .message_gameover{display:block;background-image:url(../img/gameover.png)}
+
+.keybored_game_wrap .game_control_area{display:none;position:absolute;bottom:11.454%;left:9.588%;overflow:hidden;width:80.533%;height:18.356%}
+.keybored_game_wrap .game_count_area{position:absolute;top:-7.636%;left:15.487%;z-index:1;width:65.192%;height:19.972%;background:url(../img/game_timer.png) no-repeat;background-size:100% auto;font-size:0;text-align:center;box-sizing:border-box}
+.keybored_game_wrap .game_count_area:before{position:absolute;top:-20.59%;left:-1.587%;width:15.387%;padding-top:32.13%;background:url(../img/img_thunder.png) no-repeat;background-size:100% auto;content:''}
+.keybored_game_wrap .game_count_area:after{display:inline-block;height:79%;vertical-align:middle;content:''}
+.keybored_game_wrap .game_count_area .title{display:inline-block;width:34.39%;margin-right:2.715%;padding-top:8.6%;background:url(../img/game_timer_title.png) no-repeat;background-size:100% auto;vertical-align:middle}
+.keybored_game_wrap .game_count_area .time{display:inline-block;font-size:0;color:#fff;vertical-align:middle}
+.keybored_game_wrap .game_count_area .time span{font-size:23px}
+
+.keybored_game_wrap .game_sound_area{position:absolute;top:-3.085%;right:2.36%;z-index:1;width:17.7%;padding-top:12.39%}
+.keybored_game_wrap .btn_sound{top:0;left:0;width:100%;height:100%;background-image:url(../img/btn_sound_on.png)}
+.keybored_game_wrap .btn_sound.off{background-image:url(../img/btn_sound_off.png)}
+
+.keybored_game_wrap .word_area{overflow:hidden;position:absolute;top:7.05%;left:5.754%;width:88.201%;height:86.344%;background:#031146}
+.keybored_game_wrap .word_area:after{position:absolute;left:0;bottom:0;width:100%;height:68.71%;background:url(../img/bg_gradation.png) repeat-x;background-size:auto 100%;content:''}
+.keybored_game_wrap .start_area{position:absolute;top:0;left:0;z-index:1;width:100%;height:100%;background:url(../img/bg_game_start.png) no-repeat;background-size:100% auto}
+.keybored_game_wrap .end_area{position:absolute;top:0;left:0;display:none;z-index:1;width:100%;height:100%;background:rgba(0, 0, 0, 0.6)}
+.keybored_game_wrap .btn_start,.keybored_game_wrap .btn_start_web{left:10.325%;bottom:11.454%;width:78.765%;padding-top:18.5%}
+.keybored_game_wrap .btn_start{background-image:url(../img/btn_start.png)}
+.keybored_game_wrap .btn_start_web{background-image:url(../img/btn_start_web.png)}
+.keybored_game_wrap .input_text{float:left;width:69.965%;height:100%;background:#fff;border:3px solid #000;box-sizing:border-box}
+.keybored_game_wrap .input_text input{width:100%;height:100%;padding:5px;font-size:21px;border:0;text-align:center;box-sizing:border-box}
+.keybored_game_wrap .btn_enter{float:right;position:static;width:28.023%;height:100%;background-image:url(../img/btn_enter.png);color:#fff}

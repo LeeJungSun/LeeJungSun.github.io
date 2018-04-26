@@ -61,9 +61,8 @@
 
 	/** 뽑은 단어 움직이기 **/
 	function wordsMove(){
-	  
 	  for(var i=0; i<onDiv.length; i++){
-	      if(onDiv[i]=="") continue;
+	      if(onDiv[i]=="") continue; 
 	         var speed=Math.round(Math.random()*20)+1;
 	         onDiv[i].style.top=(parseInt(onDiv[i].style.top)+speed)+"px";
 	       
@@ -71,14 +70,15 @@
 	            onDiv[i].style.display="none";
 	            onDiv[i].style.top="-30px";
 	            onDiv[i]="";
-	         }
-	      }
+	         };
+	      };
+
 	      if(endCnt % 4 == 0) {
 	        tajaStart.value="멈춤";
 	     } else {
 	        setTimeout(wordsMove,movTime);
 	        tajaStart.value="시작";
-	     }
+	     };
 	}
 	/** 2개 함수 호출 **/
 	function tajaGoGo(){
