@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>Live Region</title>
+<link rel="stylesheet" href="../css/study-sass.css">
+</head>
+<body>
+<div id="wrap" class="live_region_article">
+	<h1 class="main__title">Live Region</h1>
+	<p class="sub__text">페이지가 로드되지 않고 Javascript를 사용하여 동적으로 변경되는 컨텐츠의 경우 시각적으로 페이지를 탐색하는 사용자에게는 내용이 분명하게 전달되지만, 보조기술을 이용하는 사용자에게는 동적으로 변경되는 내용이 제대로 전달되지 않을 수 있습니다.<br> Live Region은 보조기술 사용자에게도 동적인 변경사항을 동일하게 제공하는 역할을 합니다.</p>
+
+	<h2 class="sub__title">동적으로 변경되는 컨텐츠</h2>
+	<ul class="list">
+	<li>
+		<strong class="list__title">Form Alert</strong>
+	</li>
+	<li>
+		<strong class="list__title">Search</strong>
+	</li>
+	<li>
+		<strong class="list__title">Timer</strong>
+		<div class="img_wrap">
+			<div class="img">
+				<img src="../img/alert/example_timer01.png" alt="">
+			</div>
+			<div class="img">
+				<img src="../img/alert/example_timer02.png" alt="">
+			</div>
+		</div>
+	</li>
+	<li>
+		<strong class="list__title">Chatting</strong>
+		<div class="img_wrap">
+			<div class="img">
+				<img src="../img/alert/example_chatting01.png" alt="">
+			</div>
+			<div class="img">
+				<img src="../img/alert/example_chatting02.png" alt="">
+			</div>
+		</div>
+	</li>
+	</ul>
+
+	<div class="img_wrap">
+		<div class="img">
+			<img src="../img/alert/example01.png" alt="">
+			<span class="comment">example01 :: Google 회원가입</span>
+		</div>
+		<div class="img">
+			<img src="../img/alert/example02.png" alt="">
+			<span class="comment">example02 :: Naver 회원가입</span>
+		</div>
+		<div class="img">
+			<img src="../img/alert/example03.png" alt="">
+			<span class="comment">example03 :: Daum 회원가입</span>
+		</div>
+	</div>
+
+	<h3 class="article__title">Alert 사용 시 고려사항 :</h3>
+	<ul class="list">
+	<li><strong>자동으로 사라지는 Alert을 디자인하지 않는 것이 중요합니다.</strong> 너무 빨리 사라지는 경고는 <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html" target="_blank">WCAG 2.0 / 2.2.3</a> 항목을 충족시키지 못할 수 있습니다.</li>
+	<li><strong>Alert으로 사용자에게 빈번한 중단을 주지 않아야 합니다.</strong> Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html" target="_blank">WCAG 2.0 / 2.2.4</a>의 요구 사항을 충족시키지 못하게 합니다.</li>
+	<li class="edit"><strong>사용자가 Alert을 닫을 것을 요구해서는 안됩니다. - 인터렉티브</strong> Alert은 포커스가 이동할 필요가 없기 때문에 콘텐츠 작업자는 닫아야 하는 Alert을 사용해야 할 경우 작업자는 <span class="code">role="alertdialog"</span>를 사용해야 합니다.</li>
+	</ul>
+
+	<h2 class="sub__title">WAI-ARIA 역할(Roles), 속성(Properties) 및 상태(States)</h2>
+	<ul class="list">
+	<li>
+		role="alert"
+	</li>
+	<li>
+		<dl>
+		<dt class="list__title"><span class="code">aria-live</span></dt>
+		<dd>사용자가 페이지의 어느 부분을 탐색하는 것과는 상관없이 새롭게 업데이트된 정보를 사용자에게 즉시 알릴 수 있습니다.</dd>
+		</dl>
+		<div class="box">
+			<strong class="list__title">[Values]</strong>
+			<ul class="list">
+			<li>
+				<strong class="list__title">off (default)</strong>
+				<p>해당 영역을 사용자가 탐색하는 중이 아닐 경우 변경사항을 사용자에게 제공하지 않습니다.</p>
+			</li>
+			<li>
+				<strong class="list__title">assertive</strong>
+				<p>사용자가 진행하던 작업을 중단하고 변경사항을 사용자에게 즉시 알리도록 하는 역할을 합니다.<br> 페이지에 오류가 발생했을 경우나 사용자가 작업한 입력란이 업데이트 되는 경우와 같이 중요하거나 긴급하게 알려야 할 경우 사용하는 것을 권고합니다.</p>
+			</li>
+			<li>
+				<strong class="list__title">polite</strong>
+				<p>사용자가 진행하던 작업을 마치면 변경사항을 알리도록 하는 역할을 합니다.<br> 중요하지만 긴급하지 않은 변경 사항일 경우에 적합합니다.</p>
+			</li>
+			</ul>
+		</div>
+	</li>
+	<li>
+		<dl>
+		<dt class="list__title"><span class="code">aria-atomic</span></dt>
+		<dd>변경사항을 사용자에게 전달할 때 변경된 영역만 제공할지 변경된 영역 포함하여 전체 영역을 제공할지 여부를 나타냅니다.</dd>
+		</dl>
+		<div class="box">
+			<strong class="list__title">[Values]</strong>
+			<ul class="list">
+			<li>
+				<strong class="list__title">false (default)</strong>
+				<p>변경된 사항만 표시합니다.</p>
+				<div class="example_area">
+					<p class="text">'보통' 텍스트가 변경될때 변경된 텍스트만 불러줍니다.</p>
+					<code>&lt;p role="alert" aria-live="polite" aria-atomic="false"&gt;비밀번호 안전성 : <strong>&lt;span&gt;보통&lt;/span&gt;</strong>&lt;/p&gt;</code>
+					<p class="text">NVDA 음성출력 뷰어 예시)<br> 경고 비밀번호 안전성 : 위험<br> <strong>보통</strong></p>
+				</div>
+			</li>
+			<li>
+				<strong class="list__title">true</strong>
+				<p>변경된 사항을 포함한 전체 영역을 표시합니다.</p>
+				<div class="example_area">
+					<p class="text">'보통' 텍스트가 변경될 경우 role="alert"이 선언된 태그 내 텍스트를 모두 읽어줍니다.</p>
+					<code>&lt;p role="alert" aria-live="polite" aria-atomic="true"&gt;<strong>비밀번호 안전성 : &lt;span&gt;보통&lt;/span&gt;</strong>&lt;/p&gt;</code>
+					<p class="text">NVDA 음성출력 뷰어 예시)<br> 경고 비밀번호 안전성 : 위험<br> <strong>경고 비밀번호 안전성 : 보통</strong></p>
+				</div>
+			</li>
+			</ul>			
+		</div>
+	</li>
+	</ul>	
+
+	<h2 class="sub__title">브라우저 및 스크린리더 Test</h2>
+	<p class="sub__text">Alert 메시지를 사용자에게 제공하는 방법은 여러가지가 있습니다. 그 중 대표적으로 DOM에 그려져 있는 상태에서 제공하는 방식과 Javascript로 DOM에 직접 그려주는 방식으로 테스트하였습니다.</p>
+	<p class="sub__text">* Mobile의 경우 해당 디바이스 기본 브라우저로 테스트 진행하였습니다.</p>
+
+	<h3 class="article__title">1. DOM에 있는 요소를 display:none/block으로 노출하는 경우</h3>
+	<div>
+		HTML/JS 코드 및 테스트 링크 적용
+		<a href="01_alert_sample01.html" target="_blank"></a>
+	</div>
+	<div class="table_wrap">
+		<table>
+		<caption><span>PC</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
+		<thead>
+		<tr>
+		<th scope="col">OS</th>
+		<th scope="col">Browser</th>
+		<th scope="col">Screen reader</th>
+		<th scope="col">지원 유무</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Window 10</td>
+		<td>Chrome</td>
+		<td>NVDA</td>
+		<td>초기 Alert 메시지 노출시에만 '경고'로 표시되며,<br> 이후 Alert내 메시지 업데이트시 '경고' 노출되지 않습니다.</td>
+		</tr>
+		<tr>
+		<td>Window 10</td>
+		<td>Firefox</td>
+		<td>NVDA</td>
+		<td>'경고'로 표시됩니다.</td>
+		</tr>
+		<tr>
+		<td>Window 10</td>
+		<td>IE</td>
+		<td>NVDA</td>
+		<td>초기 Alert 메시지 노출시에만 '경고'로 표시되며,<br> 이후 Alert내 메시지 업데이트시 '경고' 노출되지 않습니다.</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="table_wrap">
+		<table>
+		<caption><span>Mobile</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
+		<thead>
+		<tr>
+		<th scope="col">OS</th>
+		<th scope="col">Device</th>
+		<th scope="col">Version</th>
+		<th scope="col">Screen reader</th>
+		<th scope="col">지원 유무</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S4</td>
+		<td>5.0.1</td>
+		<td>TalkBack</td>
+		<td>'Alert'로 표시됩니다.</td>
+		</tr>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S8</td>
+		<td>7.0</td>
+		<td>Voice Assistant</td>
+		<td>X</td>
+		</tr>
+		<tr>
+		<td>iOS</td>
+		<td>아이폰X</td>
+		<td>11.2.2</td>
+		<td>VoiceOver</td>
+		<td>X</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+
+	<h3 class="article__title">2. 스크립트로 DOM을 생성하는 경우</h3>
+	<div class="table_wrap">
+		<table>
+		<caption><span>PC</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
+		<thead>
+		<tr>
+		<th scope="col">OS</th>
+		<th scope="col">Browser</th>
+		<th scope="col">Screen reader</th>
+		<th scope="col">지원 유무</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Window 10</td>
+		<td>Chrome</td>
+		<td>NVDA</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>Window 10</td>
+		<td>Firefox</td>
+		<td>NVDA</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>Window 10</td>
+		<td>IE</td>
+		<td>NVDA</td>
+		<td></td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="table_wrap">
+		<table>
+		<caption><span>Mobile</span></caption>
+		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
+		<thead>
+		<tr>
+		<th scope="col">OS</th>
+		<th scope="col">Device</th>
+		<th scope="col">Version</th>
+		<th scope="col">Screen reader</th>
+		<th scope="col">지원 유무</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S4</td>
+		<td>5.0.1</td>
+		<td>TalkBack</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>Android</td>
+		<td>Galaxy S8</td>
+		<td>7.0</td>
+		<td>Voice Assistant</td>
+		<td></td>
+		</tr>
+		<tr>
+		<td>iOS</td>
+		<td>아이폰X</td>
+		<td>11.2.2</td>
+		<td>VoiceOver</td>
+		<td></td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	
+	<h2 class="sub__title">마치며</h2>
+	<p class="sub__text">생각했던 것, 고민한 것 등등</p>
+
+	<h2 class="sub__title">참고 사이트</h2>
+	<ul class="list">
+	<li><a href="https://www.w3.org/TR/wai-aria-1.1/#alert">https://www.w3.org/TR/wai-aria-1.1/#alert</a></li>
+	<li><a href="https://www.w3.org/TR/wai-aria-1.1/#aria-live">https://www.w3.org/TR/wai-aria-1.1/#aria-live</a></li>
+	<li><a href="https://www.w3.org/TR/wai-aria-1.1/#aria-atomic">https://www.w3.org/TR/wai-aria-1.1/#aria-atomic</a></li>
+	<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role">https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_alert_role</a></li>
+	<li><a href="https://developers.google.com/web/fundamentals/accessibility/semantics-aria/hiding-and-updating-content?hl=ko">https://developers.google.com/web/fundamentals/accessibility/semantics-aria/hiding-and-updating-content?hl=ko</a></li>
+	<li><a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html">https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html</a></li>
+	<li><a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html">https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html</a></li>
+	</ul>
+
+
+</div>
+</body>
+<script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
+</html>
