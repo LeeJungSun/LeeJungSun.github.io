@@ -28,8 +28,15 @@
 }
 .live_region_article{
 	.img_wrap{
+		display:table;
+		width:100%;
+		table-layout:fixed;
+		&:after{
+			display:none;
+		}
 		.img{
-			width:50%
+			display:table-cell;
+			float:none;
 		}		
 	}	
 }
