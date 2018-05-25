@@ -87,30 +87,29 @@
 	<li>
 		<dl>
 		<dt class="list__title"><span class="code">aria-relevant</span></dt>
-		<dd>라이브 영역에서 컨텐츠가 추가, 제거 되는 등 의미 있는 변경 유형을 설정하는데 사용됩니다.</dd>
+		<dd>라이브 영역에서 콘텐츠의 업데이트 유형(추가, 제거 등)을 나타나는데 사용되는 선택적 속성입니다.</dd>
 		</dl>
 		<div class="box">
 			<div class="notice">
 				<strong class="notice__title">NOTICE :</strong>
 				<ul class="notice__list">
-				<li>설정값을 한가지 이상 설정할 수 있습니다. (default : additions text)</li>
-				<li>텍스트 제거는 지정된 값 중 하나가 'removals' 또는 'all'일 경우 관련성이 있다고 간주되어야 합니다. 예를 들어 라이브 영역에서 텍스트가 'on'에서 'off'로 변경되는 경우, 텍스트 추가('off')는 사용되지만 텍스트 제거('on')는 사용되지 않습니다.</li>
+				<li>값은 한가지 이상 설정할 수 있습니다. (기본값 : aria-relevant="additions text")</li>
+				<li>설정된 값과 관련이 없는 변경은 aria-live="off"값으로 설정된 경우와 동일한 방식으로 작동합니다.</li>
 				</ul>
 			</div>
-
 			<strong class="list__title">[Values]</strong>
 			<ul class="list">
 			<li>
 				<strong class="list__title">additions</strong>
-				<p>요소 노드가 라이브 영역 DOM에 추가됩니다.</p>
+				<p>요소 노드가 라이브 영역 내 DOM에 추가됩니다.</p>
 			</li>
 			<li>
 				<strong class="list__title">removals</strong>
-				<p>텍스트 또는 요소가 라이브 영역 DOM에서 제거됩니다.</p>
+				<p>요소나 텍스트가 라이브 영역 내 DOM에 제거됩니다.</p>
 			</li>
 			<li>
 				<strong class="list__title">text</strong>
-				<p>텍스트가 라이브 영역의 모든 자식요소에 추가됩니다.</p>
+				<p>텍스트가 라이브 영역 내 DOM에 추가되거나 제거됩니다.</p>
 			</li>
 			<li>
 				<strong class="list__title">all</strong>

@@ -49,7 +49,7 @@ https://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-relev
 
 [Notice]
 - 값은 한가지 이상 설정할 수 있습니다. (기본값 : aria-relevant="additions text")
-
+- 설정된 값과 관련이 없는 변경은 aria-live="off"값으로 설정된 경우와 동일한 방식으로 작동합니다.
 
 
 - 제거 관련된 값은 메신저 대화방에서 사용자가 나갔을때와 같이 중요한 내용을 삭제할 때 콘텐츠 제거에 대한 정보만 제공해줍니다.
@@ -59,9 +59,9 @@ https://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-relev
 - additions
   요소 노드가 라이브 영역 내 DOM에 추가됩니다.
 - removals
-  요소나 텍스트가 라이브 영역 내 DOM에 제거되었을 때
+  요소나 텍스트가 라이브 영역 내 DOM에 제거됩니다.
 - text
-  텍스트가 라이브 영역 내 DOM에 추가되거나 제거되었을 때
+  텍스트가 라이브 영역 내 DOM에 추가되거나 제거됩니다.
 - all
   "additions removals text"을 모두 사용한 것과 같습니다.
 
