@@ -1,6 +1,36 @@
 #wrap.game_wrap{
 	max-width:770px;
 }
+
+.soccer_game_wrap{position:relative;padding-top:101.3%;background:#1f395c}
+
+.field_wrap{position:absolute;left:0;bottom:0;width:100%;padding-top:101.3%;background:#2b9d07}
+.field_wrap .human{position:absolute;top:0;left:50%;width:16%;padding-top:35.5%;background:#000;transform:translate(-50%, 0)}
+.field_wrap .arm_left,.field_wrap .arm_right{position:absolute;top:25%;width:100%;padding-top:25%;background:#000}
+.field_wrap .arm_left{left:-50%;animation:armLeftAnimation 1.2s linear infinite}
+.field_wrap .arm_right{right:-50%;animation:armRightAnimation 1.2s linear infinite}
+@keyframes armLeftAnimation {
+	0% {transform:rotate(180deg)}
+	50% {transform:rotate(130deg)}
+	100% {transform:rotate(180deg)}
+}
+@keyframes armRightAnimation {
+	0% {transform:rotate(-180deg)}
+	50% {transform:rotate(-130deg)}
+	100% {transform:rotate(-180deg)}
+}
+.field_wrap .ball{position:absolute;bottom:20%;left:50%;width:19%;padding-top:19%;background:#fff;transform:translate(-50%, 0)}
+
+.soccer_game_wrap .btn_wrap{position:absolute;left:0;bottom:0;width:100%;font-size:0;text-align:center}
+.soccer_game_wrap .btn_wrap .btn{display:inline-block;width:25%;margin:0 3%;padding-top:10%}
+.soccer_game_wrap .btn_left{background:#e22b57}
+.soccer_game_wrap .btn_center{background:#412bcc}
+.soccer_game_wrap .btn_right{background:#15c771}
+
+.soccer_game_wrap .notice_text{position:absolute;left:50%;bottom:10%;width:53%;padding-top:6%;background:red;text-align:center;transform:translate(-50%, 0)}
+
+
+
 .box{
 	background:pink;
 	padding-top:137.143%;

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>축구 게임</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+<div id="wrap" class="game_wrap">
+   <div class="soccer_game_wrap">
+      <div class="field_wrap">
+         <div class="human"><span class="arm_left"></span><span class="arm_right"></span></div>
+         <div class="ball"></div>
+      </div>
+      <p class="notice_text"><span class="blind">킥 방향을 선택해 주세요!</span></p>
+       <div class="btn_wrap">
+          <button type="button" class="btn btn_left"><span class="blind">왼쪽</span></button>
+          <button type="button" class="btn btn_center"><span class="blind">중앙</span></button>
+          <button type="button" class="btn btn_right"><span class="blind">오른쪽</span></button>
+       </div>
+   </div>
+</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script src="../js/apps/game.js"></script>
+</html>

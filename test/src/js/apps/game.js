@@ -2,6 +2,66 @@
   'use strict';
 
   win.cjmall = win.cjmall || {};
+
+  // 축구 게임
+  win.cjmall.soccerGame = function (args) {
+    var defParams = { //파라미터 값 정의
+      gameWrap : '.soccer_game_wrap',
+      human : '.human',
+      btnLeft : '.btn_left',
+      btnCenter : '.btn_center',
+      btnRight : '.btn_right',
+      noticeText : '.notice_text',
+      ball : '.ball'
+    };
+    this.opts = $.extend({}, defParams, (args || {}));
+    if (!(this.gameWrap = $(this.opts.gameWrap)).length) return;
+    this.init();
+  };
+  win.cjmall.soccerGame.prototype = {
+    init : function () {
+      this.setElements();
+      this.bindEvents();
+      // this.humanMove();
+      // this.textAnimation();
+    },
+    setElements : function () {
+      this.gameWrap = $(this.opts.gameWrap);
+      this.human = this.gameWrap.find(this.opts.human);
+      this.btnLeft = this.gameWrap.find(this.opts.btnLeft);
+      this.btnCenter = this.gameWrap.find(this.opts.btnCenter);
+      this.btnRight = this.gameWrap.find(this.opts.btnRight);
+      this.noticeText = this.gameWrap.find(this.opts.noticeText);
+      this.ball = this.gameWrap.find(this.opts.ball);
+    },
+    bindEvents : function () {
+      this.btnLeft.on('click', $.proxy(this.ballLeft, this));
+      // this.btnCenter.on('click', $.proxy(this.gameEvent, this));
+      // this.btnRight.on('click', $.proxy(this.gameEvent, this));
+    },
+    textAnimation : function () {
+      var _this = this;
+
+      setInterval(function () {
+        _this.noticeText.fadeOut(600);
+        _this.noticeText.fadeIn(600);
+      })
+    },
+    humanMove : function () {
+      var _this = this;
+
+      setInterval(function () {
+        _this.human.animate({left:47+'%'}, 600);
+        _this.human.animate({left:53+'%'}, 600);
+      });
+    },
+    ballLeft : function () {
+      console.log(this.ball)
+      this.ball.animate({bottom:50+'%', left:40+'%'}, 800);
+    }
+  };
+
+  // 키보드 타자 게임
   win.cjmall.keyboredGame = function (args) {
     var defParams = { //파라미터 값 정의
       gameWrap : '.keybored_game_wrap',
@@ -189,24 +249,23 @@
     wordCheck : function (e) { // 단어 입력후 엔터 혹은 엔터 버튼 클릭하였을때 유효성 검사
       var typingText = this.textInput.val();
 
-      if (e.keyCode === 13 || e.type === 'click') { 
-        this.textInput.val('');
+      if (e.keyCode === 13 || e.type === 'click') {
+        this.textInput[0].value = ''; //[D]180503 수정
+
+        if (e.type === 'click')  {
+          this.textInput.focus();
+        };
 
         for (var i = 0; i < this.wordArray.length; i++) {
-          // 생성된 텍스트 순서
-          var onWord = this.wordArea.children().eq(i); 
+          var onWord = this.wordArea.children().eq(i); // 생성된 텍스트 순서
 
-          // 타이핑한 텍스트와 생성된 텍스트값이 일치할 경우
-          if (typingText === onWord.text() && typingText !== '') {
-              // 일치하는 텍스트 제거
-              onWord.remove();
-              // 일치할 경우 노출되는 메세지
+          if (typingText === onWord.text() && typingText !== '') { // 타이핑한 텍스트와 생성된 텍스트값이 일치할 경우
+              onWord.remove(); // 일치하는 텍스트 제거
               this.wordTrueEffect();
-              return false;
+              return this.textInput[0].value = ''; //[D]180503 수정
           };
         };
-        // 일치하지 않을 경우 노출되는 메세지 (단어가 일치하지않거나 값이 없는 상태로 전송된 경우 실행)
-        this.wordFalseEffect(); 
+        this.wordFalseEffect();
       };
     },
     wordTrueEffect : function () {
@@ -235,7 +294,9 @@
       };
     }
   };
+
   $(function () {
       win.cjoshopping = new win.cjmall.keyboredGame();
+      win.cjoshopping = new win.cjmall.soccerGame();
   });
 })(jQuery, window, document);
