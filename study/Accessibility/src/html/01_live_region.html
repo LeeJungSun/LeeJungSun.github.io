@@ -27,7 +27,7 @@
 				<ul class="notice__list">
 				<li><strong>자동으로 사라지는 Alert을 디자인하지 않는 것이 중요합니다.</strong> 너무 빨리 사라지는 경고는 <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-no-exceptions.html" target="_blank">WCAG 2.0 / 2.2.3</a> 항목을 충족시키지 못할 수 있습니다.</li>
 				<li><strong>Alert으로 사용자에게 빈번한 중단을 주지 않아야 합니다.</strong> Alert으로 인한 빈번한 중단은 시각 및 인지 장애를 가진 사람들의 유용성을 저해하여 <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-postponed.html" target="_blank">WCAG 2.0 / 2.2.4</a>의 요구 사항을 충족시키지 못하게 합니다.</li>
-				<li class="edit"><strong>사용자가 Alert을 닫을 것을 요구해서는 안됩니다. - 인터렉티브</strong> Alert은 포커스가 이동할 필요가 없기 때문에 콘텐츠 작업자는 닫아야 하는 Alert을 사용해야 할 경우 작업자는 <span class="code">role="alertdialog"</span>를 사용해야 합니다.</li>
+				<li><strong>사용자 인터렉션 요소를 포함해서는 안됩니다.</strong> role="alert"은 포커스가 이동할 필요가 없기 때문에 콘텐츠 작업자는 인터렉션 요소를 제공해야 할 경우 작업자는 <span class="code">role="alertdialog"</span>를 사용해야 합니다.</li>
 				</ul>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 	<li>
 		<dl>
 		<dt class="list__title"><span class="code">aria-live</span></dt>
-		<dd>사용자가 페이지의 어느 부분을 탐색하는 것과는 상관없이 새롭게 업데이트된 정보를 사용자에게 즉시 알릴 수 있습니다.</dd>
+		<dd>사용자가 탐색하고 있는 영역와 상관없이 새롭게 업데이트된 정보를 사용자에게 즉시 알리는 영역을 의미합니다.</dd>
 		</dl>
 		<div class="box">
 			<strong class="list__title">[Values]</strong>
@@ -142,210 +142,53 @@
 
 	<!-- 사용 예시 -->
 	<h2 class="sub__title">Live Region 사용 예시 컨텐츠</h2>
+	<p class="sub__text">ddddd</p>
 	<ul class="list">
 	<li>
-		<strong class="list__title">Form Alert</strong>
-		<p>form alert은 무엇? 어떤 경우가 있는지?</p>
+		<h3 class="list__title">검색어 자동완성</h3>
 		<div class="img_wrap">
-			<div class="img">
-				<span class="comment">example01 :: Google 회원가입</span>
-				<img src="../img/alert/example01.png" alt="Google 회원가입 예시 이미지">
+			<div class="img" style="width:40%">
+				<img src="../img/alert/example_form.png" alt="">
 			</div>
 			<div class="img">
-				<span class="comment">example02 :: Naver 회원가입</span>
-				<img src="../img/alert/example02.png" alt="Naver 회원가입 예시 이미지">
-			</div>
-			<div class="img">
-				<span class="comment">example03 :: Daum 회원가입</span>
-				<img src="../img/alert/example03.png" alt="Daum 회원가입 예시 이미지">
+				<img src="../img/alert/example_form2.png" alt="">
 			</div>
 		</div>
 	</li>
 	<li>
-		<strong class="list__title">Search</strong>
-		<p>search은 무엇? 어떤 경우가 있는지?</p>
+		<h3 class="list__title">검색어 자동완성</h3>
 		<div class="img_wrap">
 			<div class="img">
-				<img src="../img/alert/example_search01.png" alt="네이버 검색창 자동완성 예시 이미지">
+				<img src="../img/alert/example_search.png" alt="">
 			</div>
 			<div class="img">
-				<img src="../img/alert/example_search02.png" alt="다음 검색창 자동완성 예시 이미지">
+				<img src="../img/alert/example_search2.png" alt="">
 			</div>
 		</div>
 	</li>
 	<li>
-		<strong class="list__title">Timer</strong>
-		<p>Timer는 무엇? 어떤 경우가 있는지?</p>
+		<h3 class="list__title">타이머</h3>
 		<div class="img_wrap">
 			<div class="img">
-				<img src="../img/alert/example_timer01.png" alt="">
+				<img src="../img/alert/example_timer.png" alt="">
 			</div>
 			<div class="img">
-				<img src="../img/alert/example_timer02.png" alt="">
+				<img src="../img/alert/example_timer2.png" alt="">
 			</div>
 		</div>
 	</li>
 	<li>
-		<strong class="list__title">Chatting</strong>
-		<p>Chatting는 무엇? 어떤 경우가 있는지?</p>
+		<h3 class="list__title">채팅</h3>
+		<div class="img_wrap">
+			<div class="img">
+				<img src="../img/alert/example_chatting.png" alt="">
+			</div>
+			<div class="img">
+				<img src="../img/alert/example_chatting2.png" alt="">
+			</div>
+		</div>
 	</li>
 	</ul>
-
-	<!-- <h2 class="sub__title">브라우저 및 스크린리더 Test</h2>
-	<p class="sub__text">Alert 메시지를 사용자에게 제공하는 방법은 여러가지가 있습니다. 그 중 대표적으로 DOM에 그려져 있는 상태에서 제공하는 방식과 Javascript로 DOM에 직접 그려주는 방식으로 테스트하였습니다.</p>
-	<p class="sub__text">* Mobile의 경우 해당 디바이스 기본 브라우저로 테스트 진행하였습니다.</p>
-
-	<h3 class="article__title">1. DOM에 있는 요소를 display:none/block으로 노출하는 경우</h3>
-	<div>
-		HTML/JS 코드 및 테스트 링크 적용
-		<a href="01_alert_sample01.html" target="_blank"></a>
-	</div>
-	<div class="table_wrap">
-		<table>
-		<caption><span>PC</span></caption>
-		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
-		<thead>
-		<tr>
-		<th scope="col">OS</th>
-		<th scope="col">Browser</th>
-		<th scope="col">Screen reader</th>
-		<th scope="col">지원 유무</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>Window 10</td>
-		<td>Chrome</td>
-		<td>NVDA</td>
-		<td>초기 Alert 메시지 노출시에만 '경고'로 표시되며,<br> 이후 Alert내 메시지 업데이트시 '경고' 노출되지 않습니다.</td>
-		</tr>
-		<tr>
-		<td>Window 10</td>
-		<td>Firefox</td>
-		<td>NVDA</td>
-		<td>'경고'로 표시됩니다.</td>
-		</tr>
-		<tr>
-		<td>Window 10</td>
-		<td>IE</td>
-		<td>NVDA</td>
-		<td>초기 Alert 메시지 노출시에만 '경고'로 표시되며,<br> 이후 Alert내 메시지 업데이트시 '경고' 노출되지 않습니다.</td>
-		</tr>
-		</tbody>
-		</table>
-	</div>
-	<div class="table_wrap">
-		<table>
-		<caption><span>Mobile</span></caption>
-		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
-		<thead>
-		<tr>
-		<th scope="col">OS</th>
-		<th scope="col">Device</th>
-		<th scope="col">Version</th>
-		<th scope="col">Screen reader</th>
-		<th scope="col">지원 유무</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>Android</td>
-		<td>Galaxy S4</td>
-		<td>5.0.1</td>
-		<td>TalkBack</td>
-		<td>'Alert'로 표시됩니다.</td>
-		</tr>
-		<tr>
-		<td>Android</td>
-		<td>Galaxy S8</td>
-		<td>7.0</td>
-		<td>Voice Assistant</td>
-		<td>X</td>
-		</tr>
-		<tr>
-		<td>iOS</td>
-		<td>아이폰X</td>
-		<td>11.2.2</td>
-		<td>VoiceOver</td>
-		<td>X</td>
-		</tr>
-		</tbody>
-		</table>
-	</div>
-
-	<h3 class="article__title">2. 스크립트로 DOM을 생성하는 경우</h3>
-	<div class="table_wrap">
-		<table>
-		<caption><span>PC</span></caption>
-		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
-		<thead>
-		<tr>
-		<th scope="col">OS</th>
-		<th scope="col">Browser</th>
-		<th scope="col">Screen reader</th>
-		<th scope="col">지원 유무</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>Window 10</td>
-		<td>Chrome</td>
-		<td>NVDA</td>
-		<td></td>
-		</tr>
-		<tr>
-		<td>Window 10</td>
-		<td>Firefox</td>
-		<td>NVDA</td>
-		<td></td>
-		</tr>
-		<tr>
-		<td>Window 10</td>
-		<td>IE</td>
-		<td>NVDA</td>
-		<td></td>
-		</tr>
-		</tbody>
-		</table>
-	</div>
-	<div class="table_wrap">
-		<table>
-		<caption><span>Mobile</span></caption>
-		<colgroup><col style="width:15%"><col style="width:15%"><col style="width:15%"><col style="width:20%"><col></colgroup>
-		<thead>
-		<tr>
-		<th scope="col">OS</th>
-		<th scope="col">Device</th>
-		<th scope="col">Version</th>
-		<th scope="col">Screen reader</th>
-		<th scope="col">지원 유무</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-		<td>Android</td>
-		<td>Galaxy S4</td>
-		<td>5.0.1</td>
-		<td>TalkBack</td>
-		<td></td>
-		</tr>
-		<tr>
-		<td>Android</td>
-		<td>Galaxy S8</td>
-		<td>7.0</td>
-		<td>Voice Assistant</td>
-		<td></td>
-		</tr>
-		<tr>
-		<td>iOS</td>
-		<td>아이폰X</td>
-		<td>11.2.2</td>
-		<td>VoiceOver</td>
-		<td></td>
-		</tr>
-		</tbody>
-		</table>
-	</div> -->
 	
 	<h2 class="sub__title">마치며</h2>
 	<p class="sub__text">생각했던 것, 고민한 것 등등</p>
