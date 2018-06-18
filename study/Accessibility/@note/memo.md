@@ -45,7 +45,7 @@ Live Region은 보조기술 사용자에게 현재 포커스를 잃지 않고 �
 ### aria-relevant
 https://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-relevant
 
-라이브 영역에서 콘텐츠의 업데이트 유형(추가, 제거 등)을 나타나는데 사용되는 선택적 속성입니다.
+라이브 영역에서 콘텐츠의 업데이트 유형(추가, 제거 등)의 정보를 알릴지 여부를 설정하는데 사용되는 선택적 속성입니다.
 
 [Notice]
 - 값은 한가지 이상 설정할 수 있습니다. (기본값 : aria-relevant="additions text")
@@ -57,33 +57,51 @@ https://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-relev
 
 [Values]
 - additions
-  요소 노드가 라이브 영역 내 DOM에 추가됩니다.
+  요소가 라이브 영역 내 DOM에 추가되었을때 알립니다.
 - removals
-  요소나 텍스트가 라이브 영역 내 DOM에 제거됩니다.
+  요소나 텍스트가 라이브 영역 내 DOM에 제거되었을때 알립니다.
 - text
-  텍스트가 라이브 영역 내 DOM에 추가되거나 제거됩니다.
+  텍스트가 라이브 영역 내 DOM에 추가되거나 제거되었을때 알립니다.
 - all
   "additions removals text"을 모두 사용한 것과 같습니다.
 
 
 ### aria-busy
-
+변경된 내용이 업데이트 되는 중인지를 알려주는 속성입니다.
 
 [Values]
 - false (default)
-  요소에 예상되는 업데이트가 없습니다.
+  업데이트 된 내용을 알림
 - true
-  요소가 업데이트 중입니다.
+  업데이트 된 내용을 알리지않음
 
 
 ------------------------------
 
 
 ## Live Region 사용 예시 컨텐츠
-form
-timer
-search
+### 
+- 폼요소 잘못 입력한 값 알림 메세지 노출 되었을때
+```
+<span role="alert" aria-live="polite">아이디를 입력해주세요.</span>
+```
 
+### 검색어 자동완성
+검색창에 검색어를 입력했을때 자동완성 목록 결과값이 몇개가 노출되었는지 메시지를 출력하여 사용자에게 알려주는 용도로 사용
+```
+<span aria-live="polite">15개의 자동완성 결과가 있습니다. 위/아래 방향키를 눌러서 이용하세요</span>
+```
+
+### 타이머
+```
+<span aria-live="polite">00:30:37 남음</span>
+```
+
+
+### 채팅
+```
+
+```
 
 
 
