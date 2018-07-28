@@ -70,5 +70,21 @@ console.log(JSON.stringify([Infinity, NaN, null]));
 
 console.log(JSON.stringify([true, false]));
 - true, false는 값은 변하지 않고 문자열로 변환
+
+console.log(JSON.stringity(undefined));
+- 파라미터에 직접 작성하면 문자열 "undefined"로 변환
+- 배열에 작성하면 문자열 "null"로 변환
+- 프로퍼티 값으로 작성하면 프로퍼티(이름:값)를 제외시킴
+
+console.log(JSON.stringity(['ABC','가나다']))
+- []기호는 문자열로 변환되며
+- [] 안의 작은따옴표가 큰따옴표로 변환된다.
+
+var result = JSON.stringify({sports:'soccer', player: 55},
+	function (key, value) {
+        return key === 'player' ? 11 : value;
+	}
+)
+console.log(result);
 ```
 
