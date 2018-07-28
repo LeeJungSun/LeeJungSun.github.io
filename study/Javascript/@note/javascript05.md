@@ -58,3 +58,17 @@ for (var name in result) {
 
 - 자바스크립트 형태의 값을 JSON 형태의 문자열로 변환
 - JSON.stringify() 형태로 호출
+
+```
+var result = JSON.stringify(123);
+console.log(result);
+console.log(typeof result);
+- 숫자 타입을 문자열 타입으로 변환
+
+console.log(JSON.stringify([Infinity, NaN, null]));
+- Infinity, NaN, null은 문자열 "null"로 변환
+
+console.log(JSON.stringify([true, false]));
+- true, false는 값은 변하지 않고 문자열로 변환
+```
+
