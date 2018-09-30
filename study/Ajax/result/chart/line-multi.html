@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>Multi :: Chart</title>
+<style type="text/css">
+#container {
+	min-width: 310px;
+	max-width: 800px;
+	height: 400px;
+	margin: 100px auto 0
+}
+</style>
+</head>
+<body>
+<div id="container"></div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script type="text/javascript">
+
+// 1000단위 콤마 처리
+var comma = function(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+// 차트 생성
+var chart = Highcharts.chart('container', {
+	chart: {
+		animation: false
+	},
+
+	title: {
+		text: '국토교통부 실거래 정보'
+	},
+
+	subtitle: {
+		text: 'Source: Sample JSON'
+	},
+
+	scrollbar: {
+		enabled: false
+	},
+	
+	credits: {
+		enabled: false
+	},
+
+	plotOptions: {
+        series: {
+            animation: false
+		},
+		line: {
+			marker: {
+				enabled: false
+			}
+		},
+		column: {
+			dataLabels: {
+				enabled: false,
+				color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+			},
+		}
+	},
+	
+	tooltip: {
+		formatter: function() {
+			if(this.y >= 10000){
+				return this.series.name + ':' + comma(this.y  / 10000 + '억');
+			}else{
+				return this.series.name + ':' + this.y;
+			}
+		}
+	},
+
+	yAxis: [{
+			title: 'null',
+			startOnTick: false,
+			endOnTick: false,
+			labels: {
+				align: 'right',
+				x: -5,
+				y: 0,
+				formatter: function() {
+					return this.value / 10000 + '억';
+				}
+			},
+			height: '80%'
+		}, {
+			title: {
+				text: '거래량',
+				rotation: 0,
+				margin: 0,
+				x: -20
+			},
+			labels: {
+				enabled: false
+			},
+			top: '90%',
+			height: '10%',
+			offset: 0
+		}],
+	
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle'
+	},
+});
+
+// Series 데이터 추가
+var putData = function(sData, cData, sTitle, cType, yAxis){
+
+	// 전세 실거래가 데이터인 경우 X축 categories(레이블) 추가
+	if(sTitle == legend[3]){
+		chart.xAxis[0].setCategories(cData);
+	}
+	
+	chart.addSeries({
+		name: sTitle,
+		type: cType,
+		data: sData,
+		yAxis: yAxis,
+	});
+}
+
+// JSON에서 추출한 데이터를 저장할 배열 선언
+var price = [];
+var deposit = [];
+var count = [];
+var year = [];
+var yearTmp = [];
+
+// 변경될 수 있는 데이터 배열로 관리
+var legend = ['매매 실거래가', '매매 추이', '매매 거래량', '전세 실거래가', '전세 추이', '전세 거래량'];
+var dataSrc = ['sale_real', 'sale_trend', 'sale_count', 'rental_real', 'rental_trend', 'rental_count'];
+
+var dataHandle = function(src, oData){
+	$.ajax({
+		url: 'json/sampleData_'+src+'.json',
+		success: function (res) {
+			// console.log(res);
+			$.map(res, function(value){
+				// console.log(value);
+				$.map(value, function(value2, key2){
+					// console.log(key2);
+					if(key2 == 'price' && value2 != 0){
+						// console.log(value2);
+						price.push(value2);
+					}
+					if(key2 == 'deposit' && value2 != 0){
+						// console.log(value2);
+						deposit.push(value2);
+					}
+					if(key2 == 'count' && value2 != 0){
+						// console.log(value2);
+						count.push(value2);
+					}
+					if(key2 == 'year'){
+						// console.log(value2);
+						if(src == dataSrc[3]){
+							yearTmp.push(value2);
+							if(yearTmp[yearTmp.length-2] != value2){
+								year.push(value2);
+							}else{
+								year.push('');
+							}
+						}
+					}
+				});
+			});
+			// console.log(year);
+			// console.log(price);
+
+			// JSON 구분에 따른 데이터 처리
+			switch(src){
+				case 'sale_real' : 
+					putData(price, 0, legend[0], 'scatter', 0);
+					price = [];
+					break;
+				case 'sale_trend' :
+					putData(price, 0, legend[1], 'line', 0);
+					price = [];
+					break;
+				case 'sale_count' :
+					putData(count, 0, legend[2], 'column', 1);
+					count = [];
+					break;
+				case 'rental_real' :
+					putData(deposit, year, legend[3], 'scatter', 0);
+					deposit = [];
+					year = [];
+					break;
+				case 'rental_trend' :
+					putData(deposit, 0, legend[4], 'line', 0);
+					deposit = [];
+					break;
+				case 'rental_count' :
+					putData(count, 0, legend[5], 'column', 1);
+					count = [];
+					break;
+			}
+		}
+	});
+}
+
+// JSON 데이터 범위에 따른 반복 처리
+for(var i in dataSrc){
+	dataHandle(dataSrc[i]);
+}
+
+</script>
+</body>
+</html>
