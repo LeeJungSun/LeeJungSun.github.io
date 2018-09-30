@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>Chart</title>
+<style>
+#container {
+	min-width: 310px;
+	max-width: 800px;
+	height: 400px;
+	margin: 0 auto
+}
+</style>
+<script src="js/lib/jquery-1.12.4.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+
+	<script>
+		var deposit = [],
+			 year = [];
+
+		var chart = Highcharts.chart('container', {
+
+			title: {
+				text: 'Solar Employment Growth by Sector, 2010-2016'
+			},
+
+			subtitle: {
+				text: 'Source: thesolarfoundation.com'
+			},
+
+			yAxis: {
+				title: {
+					text: 'Number of Employees'
+				}
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'middle'
+			},
+
+			// plotOptions: {
+			// 	series: {
+			// 		label: {
+			// 				connectorAllowed: false
+			// 		},
+			// 		pointStart: 2010
+			// 	}
+			// },
+
+			//static 데이터 형식
+			// series: [{ 
+			// 	name: 'Installation',
+			// 	data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+			// }, {
+			// 	name: 'Manufacturing',
+			// 	data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+			// }, {
+			// 	name: 'Sales & Distribution',
+			// 	data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+			// }, {
+			// 	name: 'Project Development',
+			// 	data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+			// }, {
+			// 	name: 'Other',
+			// 	data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+			// }],
+
+			responsive: {
+				rules: [{
+					condition: {
+							maxWidth: 500
+					},
+					chartOptions: {
+							legend: {
+								layout: 'horizontal',
+								align: 'center',
+								verticalAlign: 'bottom'
+							}
+					}
+				}]
+			}
+
+		});
+
+		
+		$.ajax({
+			url: "./json/sampleData_rental_real.json",
+			success: function (res) {
+				// console.log(res);
+
+				$.map(res, function (value, key) {
+					// console.log(key, value);
+
+					$.map(value, function (value2, key2) {
+						// console.log(key2, value2);
+
+						if (key2 === 'deposit') {
+							// console.log(key2, value2);
+							deposit.push(value2);
+						}
+						if (key2 === 'year') {
+							// console.log(key2, value2);
+							year.push(value2);
+						}
+					});
+				});
+
+				console.log(deposit);
+				console.log(year);
+				chart.xAxis[0].setCategories(year);
+
+				chart.addSeries({
+					name : '매매 데이터',
+					data : deposit
+				});
+			}
+		});
+	</script>
+</body>
+</html>

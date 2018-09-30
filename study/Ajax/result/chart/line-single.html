@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>Single :: Chart</title>
+<style type="text/css">
+#container {
+	min-width: 310px;
+	max-width: 800px;
+	height: 400px;
+	margin: 0 auto
+}
+</style>
+</head>
+<body>
+<div id="container"> </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script type="text/javascript">
+
+// 차트 생성, Series 데이터 추가
+var initChart = function(sData, cData){
+	var chart = Highcharts.chart('container', {
+		title: {
+			text: '연도별 매매 가격 변동'
+		},
+
+		subtitle: {
+			text: 'Source: Sample JSON'
+		},
+
+		yAxis: {
+			title: {
+				text: 'Price'
+			}
+		},
+
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		},
+
+		/* series: [{
+			name: 'Installation',
+			data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+		}, {
+			name: 'Manufacturing',
+			data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+		}, {
+			name: 'Sales & Distribution',
+			data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+		}, {
+			name: 'Project Development',
+			data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+		}, {
+			name: 'Other',
+			data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+		}], */
+
+	});
+	// X축 categories(레이블) 추가
+	chart.xAxis[0].setCategories(cData);
+	// Series 데이터 추가
+	chart.addSeries({
+		name: '매매 가격',
+		data: sData
+	});
+}
+
+// JSON에서 추출한 데이터를 저장할 배열 선언
+var price = [];
+var year = [];
+
+$.ajax({
+	url: 'json/sampleData_sale_real.json',
+	success: function (res) {
+		// console.log(res);
+		$.map(res, function(value){
+			// console.log(value);
+			$.map(value, function(value2, key2){
+				// console.log(key2);
+
+				// 매매 가격 데이터
+				if(key2 == 'price'){
+					// console.log(value2);
+					price.push(value2);
+				}
+
+				// X축 레이블로 활용할 매매 연도 데이터
+				if(key2 == 'year'){
+					// console.log(value2);
+					year.push(value2);
+				}
+			});
+		});
+		// console.log(year);
+		// 수집한 데이터를 기반으로 차트 생성
+		initChart(price, year);
+	}
+});
+</script>
+</body>
+</html>
