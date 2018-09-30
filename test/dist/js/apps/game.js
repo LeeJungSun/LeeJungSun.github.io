@@ -33,8 +33,6 @@
       this.btnRight = this.gameWrap.find(this.opts.btnRight);
       this.noticeText = this.gameWrap.find(this.opts.noticeText);
       this.ball = this.gameWrap.find(this.opts.ball);
-
-      
     },
     bindEvents : function () {
       this.btnLeft.on('click', $.proxy(this.ballLeft, this));

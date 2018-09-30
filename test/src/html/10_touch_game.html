@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>터치이벤트</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+	<style>
+		#wrap{height:100%}
+		.touch_area{display:block;width:80%;margin:0 auto;padding-top:50%;background:rgba(255,0,0,.5);
+			-webkit-touch-callout:none;-webkit-user-select:none}
+		.touch_count{margin-top:20px;font-size:20px;font-weight:bold;text-align:center}
+	</style>
+	<div id="wrap">
+		<p class="touch_area"><span class="blind">테스트테스트테스트테스트테스트테스트테스트</span></p>
+		<p class="touch_count">0</p>
+	</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script src="../js/apps/touch_game.js"></script>
+<script>	
+
+	var FunctionName = function () {};	
+	(function () {
+		var game = new attendance.touchGame();    
+		
+		game.imageArray(1);
+	})();
+</script>
+</html>

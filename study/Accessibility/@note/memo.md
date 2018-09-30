@@ -93,8 +93,13 @@ https://www.w3.org/TR/2011/CR-wai-aria-20110118/states_and_properties#aria-relev
 ```
 
 ### 타이머
+제한 시간이 얼마나 남았는지 또는 현재 시각이 몇 시인지 등을 알려주어야 할 때 사용
+
+* aria-atomic 값을 설정하지 않을 경우 예를 들어 10:30에서 10:29로 변경될 때 변경된 숫자인 29만 전달됩니다. 변경된 값만으론 현재 시간이 몇 시인지 인지하기 어렵기 때문에 정확한 정보를 알려주기 위하여 aria-atomic="true"값으로 설정하여야 합니다.
+* 시간을 초 단위까지 노출하여야 할 경우 aira-live 값을 지정하면 초 단위가 바뀔 때마다 변경된 값이 사용자에게 지속적으로 전달됩니다. 이는 사용자의 탐색을 저해하기 때문에 aria-live 사용을 지양해야 합니다.
+
 ```
-<span aria-live="polite">00:30:37 남음</span>
+<div role="timer" aria-live="polite" aria-atomic="true">10:30</div>
 ```
 
 

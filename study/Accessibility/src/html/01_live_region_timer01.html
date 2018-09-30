@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Live Region Timer Example01</title>
+<link rel="stylesheet" href="../css/study-sass.css">
+<style>
+	.btn{display:inline-block;width:70px;height:30px;border:1px solid #303030;border-radius:5px;font-size:12px}
+	.btn:hover{background:#303030;color:#fff}
+	.btn_wrap{margin-top:20px}
+	.timer_wrap{height:30px;padding:3px 12px;background:#232323;line-height:30px}
+	.timer{font-size:15px;color:#fff}
+</style>
+</head>
+<body>
+	<div id="wrap" class="example_wrap">
+		<h1 class="main__title">1. aria-live 선언하지 않은 경우</h1>
+		<div class="timer_wrap">
+			<div id="clock" class="timer" role="timer" aria-atomic="true"></div>
+		</div>
+		<div class="btn_wrap">
+			<button type="button" class="btn btn_start"><span>START</span></button>
+			<button type="button" class="btn btn_stop"><span>STOP</span></button>
+		</div>		
+		
+		<h2 class="sub__title">2) CODE</h2>
+		<pre><code class="html">&lt;div id="clock" role="timer" aria-atomic="true"&gt;&lt;/div&gt;</code></pre>
+
+	</div>
+</body>
+<script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/apps/highlight.pack.js"></script>
+<script type="text/javascript">
+	hljs.initHighlightingOnLoad();
+	$(document).ready(function() {
+		$('pre code').each(function(i, block) {
+			hljs.highlightBlock(block);
+		});
+	});
+</script>
+<script>
+	var startButton = $('.btn_start'),
+			stopButton = $('.btn_stop')
+
+	function currentTime() {
+		var now = new Date();
+		document.getElementById('clock').innerHTML = "Time: " + now.getHours() + ":" + ("0"+now.getMinutes()).substr(-2) + ":" + ("0"+now.getSeconds()).substr(-2);
+	};
+	function startTime() {
+		currentTime();
+		time = setInterval(currentTime, 1000);
+	};
+	function stopTime() {
+		clearInterval(time);
+	};
+	
+	startButton.on('click', startTime);
+	stopButton.on('click', stopTime);
+</script>
+</html>

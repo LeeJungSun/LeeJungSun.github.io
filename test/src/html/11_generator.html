@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Generator</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+	<style>
+		html,body{height:100%}
+		#wrap{max-width:770px;height:100%;margin:0 auto;font-family:'Roboto'}
+		.page_title{margin-top:50px}
+		.vw_generator_wrap,.percent_generator_wrap{padding:50px 0;font-size:0}
+		.generator_area{position:relative;padding-right:290px}
+		.generator_area:after,.generator_area:before{position:absolute;top:50%;content:''}
+		.generator_area:after{left:412px;width:25px;height:8px;margin-top:-4px;border:solid #000;border-width:2px 0}
+		.generator_area:before{left:425px;width:14px;height:14px;margin-top:-6px;border:solid #000;border-width:2px 2px 0 0;transform:rotate(45deg)}
+		.generator_area .content{margin-top:35px}
+		.generator_area .content:first-child{margin-top:0}
+		.generator_area .title{width:205px}
+		.generator_area span{display:inline-block;font-size:26px;font-weight:bold;line-height:50px;vertical-align:middle}
+		.generator_area input{width:100%;height:100%;border:0;font-family:'Roboto';font-size:26px;font-weight:bold;text-align:center}
+		.generator_area .input_text{width:100px;height:50px;margin:0 10px;border:1px solid #777;box-sizing:border-box}
+		.generator_area .result_area{position:absolute;top:0;right:0;width:280px;height:100%;margin:0;padding-right:25px;box-sizing:border-box}
+		.generator_area .result_area>span{display:block;line-height:normal;vertical-align:bottom}
+		.generator_area .result_text{margin-top:25px;font-size:40px;text-align:center}
+		.generator_area .result_text .elp{max-width:180px;font-size:40px}
+		.btn_generator{width:100%;height:70px;margin-top:60px;background:#000;font-family:'Roboto';font-size:24px;color:#fff}
+	</style>
+	<div id="wrap">
+		<h1 class="page_title">1. 퍼센트 계산</h1>
+		<article class="percent_generator_wrap">
+			<div class="generator_area">
+				<p class="content">
+					<span class="title">Width : </span>
+					<span class="input_text"><input type="text" id="widthSize"></span>
+					<span class="text">PX</span>
+				</p>
+				<p class="content">
+					<span class="title">Design Width : </span>
+					<span class="input_text"><input type="text" id="designSize"></span>
+					<span class="text">PX</span>
+				</p>
+				<p class="content result_area">
+					<span class="title">Result</span>
+					<span id="result" class="result_text"></span>
+				</p>
+			</div>
+			<button type="button" id="jsBtnPercentGenerator" class="btn_generator"><span>Convert</span></button>	
+		</article>
+		<h1 class="page_title">2. VW 계산</h1>
+		<article class="vw_generator_wrap">
+			<div class="generator_area">
+				<p class="content">
+					<span class="title">Viewport Width : </span>
+					<span class="input_text"><input type="text" id="viewport"></span>
+					<span class="text">PX</span>
+				</p>
+				<p class="content">
+					<span class="title">Design Font-size : </span>
+					<span class="input_text"><input type="text" id="fontSize"></span>
+					<span class="text">PX</span>
+				</p>
+				<p class="content result_area">
+					<span class="title">Result</span>
+					<span id="result2" class="result_text"></span>
+				</p>
+			</div>
+			<button type="button" id="jsBtnVWGenerator" class="btn_generator"><span>Convert</span></button>			
+		</article>
+	</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script>
+	var btnVWGenerator = document.getElementById('jsBtnVWGenerator'),
+			btnPercentGenerator = document.getElementById('jsBtnPercentGenerator');
+
+	function vwGenerator () {
+		vwResultValueAdd();
+	};
+	function vwResultCreate () {
+		var inputViewportValue = document.getElementById('viewport').value,
+				inputFontSizeValue = document.getElementById('fontSize').value;
+		
+		vwViewportValue = inputViewportValue * 0.01;
+		result = (inputFontSizeValue / vwViewportValue) * 1;
+		
+		return result;
+	};
+	function vwResultValueAdd () {
+		var resultElement = document.getElementById('result2');
+		resultElement.innerHTML = '<span class="elp">' + vwResultCreate() + '</span> vw';
+	};
+	btnVWGenerator.addEventListener('click', vwGenerator);
+
+	function percentGenerator () {
+		percentResultValueAdd();
+	};
+	function percentResultCreate () {
+		var inputWidthSizeValue = document.getElementById('widthSize').value,
+				inputDesignSizeValue = document.getElementById('designSize').value;
+		
+		result = (inputDesignSizeValue * 100) / inputWidthSizeValue
+		
+		return result;
+	};
+	function percentResultValueAdd () {
+		var resultElement = document.getElementById('result');
+		resultElement.innerHTML = '<span class="elp">' + percentResultCreate() + '</span> %';
+	};
+	btnPercentGenerator.addEventListener('click', percentGenerator);
+</script>
+</html>

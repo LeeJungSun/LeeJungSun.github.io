@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>흐르는 배너</title>
+<link rel="stylesheet" href="../css/test-sass.css">
+</head>
+<body>
+	<style>
+		.banner_wrap{overflow:hidden;position:relative;width:89.612%;max-width:690px;height:40px;margin:0 auto;background:#3e2c1d;border-top-right-radius:20px;border-top-left-radius:20px;border-bottom-right-radius:20px;border-bottom-left-radius:20px}
+		.banner_wrap .banner_area{position:relative;height:100%}
+		.banner_wrap:after,.banner_wrap:before{position:absolute;top:0;z-index:1;height:100%;width:55px;background-repeat:repeat-y;background-size:100% auto;content:''}
+		.banner_wrap:after{left:0;background-image:url(../img/bg_banner_left.png)}
+		.banner_wrap:before{right:0;background-image:url(../img/bg_banner_right.png)}
+		.banner_wrap .banner_list{overflow:hidden;position:absolute;top:0;left:0;height:100%}
+		.banner_wrap .banner_list li{float:left;height:40px;padding:0 5px;font-size:14px;color:#926948;line-height:40px;text-align:center;box-sizing:border-box}
+	</style>
+	<div class="banner_wrap">
+		<div class="banner_area">
+			<ul class="banner_list">
+			<li>hyeyeo****</li>
+			<li>cjlo****</li>
+			<li>hills****</li>
+			<li>lovemo****</li>
+			<li>donor****</li>
+			<li>heart****</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
+<script src="../js/apps/rollingBanner.js"></script>
+</html>
