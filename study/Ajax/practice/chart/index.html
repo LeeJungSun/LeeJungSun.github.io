@@ -21,9 +21,6 @@
 	<div id="container"></div>
 
 	<script>
-		var deposit = [],
-			 year = [];
-
 		var chart = Highcharts.chart('container', {
 
 			title: {
@@ -45,33 +42,6 @@
 				verticalAlign: 'middle'
 			},
 
-			// plotOptions: {
-			// 	series: {
-			// 		label: {
-			// 				connectorAllowed: false
-			// 		},
-			// 		pointStart: 2010
-			// 	}
-			// },
-
-			//static 데이터 형식
-			// series: [{ 
-			// 	name: 'Installation',
-			// 	data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-			// }, {
-			// 	name: 'Manufacturing',
-			// 	data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-			// }, {
-			// 	name: 'Sales & Distribution',
-			// 	data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-			// }, {
-			// 	name: 'Project Development',
-			// 	data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-			// }, {
-			// 	name: 'Other',
-			// 	data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-			// }],
-
 			responsive: {
 				rules: [{
 					condition: {
@@ -89,39 +59,72 @@
 
 		});
 
-		
-		$.ajax({
-			url: "./json/sampleData_rental_real.json",
-			success: function (res) {
-				// console.log(res);
+    var addData = function (nameTitle) {
+      chart.xAxis[0].setCategories(year);
 
-				$.map(res, function (value, key) {
-					// console.log(key, value);
+      chart.addSeries({
+        name : nameTitle,
+        data : deposit
+      });
+    }
 
-					$.map(value, function (value2, key2) {
-						// console.log(key2, value2);
+		var deposit = [],
+			  year = [],
+        dataName = ['전세 실거래가','전세 추이'],
+			  jsonData = ['sampleData_rental_real','sampleData_rental_trend'];
+			 
 
-						if (key2 === 'deposit') {
+		var chartData = function (src) {
+			$.ajax({
+				url: "./json/"+ src +".json",
+				success: function (res) {
+					console.log(res);
+
+					$.map(res, function (value, key) {
+						// console.log(key, value);
+
+						$.map(value, function (value2, key2) {
 							// console.log(key2, value2);
-							deposit.push(value2);
-						}
-						if (key2 === 'year') {
-							// console.log(key2, value2);
-							year.push(value2);
-						}
+
+							if (key2 === 'deposit') {
+								// console.log(key2, value2);
+								deposit.push(value2);
+                console.log(deposit);
+							}
+							if (key2 === 'year') {
+								// console.log(key2, value2);
+								year.push(value2);                
+
+                // console.log(year)
+
+							}
+						});
 					});
-				});
 
-				console.log(deposit);
-				console.log(year);
-				chart.xAxis[0].setCategories(year);
+					// console.log(src);
+				
 
-				chart.addSeries({
-					name : '매매 데이터',
-					data : deposit
-				});
-			}
-		});
+          switch (src) {
+            case 'sampleData_rental_real' :
+                  addData(dataName[0]);
+                  deposit = [];
+                  break;
+            case 'sampleData_rental_trend' :
+                  addData(dataName[1]);
+                  deposit = [];
+                  break;
+          }
+
+				}
+			});
+		}
+    for (var i = 0 ; i < jsonData.length ; i++) {
+      chartData(jsonData[i]);
+    }
+
+    // for (var i in jsonData) {
+    //   chartData(jsonData[i])
+    // }
 	</script>
 </body>
 </html>
