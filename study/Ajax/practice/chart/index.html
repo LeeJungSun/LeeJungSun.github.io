@@ -70,6 +70,7 @@
 
 		var deposit = [],
 			  year = [],
+			  yeartemp = [],
         dataName = ['전세 실거래가','전세 추이'],
 			  jsonData = ['sampleData_rental_real','sampleData_rental_trend'];
 			 
@@ -94,15 +95,15 @@
 							if (key2 === 'year') {
 								// console.log(key2, value2);
 								if (src === jsonData[0]) {
-									year.push(value2);
-									console.log(year[year.length-2]);
-									console.log(value2);
+									yeartemp.push(value2);
+									// console.log(year[year.length-2]);
+									// console.log(value2);
 
-									// if (year[year.length-2] === value2) {
-									// 	year.push('')
-									// } else {
-									// 	year.push(value2);
-									// }
+									if (yeartemp[yeartemp.length-2] === value2) {
+										year.push('')
+									} else {
+										year.push(value2);
+									}
 									
 								}
 
