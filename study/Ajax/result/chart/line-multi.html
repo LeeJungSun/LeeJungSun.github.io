@@ -144,7 +144,7 @@ var dataHandle = function(src, oData){
 	$.ajax({
 		url: 'json/sampleData_'+src+'.json',
 		success: function (res) {
-			// console.log(res);
+			console.log(res);
 			$.map(res, function(value){
 				// console.log(value);
 				$.map(value, function(value2, key2){
@@ -210,6 +210,7 @@ var dataHandle = function(src, oData){
 }
 
 // JSON 데이터 범위에 따른 반복 처리
+console.log(dataSrc)
 for(var i in dataSrc){
 	dataHandle(dataSrc[i]);
 }

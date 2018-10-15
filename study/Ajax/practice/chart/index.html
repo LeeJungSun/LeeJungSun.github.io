@@ -78,7 +78,7 @@
 			$.ajax({
 				url: "./json/"+ src +".json",
 				success: function (res) {
-					console.log(res);
+					// console.log(res);
 
 					$.map(res, function (value, key) {
 						// console.log(key, value);
@@ -89,13 +89,28 @@
 							if (key2 === 'deposit') {
 								// console.log(key2, value2);
 								deposit.push(value2);
-                console.log(deposit);
+                // console.log(deposit);
 							}
 							if (key2 === 'year') {
 								// console.log(key2, value2);
-								year.push(value2);                
+								if (src === jsonData[0]) {
+									year.push(value2);
+									console.log(year[year.length-2]);
+									console.log(value2);
 
-                // console.log(year)
+									// if (year[year.length-2] === value2) {
+									// 	year.push('')
+									// } else {
+									// 	year.push(value2);
+									// }
+									
+								}
+
+                // if (year[year.length-2] === value2) {
+								// 	year.push('');
+								// } else {
+								// 	year.push(value2);
+								// }
 
 							}
 						});
@@ -103,21 +118,33 @@
 
 					// console.log(src);
 				
+					// if문 말고 switch문을 사용한 이유?
+					if (src === jsonData[0]) {
+						addData(dataName[0]);
+						deposit = [];
+					}
+					if (src === jsonData[1]) {
+						addData(dataName[1]);
+						deposit = [];
+					}
 
-          switch (src) {
-            case 'sampleData_rental_real' :
-                  addData(dataName[0]);
-                  deposit = [];
-                  break;
-            case 'sampleData_rental_trend' :
-                  addData(dataName[1]);
-                  deposit = [];
-                  break;
-          }
+
+          // switch (src) {
+          //   case 'sampleData_rental_real' :
+          //         addData(dataName[0]);
+          //         deposit = [];
+          //         break;
+          //   case 'sampleData_rental_trend' :
+          //         addData(dataName[1]);
+          //         deposit = [];
+          //         break;
+          // }
 
 				}
 			});
 		}
+		// for문을 사용하는것과 for in문을 사용하는것의 차이?
+		// 왜 for in문을 사용하셨는지?
     for (var i = 0 ; i < jsonData.length ; i++) {
       chartData(jsonData[i]);
     }
