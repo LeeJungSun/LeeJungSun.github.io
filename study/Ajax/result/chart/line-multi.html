@@ -13,10 +13,32 @@
 	height: 400px;
 	margin: 100px auto 0
 }
+.tbl_type{
+	width:600px;
+	margin:100px auto 0;
+	border-collapse:collapse;
+}
+.tbl_type th, .tbl_type td{
+	border:1px solid #333;
+	text-align:center;
+	padding: 2px 0 1px;
+}
 </style>
 </head>
 <body>
 <div id="container"></div>
+<table class="tbl_type">
+	<thead>
+		<th>area</th>
+		<th>year</th>
+		<th>month</th>
+		<th>division</th>
+		<th>price</th>
+		<th>deposit</th>
+		<th>monthly</th>
+	</thead>
+	<tbody></tbody>
+</table>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
@@ -114,6 +136,13 @@ var chart = Highcharts.chart('container', {
 });
 
 // Series 데이터 추가
+/*
+	sData : Series Data
+	cData : Categories Data
+	sTitle : Series Title
+	cType : Chart Type
+	yAxis : yAxis 데이터 구분 0, 1
+*/
 var putData = function(sData, cData, sTitle, cType, yAxis){
 
 	// 전세 실거래가 데이터인 경우 X축 categories(레이블) 추가
@@ -136,6 +165,7 @@ var count = [];
 var year = [];
 var yearTmp = [];
 
+
 // 변경될 수 있는 데이터 배열로 관리
 var legend = ['매매 실거래가', '매매 추이', '매매 거래량', '전세 실거래가', '전세 추이', '전세 거래량'];
 var dataSrc = ['sale_real', 'sale_trend', 'sale_count', 'rental_real', 'rental_trend', 'rental_count'];
@@ -144,9 +174,26 @@ var dataHandle = function(src, oData){
 	$.ajax({
 		url: 'json/sampleData_'+src+'.json',
 		success: function (res) {
-			console.log(res);
+			// console.log(res);
 			$.map(res, function(value){
 				// console.log(value);
+				if(src == dataSrc[0]){
+					// 데이터를 중첩적으로 불러오는 것을 방지하기 위한 방식
+					// 호출이 완료 된 후 아래 구문이 실행
+					var hbs = $.ajax({
+						// .hbs확장자명은 고정
+						url: './hbs/data.hbs'
+					});
+					// Handlebars는 구문을 알면 데이터를 어렵지 않게 가져다가 쓸 수 있음
+					// 자유롭게 변형하긴 어려움 조건문을 건다거나 반복문을 건다거나..
+					var hbsThen = function(hbs){
+						var template = Handlebars.compile(hbs);
+						var target = $('.tbl_type tbody');
+						var html = template(value)
+						target.append(html);
+					}
+					hbs.then(hbsThen);
+				}
 				$.map(value, function(value2, key2){
 					// console.log(key2);
 					if(key2 == 'price' && value2 != 0){
@@ -210,7 +257,6 @@ var dataHandle = function(src, oData){
 }
 
 // JSON 데이터 범위에 따른 반복 처리
-console.log(dataSrc)
 for(var i in dataSrc){
 	dataHandle(dataSrc[i]);
 }
