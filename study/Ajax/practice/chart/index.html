@@ -7,18 +7,57 @@
 <meta name="format-detection" content="telephone=no">
 <title>Chart</title>
 <style>
-#container {
-	min-width: 310px;
-	max-width: 800px;
-	height: 400px;
-	margin: 0 auto
-}
+#container{min-width:310px;max-width:800px;height:400px;margin: 0 auto}
+#table_area{width:600px;margin:0 auto;border:1px solid #000}
+#table_area table{width:100%;table-layout:fixed;border-collapse:collapse;border-spacing:0}
+#table_area td{text-align:center}
+#table_area th,#table_area td{border:solid #000;border-width:1px 0 0 1px}
+#table_area tr:first-child th{border-top:0}
+#table_area th:first-child,#table_area td:first-child{border-left:0}
 </style>
-<script src="js/lib/jquery-1.12.4.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 	<div id="container"></div>
+
+	<div id="table_area"></div>
+
+	<script src="js/lib/jquery-1.12.4.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+	<!-- <script id="entry-template" type="text/x-handlebars-template">
+		<h1>{{title}}</h1>
+		<div class="body">
+			{{body}}
+		</div>
+	</script> -->
+
+	<script id="data-template" type="text/x-handlebars-template">
+		<table>
+			<thead>
+			<tr>
+			<th>area</th>
+			<th>year</th>
+			<th>month</th>
+			<th>division</th>
+			<th>price</th>
+			<th>deposit</th>
+			<th>monthly</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td>{{area}}</td>
+			<td>{{year}}</td>
+			<td>{{month}}</td>
+			<td>{{division}}</td>
+			<td>{{price}}</td>
+			<td>{{deposit}}</td>
+			<td>{{monthly}}</td>
+			</tr>
+			</tbody>
+		</table>
+	</script>
 
 	<script>
 		var chart = Highcharts.chart('container', {
@@ -86,8 +125,17 @@
 				url: "./json/sampleData_"+ src +".json",
 				success: function (res) {
 					// console.log(res);
-
 					$.map(res, function (value) {
+
+						if (src === jsonData[2]) {
+							var source = document.getElementById('data-template').innerHTML,
+									template = Handlebars.compile(source),
+									html = template(value);
+	
+							document.getElementById('table_area').innerHTML = html;
+	
+							console.log(value)
+						}
 
 						$.map(value, function (value2, key2) {
 							if (key2 === 'deposit') {
