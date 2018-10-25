@@ -1,0 +1,23 @@
+<div>
+    <a href="03_estate_info_ver3.html?danji_seq={{danji_seq}}" class="lst_item_type2">
+        <span class="bx_img">
+            {{#xif "this.hasOwnProperty('danji_img') && danji_img != ''"}}
+            <img src="{{danji_img}}" alt="">
+            {{else}}
+            <img src="http://via.placeholder.com/100x100" alt="">
+            {{/xif}}
+        </span>
+        <div class="group_item_dsc2">
+            <div class="item_info">
+                <span class="tag_bubbletype">중개소 추천</span>
+                <em class="tit ellipsis">{{danji_name}}</em>
+                <div class="info_detail">
+                    <span class="item_type"><span class="blind">매물형태</span>{{danji_type}}</span>											
+                    {{!-- <span class="ellipsis"><span class="blind">주소</span>경기도 용인시 기흥구 중동 동백4로 26 한줄말줄임처리한줄말줄임처리한줄말줄임처리</span> --}}
+                </div>
+            </div>
+        </div>
+        <input type="hidden" class="xPos" value="{{xpos}}">
+        <input type="hidden" class="yPos" value="{{ypos}}">
+    </a>
+</div>

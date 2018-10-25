@@ -1,0 +1,37 @@
+<div>
+    <div class="lst_item_type3">
+        <span class="bx_img">
+            {{#xif "this.hasOwnProperty('danji_img') && danji_img != ''"}}
+            <img src="{{danji_img}}" alt="">
+            {{else}}
+            <img src="http://via.placeholder.com/560x260" alt="">
+            {{/xif}}
+        </span>
+        <div class="group_item_dsc2">
+            <div class="item_info">
+                <span class="tag_bubbletype">중개소 추천</span>
+                <em class="tit ellipsis">{{danji_name}}</em>
+                <div class="info_detail">
+                    <span class="item_type"><span class="blind">매물형태 : </span>{{danji_type}}</span>
+                    {{!-- <span class="ellipsis"><span class="blind">주소 :</span>경기도 용인시 기흥구 중동 동백4로 26 한줄말줄임처리한줄말줄임처리한줄말줄임처리</span> --}}
+                </div>
+            </div>
+            <a href="03_estate_info_ver3.html?danji_seq={{danji_seq}}" class="btn_type2 btn_round btn_link">
+                <span class="txt">단지 정보</span>
+                <span class="sp"></span>
+            </a>
+            <p class="dsc">
+                <span class="txt">입주시기 : {{movein_date}}</span>
+                <span class="txt">공급면적 : {{supp_meter_str}}</span>
+                <span class="txt">단지구성 : {{total_cnt}}세대 / {{total_dong_cnt}}동</span>
+            </p>
+            <ul class="item_count">
+                <li><a href="#">매매 <span class="txt_color">{{sale_cnt}}</span></a></li>
+                <li><a href="#">전세 <span class="txt_color">{{loan_cnt}}</span></a></li>
+                <li><a href="#">월세 <span class="txt_color">{{rent_cnt}}</span></a></li>
+            </ul>
+            <input type="hidden" class="xPos" value="{{xpos}}">
+            <input type="hidden" class="yPos" value="{{ypos}}">
+        </div>
+    </div>
+</div>
