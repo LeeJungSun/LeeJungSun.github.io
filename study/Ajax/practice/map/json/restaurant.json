@@ -1,0 +1,42 @@
+[
+  {
+    "title" : "계성치킨",
+    "address" : "서울특별시 관악구 남현동 1067-19",
+    "tel" : "02-585-9858",
+    "thumb" : "https://search.pstatic.net/common/?type=ofullfill&size=110x110&src=http%3A%2F%2Fblogfiles.naver.net%2F20160425_156%2Flovenger_1461564302803bhf62_JPEG%2F20160415_191421.jpg%234128x3096",
+    "lat": 37.475842,
+    "lng": 126.977165
+  },
+  {
+    "title" : "스시테헤란 사당점",
+    "address" : "서울특별시 서초구 방배동 444-8",
+    "tel" : "02-583-5456",
+    "thumb" : "https://search.pstatic.net/common/?type=ofullfill&size=110x110&src=http%3A%2F%2Fldb.phinf.naver.net%2F20150825_204%2F1440483344113pDeID_JPEG%2F166775554559752_0.jpg",
+    "lat": 37.477291,
+    "lng": 126.982033
+  },
+  {
+    "title" : "리에또 사당점",
+    "address" : "서울특별시 서초구 방배2동 방배천로4안길 20",
+    "tel" : "02-581-5291",
+    "thumb" : "https://search.pstatic.net/common/?type=ofullfill&size=110x110&src=http%3A%2F%2Fldb.phinf.naver.net%2F20151128_214%2F1448687042407YE60d_JPEG%2F167078543421333_0.jpeg",
+    "lat": 37.478992,
+    "lng": 126.983310
+  },
+  {
+    "title" : "72420 사당점",
+    "address" : "서울특별시 동작구 사당동 남부순환로269길 13",
+    "tel" : "02-521-2420",
+    "thumb" : "https://search.pstatic.net/common/?type=ofullfill&size=110x110&src=http%3A%2F%2Fldb.phinf.naver.net%2F20150831_55%2F1440994960638GLC4v_JPEG%2FSUBMIT_1375076762952_31413905.jpg",
+    "lat": 37.477380,
+    "lng": 126.978644
+  },
+  {
+    "title" : "신셰프 양꼬치 사당점",
+    "address" : "서울특별시 관악구 남현동 1062-10",
+    "tel" : "010-6298-7859",
+    "thumb" : "https://search.pstatic.net/common/?type=ofullfill&size=110x110&src=http%3A%2F%2Fldb.phinf.naver.net%2F20170615_108%2F1497500025094NHgRy_PNG%2F186565534362.png",
+    "lat": 37.475416,
+    "lng": 126.980383
+  }
+]

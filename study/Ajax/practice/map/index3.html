@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>Map</title>
+<style>
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button {  margin: 0;  padding: 0;}
+html,body{  width: 100%;}
+body,input,select,textarea,button,th,td {  font-family: '돋움', dotum, tahoma, sans-serif;  font-size: 12px;  color: #000;}
+fieldset,img {border: 0 none;}
+ul,ol,dl,li{list-style: none;}
+input,select,textarea,button{vertical-align: top;}
+button,input[type="button"] {overflow: visible;background-color: transparent;cursor: pointer;}
+button::-moz-focus-inner {padding: 0;border: 0;}
+button {-webkit-appearance: none;border: 0 none;border-radius: 0}
+address,caption,em{font-style: normal}
+a{color: #000}
+a,a:active,a:hover{text-decoration: none}
+.sp{display: inline-block;overflow: hidden;width: 10px;height: 10px;line-height: 999px;vertical-align: top;}
+.blind,legend,caption span {overflow: hidden;position: absolute;top: 0;left: 0;width: 1px;height: 1px;font-size: 0;line-height: 999px;white-space: nowrap;}
+
+
+.layer_info{position:relative;bottom:110px;width:320px;padding:15px;border:1px solid #666;background:#fff;box-sizing:border-box;-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.32);box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.32);}
+.layer_info .title_area{margin-bottom:15px;padding-bottom:12px;border-bottom:1px solid #000}
+.layer_info .title{font-size:14px}
+.layer_info .content_area{overflow:hidden}
+.layer_info .btn_close{position:absolute;top:0;right:0;padding:11px 13px}
+.layer_info .btn_close .sp{position:relative;width:20px;height:20px}
+.layer_info .btn_close .sp:after,.layer_info .btn_close .sp:before{position:absolute;top:1px;left:9px;width:1px;height:18px;background:#000;content:''}
+.layer_info .btn_close .sp:after{transform:rotate(-45deg)}
+.layer_info .btn_close .sp:before{transform:rotate(45deg)}
+.layer_info .info_list li{margin-top:5px}
+.layer_info .info_list li:first-child{margin:0}
+.layer_info .thumb{float:left;width:50px;height:50px;border:1px solid #ccc}
+.layer_info .thumb img{width:100%;height:100%}
+.layer_info .info_list{overflow:hidden;padding:5px 0 5px 10px}
+.infowindow{padding:5px}
+</style>
+</head>
+<body>
+  <div id="map" style="width:600px;height:600px;margin:0 auto"></div>
+</body>
+<!-- 발급받은 APP KEY를 넣으시면 됩니다. => 생성한 앱에서 앱키 JavaScript키 복사  -->
+<script type="text/javascript" src="./js/lib/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9413087df6d6c00e1b63507a8066fdd5"></script>
+<script id="overlay-content" type="text/x-handlebars-template">
+  <div class="layer_info">
+    <div class="title_area">
+      <h1 class="title">{{title}}</h1>      
+    </div>
+    <button type="button" class="btn_close js-btn-close" onclick="overlayCloseFunc()"><span class="sp">닫기</span></button>
+    <div class="content_area">
+      <div class="thumb">
+        <img src="{{thumb}}" alt="">
+      </div>
+      <ul class="info_list">
+      <li><strong class="blind">주소</strong><span class="info_content">{{address}}</span></li>
+      <li><strong class="blind">전화번호</strong><span class="info_content">{{tel}}</span></li>
+      </ul>
+    </div>
+  </div>
+</script>
+<script>
+
+  var mapContainer = document.getElementById('map'),
+      mapOption = { 
+        center: new daum.maps.LatLng(37.477071, 126.9811459),
+        level: 3
+      };
+
+  // 지도를 생성한다.
+  var map = new daum.maps.Map(mapContainer, mapOption);
+ 
+  // 커스텀 오버레이 생성
+  var customOverlay = new daum.maps.CustomOverlay();
+  // 인포윈도우 생성
+  var InfoWindow = new daum.maps.InfoWindow()
+
+  // json 데이터 호출
+  $.ajax({
+    url : './json/restaurant.json',
+    success : function (res) {
+      $.map (res, function (value) {
+        // handlebars로 커스텀 오버레이 소스 생성
+        var source = document.getElementById('overlay-content').innerHTML,
+            template = Handlebars.compile(source),
+            overlayContent = template(value); // 커스텀 오버레이 content
+
+        // 마커, 커스텀 오버레이 위치값
+        var position = new daum.maps.LatLng(value.lat, value.lng);
+
+         // 마커를 생성하고 지도에 마커 표시한다.
+        var marker = new daum.maps.Marker({
+          map : map,
+          position : position
+        })
+
+        // console.log(value.title)        
+
+        // 커스텀 오버레이 컨텐츠 설정 (왜 하나하나 안돌징)
+        customOverlay.setContent(overlayContent);
+        console.log(overlayContent);
+
+        // 마커 클릭 이벤트 : 클릭시 커스텀 오버레이 노출
+        daum.maps.event.addListener(marker, 'click', function () {
+          console.log('overlay open');
+          // 커스텀 오버레이 위치값 지정
+          customOverlay.setPosition(position);
+          // 커스텀 오버레이 노출          
+          customOverlay.setMap(map);
+        })
+
+        // 마커 마우스오버 이벤트 : 마우스 오버시 인포윈도우 노출
+        daum.maps.event.addListener(marker, 'mouseover', function () {
+          InfoWindow.setContent('<div class="infowindow">'+value.title+'</div>');
+          // 인포 윈도우 노출
+          InfoWindow.open(map, marker);
+        })
+        // 마커 마우스아웃 이벤트 : 마우스 오버시 인포윈도우 제거
+        daum.maps.event.addListener(marker, 'mouseout', function () {
+          // 인포 윈도우 제거
+          InfoWindow.close();
+        })
+      })
+    }
+  })
+    
+  // 커스텀 오버레이 닫기
+  function overlayCloseFunc () {
+    customOverlay.setMap(null);   
+  }  
+</script>
+</html>
