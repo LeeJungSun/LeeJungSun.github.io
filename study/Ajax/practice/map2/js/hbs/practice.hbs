@@ -1,0 +1,28 @@
+<a href="#" class="lst_item_type2">
+    <div class="bx_dummy">
+        <span class="bx_img">
+            {{#xif "this.hasOwnProperty('memul_photo1')"}}
+            <img src="{{memul_photo1}}" alt="" width="150" height="150">
+            {{else}}
+            <img src="http://via.placeholder.com/150x150" alt="" width="150" height="150">
+            {{/xif}}
+        </span>
+    </div>
+    <div class="bx_item_dsc">
+        <div class="bx_align">
+            <em class="tit ellipsis">{{sido}} {{gugun}} {{dong}} {{dangi_name}}</em>
+            {{#xif "sale_price !=0"}}
+            <span class="dsc price">매매 {{sale_price}}</span>
+            {{/xif}}
+            {{#xif "lease_price !=0"}}
+            <span class="dsc price">전세 {{lease_price}}</span>
+            {{/xif}}
+            {{#xif "month_deposit_price !=0"}}
+            <span class="dsc price">월세 {{month_deposit_price}}</span>
+            {{/xif}}
+            <span class="dsc extent">{{contract_meter}}/{{use_meter}}㎡ {{contract_meter_py}}/{{use_meter_py}}평 {{corrp_flr}}/{{ground_flr}}층 방{{room_count}}욕실{{bath_count}}</span>
+            <p class="dsc txt">{{memul_ad}}</p>
+            <span class="tag_type">확인매물 {{confirm_date}}</span>
+        </div>
+    </div>
+</a>
