@@ -1,0 +1,50 @@
+[
+	{
+		"danji_seq": "183",
+		"danji_type": "아파트",
+		"danji_name": "개포주공5단지",
+		"total_cnt": "940",
+		"bunyang_yn": "N",
+		"total_dong_cnt": "6",
+		"movein_date": "1983.10",
+		"supp_meter_str": "75.33~116.04",
+		"danji_img": "http://image.bizmk.kr/files/danjiPhoto/서울/강남구/183/C교통사진/Thumbnail/IMG_4929.JPG",
+		"sale_cnt": "4",
+		"loan_cnt": "2",
+		"rent_cnt": "0",
+		"xpos": "127.0680392",
+		"ypos": "37.4878238"
+	},
+	{
+		"danji_seq": "40392",
+		"danji_type": "아파트",
+		"danji_name": "래미안블레스티지",
+		"total_cnt": "1845",
+		"bunyang_yn": "Y",
+		"total_dong_cnt": "23",
+		"movein_date": "2019.02",
+		"supp_meter_str": "67.77~249.32",
+		"danji_img": "",
+		"sale_cnt": "4",
+		"loan_cnt": "4",
+		"rent_cnt": "0",
+		"xpos": "127.0644962",
+		"ypos": "37.4808667"
+	},
+	{
+		"danji_seq": "43774",
+		"danji_type": "오피스텔",
+		"danji_name": "하우징허브럭스",
+		"total_cnt": "18",
+		"bunyang_yn": "N",
+		"total_dong_cnt": "1",
+		"movein_date": "2017.02",
+		"supp_meter_str": "72.88~76.57",
+		"danji_img": "",
+		"sale_cnt": "0",
+		"loan_cnt": "1",
+		"rent_cnt": "0",
+		"xpos": "127.0461984",
+		"ypos": "37.4765598"
+	}
+]
