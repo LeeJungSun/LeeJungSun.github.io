@@ -1,0 +1,407 @@
+<!Doctype html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>더비즈 공인중개사</title>
+<link rel="stylesheet" type="text/css" href="css/ie8.css">
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/contents.css">
+<style>
+.wh,.wh2,.wh3,.wh4{line-height:normal !important}
+.wh br,.wh2 br,.wh3 br,.wh4 br{display:block; margin-top:10px}
+.wh:hover,.wh2:hover,.wh3:hover,.wh4:hover,.wh.on,.wh2.on,.wh3.on,.wh4.on{width:80px !important; height:100px !important; margin:-30px 0 0 -30px !important; padding:0 10px; word-break: break-all; word-wrap: break-word; white-space: normal; transform: scale(2)}
+.wh2:hover,.wh2.on{margin:-20px 0 0 -20px !important}
+.wh3:hover,.wh3.on{margin:-10px 0 0 -10px !important}
+.wh4:hover,.wh4.on{margin:0 !important}
+.wh.on,.wh2.on,.wh3.on,.wh4.on{background:#fff !important;color:#3a78bd !important; opacity:0.95 !important}
+
+#mapCtrl {overflow:hidden;height:100%;position:relative;}
+#mapWrapper {width:100%;height:100%;z-index:1;}
+#rvWrapper {width:25%;height:100%;top:0;right:0;position:absolute;z-index:0;}
+#mapCtrl.view_roadview #mapWrapper {width: 75%;}
+roadviewControl.active{display:block}
+
+#close {position: absolute;padding: 4px;top: 5px;left: 5px;cursor: pointer;background: #fff;border-radius: 4px;border: 1px solid #c8c8c8;box-shadow: 0px 1px #888;}
+#close .img {display: block;background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/rv_close.png) no-repeat;width: 14px;height: 14px;}
+
+.dot {overflow:hidden;float:left;width:12px;height:12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
+.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.number {font-weight:bold;color:#ee6152;}
+.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+.distanceInfo .label {display:inline-block;width:50px;}
+.distanceInfo:after {content:none;}
+
+</style>
+</head>
+<body>
+<ul id="skip">
+<li><a href="#gnb">주메뉴 바로가기</a></li>
+<li><a href="#container">본문 바로가기</a></li>
+</ul>
+
+<!-- [D]  매물정보(최근 본 매물) 페이지 : .wrap 에 estate_info 클래스 추가 -->
+<div id="wrap" class="wrap estate_info">
+	<!-- [D] 매물정보(최근 본 매물) : header에 .sub_type2 클래스 (헤더 기본타입2) 추가  -->
+	<div id="header" class="header sub_type2">
+		<div class="inner">
+			<div class="gnb">
+				<!-- [D] 로고 활성화 시 : display: inline-block 으로 활성화 -->
+				<h1 class="logo" style="display:inline-block"><a href="#" class="btn_link">골든키 공인중개소</a></h1>
+				<!-- [D] 로고가 이미지인 경우 : logo에 img_type 클래스 추가 -->
+				<h1 class="logo img_type" style="display:none"><a href="#" class="btn_link">
+					<img src="img/temp/@logo.png" alt="" width="220" height="48">
+				</a></h1>
+				<ul id="gnb" class="gnb_cate">
+				<li><a href="#">업소 소개</a></li>
+				<li><a href="#">단지 정보</a></li>
+				<li class="on"><a href="#">매물 정보</a></li>
+				<li><a href="#">최근 본 매물</a></li>	
+				</ul>
+			</div> 
+
+			<div class="m gnb">
+				<h1 class="logo" style="display:_none"><a href="#" class="btn_link">골든키 공인중개소</a></h1>
+				<h1 class="logo img_type" style="display:none"><a href="#" class="btn_link">
+					<img src="img/temp/@logo.png" alt="" width="220" height="48">
+				</a></h1>
+				<strong class="page_tit">매물 정보</strong>
+				<a href="#" class="btn_back" style="display:none">
+					<span class="sp">뒤로가기</span>
+				</a>
+				<a href="#" class="btn_home">
+					<span class="sp">메인으로</span>
+				</a>
+				<button type="button" class="btn_menu">
+					<span class="sp">하위메뉴 열기</span>
+				</button>
+				<!-- [D] GNB Depth
+					1. Depth 활성화 시, body에 no_scroll 클래스 추가 필요 
+					2. dimmed 활성화 필요
+				-->
+				<div class="dimmed" style="display:none"></div>
+				<div class="m gnb_cate" style="display:none">
+					<div class="bx_tit">
+						<strong class="tit">골든키 공인중개소</strong>
+						<button type="button" class="btn_close">
+							<span class="sp">하위메뉴 닫기</span>
+						</button>
+					</div>
+					<ul class="lst_category">
+					<!-- [D] 메뉴 활성화 시 : on클래스 추가 -->
+					<li><a href="#">HOME</a></li>
+					<li><a href="#">업소 소개</a></li>
+					<li><a href="#">단지 정보</a></li>
+					<li class="on"><a href="#">매물 정보</a></li>
+					<li><a href="#">최근 본 매물</a></li>
+					</ul>
+					<ul class="lst_bottom_btn">
+					<li><a href="#" class="btn btn_call"><span class="ico"></span>전화하기</a></li>
+					<li><a href="#" class="btn btn_sms"><span class="ico"></span>문자문의</a></li>
+					<li><a href="#" class="btn btn_kakaotalk"><span class="ico"></span>카카오톡</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- [D]  매물정보 페이지 : container 에 estate_info 클래스 추가 -->
+	<div role="main" id="container" class="estate_info">
+		<h2 class="blind">매물 정보</h2>
+		<div class="group_filter">
+			<div class="bx_filter">
+				<!-- [D] 옵션 누를 시 open 클래스 추가 (옵션창 열림) -->
+				<!-- [D] 옵션 선택된 화면 : option 에 selected 클래스 추가 -->
+				<a href="#" class="option">지역 선택</a>
+				<div class="filter_option">
+					<em class="option_tit">지역</em>
+					<ul class="lst_option">
+					<li>
+						<!-- [D] 체크박스 활성화 시 : .bx_input_chk에 checked 클래스 추가 (IE8대응) -->
+						<span class="bx_input_chk checked">
+							<input type="checkbox" id="choice_type1">
+							<label for="choice_type1">강남구</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type2">
+							<label for="choice_type2">중랑구</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type3">
+							<label for="choice_type3">도봉구</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type4">
+							<label for="choice_type4">예시4</label>
+						</span>
+					</li>
+					</ul>
+					<button type="button" class="btn_close"><span class="sp">닫기</span></button>
+				</div>
+			</div>
+			<div class="bx_filter">
+				<a href="#" class="option selected">아파트 외 9개 선택</a>
+				<div class="filter_option">
+					<em class="option_tit">매물종류</em>
+					<ul class="lst_option">
+					<li>
+						<span class="bx_input_chk checked">
+							<input type="checkbox" id="choice_type5" checked>
+							<label for="choice_type5">옵션1</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type6" checked>
+							<label for="choice_type6">옵션2</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type7">
+							<label for="choice_type7">옵션3</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type8">
+							<label for="choice_type8">옵션4</label>
+						</span>
+					</li>
+					</ul>
+					<button type="button" class="btn_close"><span class="sp">닫기</span></button>
+				</div>
+			</div>
+			<div class="bx_filter">
+				<a href="#" class="option">매매, 전세, 단기임대</a>
+				<div class="filter_option">
+					<em class="option_tit">거래방식</em>
+					<ul class="lst_option">
+					<li>
+						<span class="bx_input_chk checked">
+							<input type="checkbox" id="choice_type9" checked>
+							<label for="choice_type9">매매</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type10" checked>
+							<label for="choice_type10">전세</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type11">
+							<label for="choice_type11">월세</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type12">
+							<label for="choice_type12">단기임대</label>
+						</span>
+					</li>
+					</ul>
+					<button type="button" class="btn_close"><span class="sp">닫기</span></button>
+				</div>
+			</div>
+			<div class="bx_filter">
+				<a href="#" class="option">면적 선택</a>
+				<div class="filter_option">
+					<em class="option_tit">면적</em>
+					<ul class="lst_option">
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type13">
+							<label for="choice_type13">~10평 이하</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type14">
+							<label for="choice_type14">20평</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type15">
+							<label for="choice_type15">30평</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type16">
+							<label for="choice_type16">40평</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type17">
+							<label for="choice_type17">50평</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type18">
+							<label for="choice_type18">60평</label>
+						</span>
+					</li>
+					<li>
+						<span class="bx_input_chk">
+							<input type="checkbox" id="choice_type19">
+							<label for="choice_type19">70평 이상~</label>
+						</span>
+					</li>
+					</ul>
+					<button type="button" class="btn_close"><span class="sp">닫기</span></button>
+				</div>
+			</div>
+		</div>
+		<!-- [D] 모바일 필터영역 -->
+		<!-- [D] 상세필터 + 초기화 버튼 노출 : all_btn 클래스 추가 -->
+		<div class="m bx_filter_result view_detail all_btn">
+			<div class="bx_inner">
+				<a href="#" class="option_tag">
+					<span class="txt">면적 선택</span>
+					<span class="btn_del"><span class="sp">삭제</span></span>
+				</a>
+				<!-- [D] 선택된 결과값 : .option_tag 에 selected 클래스 추가 -->
+				<a href="#" class="option_tag selected">
+					<span class="txt ellipsis">매매</span>
+					<span class="btn_del"><span class="sp">삭제</span></span>
+				</a>						
+				<a href="#" class="option_tag selected">
+					<span class="txt ellipsis">아파트 외 7건</span>
+					<span class="btn_del"><span class="sp">삭제</span></span>
+				</a>
+			</div>
+			<!-- [D] 상세필터 : option_tag 에 .detail 클래스 추가 -->
+			<a href="#" class="option_tag detail">
+				<span class="sp"></span>
+				<span class="txt">상세 필터</span>
+			</a>
+			<button type="button" class="btn_reset">
+				<span class="sp ico_reset2"></span>
+				<span class="txt">초기화</span>
+			</button>
+		</div>
+
+		<!-- [D] (모바일) 
+			1. 목록 펼칠 경우 : .section 에 view_list 클래스 추가
+			2. 지도 펼칠 경우 : .section 에 view_map 클래스 추가 (기본)
+		-->
+		<div class="section view_list">
+			<div class="result_search">
+				<p class="dsc">총 <span class="num"></span>건의 검색 매물이 있습니다.</p>
+				<button type="button" class="btn_type2 btn_round btn_reset">
+					<span class="sp"></span><span class="txt">초기화</span>
+				</button>
+				<button type="button" class="m btn_type2 btn_round btn_list">
+					<span class="sp ico_list2"></span><span class="txt">목록보기</span>
+				</button>
+				<button type="button" class="m btn_type2 btn_round btn_map">
+					<span class="sp"></span><span class="txt">지도보기</span>
+				</button>
+			</div>			
+			<!-- [D] 지도 -->
+			<div id="mapCtrl">
+				<div id="rvWrapper">
+					<div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+					<!-- <div id="close" title="로드뷰닫기"><span class="img"></span></div> -->
+				</div>
+				<div id="mapWrapper">
+					<div id="map" class="map_info">
+						<div class="map_control top_left">
+							<button type="button" class="btn_distance"><span class="blind">거리보기</span></button>  
+							<button type="button" class="btn_airline"><span class="blind">항공뷰</span></button>  
+							<button type="button" id="roadviewControl" class="btn_loadview"><span class="blind">로드뷰</span></button>  
+						</div>
+						<div class="map_control top_right"> 
+							<button type="button" class="btn_focus"><span class="blind">현재 위치</span></button>  
+						</div>
+						<div class="map_control top_right"> 
+							<button type="button" class="btn_zoomin"><span class="blind">확대</span></button>  
+							<button type="button" class="btn_zoomout"><span class="blind">축소</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- [D] 조회결과 없는 경우 : .area_item 에 nodata 클래스 추가 -->
+		<div class="area_item">
+			<!-- [D] 추천단지 (활성화 시 display:block 처리) -->
+			<!-- <div class="bx_recommend">
+				<div class="bx_tit">
+					<strong class="tbl_tit">
+						<span class="tit_txt">추천 단지</span>
+					</strong>
+					<span class="slide_pagination">
+						<button type="button" class="btn_prev slick-arrow" style="display: block;">prev</button>
+						<span class="all_page"></span>
+						<button type="button" class="btn_next slick-arrow" style="display: block;">next</button>
+					</span>
+				</div>
+				<div class="regular slick-slider"></div>
+			</div> -->
+			<!-- [D] 아이템 리스트-->
+			<div class="bx_lst_item_type2"></div>
+
+			<!-- [D] 조회결과 없는 경우 -->
+			<div class="bx_nodata">
+				<p class="dsc">
+					<em class="txt_tit">조건에 맞는 매물이 없습니다.</em>
+					<span class="txt">지역을 변경하시거나, 조건을 초기화 해주세요.</span>
+				</p>
+			</div>
+		</div>
+
+		<!-- [D] 배너영역 -->
+		<!-- <div class="bx_banner">
+			<div class="auto_slide slick-slider"></div>
+			<span class="slide_pagination">
+				<span class="all_page"></span>
+			</span>
+			<button type="button" class="btn_close">
+				<span class="sp">닫기</span>
+			</button>
+		</div> -->
+	</div>
+	<input type="hidden" class="memXpos">
+	<input type="hidden" class="memYpos">
+</div>
+<!-- [D] JS -->
+<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="js/lib/slick.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=64425c8b50b8d904a1870e731b84311d&libraries=clusterer"></script>
+
+<!-- common -->
+<script type="text/javascript" src="js/thebiz.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script type="text/javascript" src="js/lib/handlebars-helper-x.js"></script>
+<script type="text/javascript" src="js/estate_info.js"></script>
+<!-- // [D] JS -->
+
+<!-- [D] 마크업 레이어 뷰용 // 개발시 제거 필요 -->
+<style>
+	.case_review{position:fixed;top:50px;right:15px;padding:8px 10px;background:#000;opacity:.5;filter:alpha(opacity=50);-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=50)';z-index:1010;font-size:12px;color:#fff;line-height:14px}
+	.case_review a{display:block;padding:4px 0;font-size:12px;color:#fff}
+</style>
+<div class="case_review">
+<a href="#" onclick="$('.area_item').addClass('nodata')">1. 데이터 없는 경우</a>
+<a href="#" onclick="$('.area_item').removeClass('nodata')">2. 데이터 있는 경우</a>
+</div>
+<!-- [D] 마크업 레이어 뷰용 // 개발시 제거 필요 -->
+
+</body>
+</html>
