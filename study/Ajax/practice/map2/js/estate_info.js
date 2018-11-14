@@ -64,16 +64,8 @@ $.get('js/data/estateInfo_member.json', function(data) {
 	// 매물 JSON 데이터 저장 객체
 	var data = {}
 
-	// 단지 시퀀스 배열
-	var danjiSeq = [];
-	// 단지명
-	var danjiName = [];
-
 	// 추천 단지 시퀀스 배열
 	var danjiSeq2 = [];
-
-	// 매물 종류 배열
-	var memulClass = [];
 
 
  // 숫자 천단위 콤마
@@ -114,7 +106,7 @@ $.get('js/data/estateInfo_member.json', function(data) {
 	}
 
 	// Handlebars.js를 활용한 데이터 바인딩
-	var bind = function (arr) {
+	var bind = function (arr, cnt) {
 		var hbs = $.ajax({
 			url: "js/hbs/practice.hbs"
 		});
@@ -125,6 +117,8 @@ $.get('js/data/estateInfo_member.json', function(data) {
 				var html = template(arr[i]);
 				target.append(html);
 			}
+			// 총 검색 매물
+			$('.num').text(cnt);
 			
 			// 매물 금액 치환
 			money();
@@ -133,13 +127,116 @@ $.get('js/data/estateInfo_member.json', function(data) {
 		}
 		hbs.then(hbsThen);
 	}
-
+	// 단지 시퀀스 배열
+	var danjiSeq = [];
+	// 단지명
+	var danjiName = [];
+	// 매물 종류 배열
+	var memulClass = [];
 	$.ajax({
 		url: 'js/data/estateInfo.json',
 		success: function (res) {
-			bind(res);
+			bind(res, res.length);
+
+			// 마커 생성
+			var markers = $(res).map(function (i, position) {
+				return new daum.maps.Marker({
+					map : map,
+					position : new daum.maps.LatLng(position.ypos, position.xpos)
+				})
+			});
+
+			// 단지 식별을 위해 danjiSeq 배열에 danji_seq 키에 해당하는 value 삽입
+			$.map(res, function (value) {
+				$.map(value, function (value2, key2) {
+					// console.log(key2, value2)
+					if (key2 === 'danji_seq' && value2 !== '') {
+						danjiSeq.push(value2);
+					} else if (key2 === 'danji_seq' && value2 === '') {
+						danjiSeq.push(value.memul_seq);
+					}
+
+					key2 === 'danji_name' ? danjiName.push(value2) : '',
+					key2 === 'memul_class' ? memulClass.push(value2) : ''
+				})
+			});
+			// console.log(danjiSeq)
+
+			var lstArr = [];
+
+			$.map(res, function (value, key) {
+				markers[key].Ta = danjiSeq[key]
+
+				// 아파트일 경우
+				if (danjiName[key] !== '') {
+					markers[key].va = danjiName[key];
+				} else {
+					// 아파트가 아닐 경우
+					markers[key].va = memulClass[key];
+				}
+				// console.log(markers[key]);	
+
+				// 마커 클릭 이벤트
+				// api같은 것들은 jquery는 사용하지않고 자바스크립트를 사용함 (사용자가 jquery를 쓸지 안쓸지 모르기 때문)
+				daum.maps.event.addListener(markers[key], 'click', function () {
+					// 인포윈도우 생성
+					var iwContent = '<div style="padding:5px">' + markers[key].va + '</div>';
+					var iwRemovale = true;
+					var iw = new daum.maps.InfoWindow({
+						content : iwContent,
+						removable : iwRemovale
+					});
+					iw.open(map, markers[key]);
+
+					// 초기화 버튼
+					$('.btn_reset').click(function () {
+						// 목록 비운 후
+						$('.bx_lst_item_type2').empty();
+						// 다시 초기 값 호출
+						bind(res, res.length);
+					})
+
+					// 클릭할 때 마다 쌓이는 배열 초기화
+					lstArr = [];
+
+					// 기존에 있던 리스트 목록 비우기
+					$('.bx_lst_item_type2').empty();
+
+					// 클릭한 마커의 값을 배열화한걸 분리
+					$.map(markers[key], function (value2, key2) {
+						// console.log(key2, value2)
+						// ta => 단지시퀀스 값을 넣어준 상태
+
+						// Ta 일 경우에만 처리
+						if (key2 === 'Ta') {
+							//danjiSeq의 갯수(121번)만큼의 루프를 돌면서 
+							for (var j in danjiSeq) {
+								//클릭한 단지의 값과 같은 것을 찾음 value2 는 Ta의 값
+								if (value2 === danjiSeq[j]) {
+									lstArr.push(res[j]);
+									console.log(lstArr);
+								}
+							}
+						} else if (key2 === 'va') { //단지에 대한 처리
+							for (var j in memulClass) {
+								if (value2 === memulClass[j]) {
+									lstArr.push(res[j]);
+									console.log(lstArr);
+								}
+							}
+						}
+					});
+					// 기존에 전체적으로 json값을 노출시키던 값을 lstArr값으로 변경해서 bind
+					bind(lstArr, lstArr.length);
+				});
+			});
+
+
+
 		}
 	});
+
+	
 	
 	// $.get('js/data/estateInfo.json', function (data) {
 	// 	bind(data);
