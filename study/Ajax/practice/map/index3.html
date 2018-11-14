@@ -47,6 +47,7 @@ a,a:active,a:hover{text-decoration: none}
 <script type="text/javascript" src="./js/lib/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9413087df6d6c00e1b63507a8066fdd5"></script>
+
 <script id="overlay-content" type="text/x-handlebars-template">
   <div class="layer_info">
     <div class="title_area">
@@ -76,10 +77,12 @@ a,a:active,a:hover{text-decoration: none}
   var map = new daum.maps.Map(mapContainer, mapOption);
  
   // 커스텀 오버레이 생성
-  var customOverlay = new daum.maps.CustomOverlay();
+  //var customOverlay = new daum.maps.CustomOverlay();
   // 인포윈도우 생성
   var InfoWindow = new daum.maps.InfoWindow()
 
+  var markers = [];
+  var overlays = [];    
   // json 데이터 호출
   $.ajax({
     url : './json/restaurant.json',
@@ -89,6 +92,7 @@ a,a:active,a:hover{text-decoration: none}
         var source = document.getElementById('overlay-content').innerHTML,
             template = Handlebars.compile(source),
             overlayContent = template(value); // 커스텀 오버레이 content
+        var customOverlay = new daum.maps.CustomOverlay();
 
         // 마커, 커스텀 오버레이 위치값
         var position = new daum.maps.LatLng(value.lat, value.lng);
@@ -97,12 +101,14 @@ a,a:active,a:hover{text-decoration: none}
         var marker = new daum.maps.Marker({
           map : map,
           position : position
-        })
-
+        });
+        
+        markers.push(marker);
         // console.log(value.title)        
 
         // 커스텀 오버레이 컨텐츠 설정 (왜 하나하나 안돌징)
         customOverlay.setContent(overlayContent);
+        overlays.push(marker);
         console.log(overlayContent);
 
         // 마커 클릭 이벤트 : 클릭시 커스텀 오버레이 노출

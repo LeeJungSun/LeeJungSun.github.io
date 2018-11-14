@@ -19,20 +19,7 @@
 <body>
 	<div id="container"></div>
 
-	<div id="table_area"></div>
-
-	<script src="js/lib/jquery-1.12.4.min.js"></script>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-
-	<!-- <script id="entry-template" type="text/x-handlebars-template">
-		<h1>{{title}}</h1>
-		<div class="body">
-			{{body}}
-		</div>
-	</script> -->
-
-	<script id="data-template" type="text/x-handlebars-template">
+	<div id="table_area">
 		<table>
 			<thead>
 			<tr>
@@ -46,17 +33,32 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr>
-			<td>{{area}}</td>
-			<td>{{year}}</td>
-			<td>{{month}}</td>
-			<td>{{division}}</td>
-			<td>{{price}}</td>
-			<td>{{deposit}}</td>
-			<td>{{monthly}}</td>
-			</tr>
+			
 			</tbody>
 		</table>
+	</div>
+
+	<script src="js/lib/jquery-1.12.4.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+	<!-- <script id="entry-template" type="text/x-handlebars-template">
+		<h1>{{title}}</h1>
+		<div class="body">
+			{{body}}
+		</div>
+	</script> -->
+
+	<script id="data-template" type="text/x-handlebars-template">
+		<tr>
+		<td>{{area}}</td>
+		<td>{{year}}</td>
+		<td>{{month}}</td>
+		<td>{{division}}</td>
+		<td>{{price}}</td>
+		<td>{{deposit}}</td>
+		<td>{{monthly}}</td>
+		</tr>
 	</script>
 
 	<script>
@@ -128,13 +130,14 @@
 					$.map(res, function (value) {
 
 						if (src === jsonData[2]) {
+							console.log(value);
 							var source = document.getElementById('data-template').innerHTML,
 									template = Handlebars.compile(source),
 									html = template(value);
+							console.log(html);
+							$('#table_area tbody').append(html);
+							
 	
-							document.getElementById('table_area').innerHTML = html;
-	
-							console.log(value)
 						}
 
 						$.map(value, function (value2, key2) {

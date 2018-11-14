@@ -75,34 +75,41 @@ $.get('js/data/estateInfo_member.json', function(data) {
 	// 매물 종류 배열
 	var memulClass = [];
 
-	// 콤마 처리
-	var comma = function(str) {
-		str = String(str);
-		return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-	}
 
-	// 화폐 단위 조정
-	var moneyUnit = function(){
-		var unit = $('.unit');
-		for(var i=0;i<unit.length;i++){
-			if(unit.eq(i).text().length > 4){
-				var base = Math.floor(Number(unit.eq(i).text())/10000);
-				var rest = Number(unit.eq(i).text())%10000;
-				if(rest == 0){
-					unit.eq(i).text(comma(base+'억'));
-				}else{
-					unit.eq(i).text(String(base)+'억'+comma(rest));
+ // 숫자 천단위 콤마
+	var comma = function (str) {
+		return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	// 매물 금액
+	var money = function () {
+		var sum = $('.bx_align').find('.sum');
+		
+		for (var i = 0 ; i<=sum.length ; i++) {
+			if (sum.eq(i).text().length > 4) { 
+				var million = sum.eq(i).text()%10000;
+				var billion = Math.floor(sum.eq(i).text()/10000);
+
+				if (million === 0) {
+					// 천만원 단위 없음
+
+					// 숫자 + 억 천단위는 절사
+					sum.eq(i).text(billion + '억');							
+				} else {
+					// 천만원 단위 있음
+
+					// 숫자 + 억 + 콤마 포함된 천만원 단위
+					sum.eq(i).text(billion + '억' + comma(million) + '만원');
 				}
 			}
-			unit.eq(i).text(comma(unit.eq(i).text()));
 		}
 	}
+	// 확인매물 날짜
+	var date = function () {
+		var tag = $('.tag_type .date');
+		for (var i = 0 ; i < tag.length ; i ++) {
+			var characterConvert = tag.eq(i).text().replace(/-/g, '.');
 
-	// 날짜 포멧 조정
-	var dateUnit = function(){
-		var unit = $('.tag_type span');
-		for(var i=0;i<unit.length;i++){
-			unit.eq(i).text(unit.eq(i).text().substr(2).replace(/\-/g, '.'))
+			tag.eq(i).text(characterConvert);
 		}
 	}
 
@@ -118,6 +125,11 @@ $.get('js/data/estateInfo_member.json', function(data) {
 				var html = template(arr[i]);
 				target.append(html);
 			}
+			
+			// 매물 금액 치환
+			money();
+			// 확인매물 날짜 특수문자 치환
+			date();
 		}
 		hbs.then(hbsThen);
 	}

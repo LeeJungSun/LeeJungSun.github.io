@@ -12,17 +12,17 @@
         <div class="bx_align">
             <em class="tit ellipsis">{{sido}} {{gugun}} {{dong}} {{dangi_name}}</em>
             {{#xif "sale_price !=0"}}
-            <span class="dsc price">매매 {{sale_price}}</span>
+            <span class="dsc price">매매 <span class="sum">{{sale_price}}</span></span>
             {{/xif}}
             {{#xif "lease_price !=0"}}
-            <span class="dsc price">전세 {{lease_price}}</span>
+            <span class="dsc price">전세 <span class="sum">{{lease_price}}</span></span>
             {{/xif}}
             {{#xif "month_deposit_price !=0"}}
-            <span class="dsc price">월세 {{month_deposit_price}}</span>
+            <span class="dsc price">월세 <span class="sum">{{month_deposit_price}}</span></span>
             {{/xif}}
             <span class="dsc extent">{{contract_meter}}/{{use_meter}}㎡ {{contract_meter_py}}/{{use_meter_py}}평 {{corrp_flr}}/{{ground_flr}}층 방{{room_count}}욕실{{bath_count}}</span>
             <p class="dsc txt">{{memul_ad}}</p>
-            <span class="tag_type">확인매물 {{confirm_date}}</span>
+            <span class="tag_type">확인매물 <span class="date">{{confirm_date}}</span></span>
         </div>
     </div>
 </a>
