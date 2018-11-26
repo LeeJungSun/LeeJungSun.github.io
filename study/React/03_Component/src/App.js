@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // 모듈 불러오기 (import)
-// MyComponent 파일을 불러온다.
+// MyComponent.js에서 내보낸 MyCmponent 모듈을 불러온다.
 import MyComponent from './MyComponent';
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
       // <MyComponent name={3}/> 
 
       <MyComponent name="React" age={4} />
-      );
+    );
   }
 }
 

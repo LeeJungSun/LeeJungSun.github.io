@@ -2,6 +2,21 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // propTypes 불러오기
 
 class MyComponent extends Component {
+
+	// constructor : 컴포넌트의 생성자 메소드
+	// 생성자 메소드는 컴포넌트를 새로 만들 때 실행
+	constructor (props) {
+		// super
+		// - 메서드 내부에서 부모 클래스인 component의 constructor 메소드를 호출하기 위하여 사용
+		// - 컴포넌트를 만들 때 props 값들을 사용하므로 props를 메소드의 파라미터로 전달
+		super(props);
+
+		// state 초깃값 설정
+		this.state = {
+			number : 0
+		}
+	}
+
 	// defaultProps(transform-class-properties) : 클래스 내부에 정의하는 방식
 	// static defaultProps = {
 	// 	name : '기본이름'
@@ -19,7 +34,13 @@ class MyComponent extends Component {
 			<div>
 				<p>안녕하세요 제 이름은 {this.props.name} 입니다.</p>
 				<p>저는 {this.props.age}살 입니다.</p>
-
+				<p>숫자 : {this.state.number}</p>
+				<button onClick={() => {
+					// setState() : state값 업데이트
+					this.setState({
+						number : this.state.number + 1
+					})	
+				}}>더하기</button>
 			</div> 
 		);
 	}
