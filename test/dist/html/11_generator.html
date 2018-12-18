@@ -11,73 +11,85 @@
 <body>
 	<style>
 		html,body{height:100%}
-		#wrap{max-width:770px;height:100%;margin:0 auto;font-family:'Roboto'}
-		.page_title{margin-top:50px}
-		.vw_generator_wrap,.percent_generator_wrap{padding:50px 0;font-size:0}
-		.generator_area{position:relative;padding-right:290px}
-		.generator_area:after,.generator_area:before{position:absolute;top:50%;content:''}
-		.generator_area:after{left:412px;width:25px;height:8px;margin-top:-4px;border:solid #000;border-width:2px 0}
-		.generator_area:before{left:425px;width:14px;height:14px;margin-top:-6px;border:solid #000;border-width:2px 2px 0 0;transform:rotate(45deg)}
-		.generator_area .content{margin-top:35px}
-		.generator_area .content:first-child{margin-top:0}
-		.generator_area .title{width:205px}
-		.generator_area span{display:inline-block;font-size:26px;font-weight:bold;line-height:50px;vertical-align:middle}
-		.generator_area input{width:100%;height:100%;border:0;font-family:'Roboto';font-size:26px;font-weight:bold;text-align:center}
-		.generator_area .input_text{width:100px;height:50px;margin:0 10px;border:1px solid #777;box-sizing:border-box}
-		.generator_area .result_area{position:absolute;top:0;right:0;width:280px;height:100%;margin:0;padding-right:25px;box-sizing:border-box}
-		.generator_area .result_area>span{display:block;line-height:normal;vertical-align:bottom}
-		.generator_area .result_text{margin-top:25px;font-size:40px;text-align:center}
-		.generator_area .result_text .elp{max-width:180px;font-size:40px}
-		.btn_generator{width:100%;height:70px;margin-top:60px;background:#000;font-family:'Roboto';font-size:24px;color:#fff}
+		article{position:relative}
+		#wrap{overflow:hidden;max-width:830px;height:auto;margin:0 auto;font-family:'Roboto'}
+		section{float:left;width:50%;padding:0 30px;box-sizing:border-box}
+		span{display:inline-block;font-size:24px;font-weight:bold;vertical-align:middle}
+		.page_title{margin-top:50px;font-size:26px}
+		.vw_generator_wrap,.percent_generator_wrap{overflow:hidden;padding:50px 0}
+		.input_box{margin-top:20px}
+		.input_box:first-child{margin-top:0}
+		.input_box .title{display:inline-block;width:200px;font-size:22px;font-weight:bold;vertical-align:middle}
+		.input_text{width:100px;height:50px;margin-right:10px;border:1px solid #777;box-sizing:border-box}
+		.input_text input{width:100%;height:100%;border:0;font-family:'Roboto';font-size:22px;font-weight:bold;text-align:center}
+		.text{font-size:22px}
+		.result_area{margin-top:50px}
+		.result_area>span{display:block;vertical-align:bottom}
+		.result_text{height:100px;margin-top:15px;padding:27px 0;background:#e0e0e0;font-size:40px;text-align:center;box-sizing:border-box}
+		.result_text .elp{max-width:180px;font-size:40px}
+		.btn{display:block;width:180px;height:55px;margin:30px auto 0;background:#000;font-family:'Roboto';font-size:19px;font-weight:bold;color:#fff}
 	</style>
 	<div id="wrap">
-		<h1 class="page_title">1. 퍼센트 계산</h1>
-		<article class="percent_generator_wrap">
-			<div class="generator_area">
-				<p class="content">
-					<span class="title">Width : </span>
-					<span class="input_text"><input type="text" id="widthSize"></span>
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<![endif]-->
+			<a href="../img/bg_autoplay.jpg" style="display:block;width:300px;height:50px;background:red" download type="image/jpeg">다운로드 테스트</a>
+
+		<section>
+			<h1 class="page_title">1. 퍼센트 계산</h1>
+			<article class="percent_generator_wrap">
+				<div class="input_box">
+					<label for="widthSize" class="title">Width : </label>
+					<span class="input_text"><input type="number" id="widthSize"></span>
 					<span class="text">PX</span>
-				</p>
-				<p class="content">
-					<span class="title">Design Width : </span>
-					<span class="input_text"><input type="text" id="designSize"></span>
+				</div>
+				<div class="input_box">
+					<label for="designSize" class="title">Design Width : </label>
+					<span class="input_text"><input type="number" id="designSize"></span>
 					<span class="text">PX</span>
-				</p>
+				</div>
+				<button type="button" id="jsBtnPercentGenerator" class="btn btn_generator">Generate</button>
 				<p class="content result_area">
 					<span class="title">Result</span>
 					<span id="result" class="result_text"></span>
 				</p>
-			</div>
-			<button type="button" id="jsBtnPercentGenerator" class="btn_generator"><span>Convert</span></button>	
-		</article>
-		<h1 class="page_title">2. VW 계산</h1>
-		<article class="vw_generator_wrap">
-			<div class="generator_area">
-				<p class="content">
-					<span class="title">Viewport Width : </span>
-					<span class="input_text"><input type="text" id="viewport"></span>
+				<button type="button" class="btn btn_copy">Copy to clipboard</button>
+			</article>
+		</section>
+		<section>
+			<h1 class="page_title">2. VW 계산</h1>
+			<article class="vw_generator_wrap">
+				<div class="input_box">
+					<label for="viewport" class="title">Viewport Width : </label>
+					<span class="input_text"><input type="number" id="viewport"></span>
 					<span class="text">PX</span>
-				</p>
-				<p class="content">
-					<span class="title">Design Font-size : </span>
-					<span class="input_text"><input type="text" id="fontSize"></span>
+				</div>
+				<div class="input_box">
+					<label for="fontSize" class="title">Design Font-size : </label>
+					<span class="input_text"><input type="number" id="fontSize"></span>
 					<span class="text">PX</span>
-				</p>
+				</div>
+				<button type="button" id="jsBtnVWGenerator" class="btn btn_generator">Generate</button>
 				<p class="content result_area">
 					<span class="title">Result</span>
 					<span id="result2" class="result_text"></span>
 				</p>
-			</div>
-			<button type="button" id="jsBtnVWGenerator" class="btn_generator"><span>Convert</span></button>			
-		</article>
+				<button type="button" class="btn btn_copy">Copy to clipboard</button>
+			</article>
+		</section>
 	</div>
 </body>
 <script src="../js/libs/jquery/jquery-1.12.4.min.js"></script>
 <script>
+	(function(f,c){"undefined"!==typeof module?module.exports=c():"function"===typeof define&&"object"===typeof define.amd?define(c):this[f]=c()})("clipboard",function(){if("undefined"===typeof document||!document.addEventListener)return null;var f={};f.copy=function(){function c(){d=!1;b=null;e&&window.getSelection().removeAllRanges();e=!1}var d=!1,b=null,e=!1;document.addEventListener("copy",function(c){if(d){for(var e in b)c.clipboardData.setData(e,b[e]);c.preventDefault()}});return function(g){return new Promise(function(k,f){d=!0;b="string"===typeof g?{"text/plain":g}:g instanceof Node?{"text/html":(new XMLSerializer).serializeToString(g)}:g;try{var n=document.getSelection();if(!document.queryCommandEnabled("copy")&&n.isCollapsed){var l=document.createRange();l.selectNodeContents(document.body);n.addRange(l);e=!0}if(document.execCommand("copy"))c(),k();else throw Error("Unable to copy. Perhaps it's not available in your browser?");}catch(p){c(),f(p)}})}}();f.paste=function(){var c=!1,d,b;document.addEventListener("paste",function(e){if(c){c=!1;e.preventDefault();var g=d;d=null;g(e.clipboardData.getData(b))}});return function(e){return new Promise(function(g,f){c=!0;d=g;b=e||"text/plain";try{document.execCommand("paste")||(c=!1,f(Error("Unable to paste. Pasting only works in Internet Explorer at the moment.")))}catch(m){c=!1,f(Error(m))}})}}();"undefined"===typeof ClipboardEvent&&"undefined"!==typeof window.clipboardData&&"undefined"!==typeof window.clipboardData.setData&&(function(c){function d(a,b){return function(){a.apply(b,arguments)}}function b(a){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof a)throw new TypeError("not a function");this._value=this._state=null;this._deferreds=[];l(a,d(f,this),d(k,this))}function e(a){var b=this;return null===this._state?void this._deferreds.push(a):void p(function(){var c=b._state?a.onFulfilled:a.onRejected;if(null===c)return void(b._state?a.resolve:a.reject)(b._value);var h;try{h=c(b._value)}catch(d){return void a.reject(d)}a.resolve(h)})}function f(a){try{if(a===this)throw new TypeError("A promise cannot be resolved with itself.");if(a&&("object"==typeof a||"function"==typeof a)){var b=a.then;if("function"==typeof b)return void l(d(b,a),d(f,this),d(k,this))}this._state=!0;this._value=a;m.call(this)}catch(c){k.call(this,c)}}function k(a){this._state=!1;this._value=a;m.call(this)}function m(){for(var a=0,b=this._deferreds.length;b>a;a++)e.call(this,this._deferreds[a]);this._deferreds=null}function n(a,b,c,h){this.onFulfilled="function"==typeof a?a:null;this.onRejected="function"==typeof b?b:null;this.resolve=c;this.reject=h}function l(a,b,c){var h=!1;try{a(function(a){h||(h=!0,b(a))},function(a){h||(h=!0,c(a))})}catch(d){h||(h=!0,c(d))}}var p=b.immediateFn||"function"==typeof setImmediate&&setImmediate||function(a){setTimeout(a,1)},q=Array.isArray||function(a){return"[object Array]"===Object.prototype.toString.call(a)};b.prototype["catch"]=function(a){return this.then(null,a)};b.prototype.then=function(a,c){var d=this;return new b(function(b,f){e.call(d,new n(a,c,b,f))})};b.all=function(){var a=Array.prototype.slice.call(1===arguments.length&&q(arguments[0])?arguments[0]:arguments);return new b(function(b,c){function d(e,g){try{if(g&&("object"==typeof g||"function"==typeof g)){var k=g.then;if("function"==typeof k)return void k.call(g,function(a){d(e,a)},c)}a[e]=g;0===--f&&b(a)}catch(l){c(l)}}if(0===a.length)return b([]);for(var f=a.length,e=0;e<a.length;e++)d(e,a[e])})};b.resolve=function(a){return a&&"object"==typeof a&&a.constructor===b?a:new b(function(b){b(a)})};b.reject=function(a){return new b(function(b,c){c(a)})};b.race=function(a){return new b(function(b,c){for(var d=0,e=a.length;e>d;d++)a[d].then(b,c)})};"undefined"!=typeof module&&module.exports?module.exports=b:c.Promise||(c.Promise=b)}(this),f.copy=function(c){return new Promise(function(d,b){if("string"!==typeof c&&!("text/plain"in c))throw Error("You must provide a text/plain type.");window.clipboardData.setData("Text","string"===typeof c?c:c["text/plain"])?d():b(Error("Copying was rejected."))})},f.paste=function(){return new Promise(function(c,d){var b=window.clipboardData.getData("Text");b?c(b):d(Error("Pasting was rejected."))})});return f});
+</script>
+<script>
 	var btnVWGenerator = document.getElementById('jsBtnVWGenerator'),
-			btnPercentGenerator = document.getElementById('jsBtnPercentGenerator');
+			btnPercentGenerator = document.getElementById('jsBtnPercentGenerator'),
+			btnPercentCopy = document.querySelector('.percent_generator_wrap .btn_copy'),
+			btnVwCopy = document.querySelector('.vw_generator_wrap .btn_copy');	
 
+	// vw Generate
 	function vwGenerator () {
 		vwResultValueAdd();
 	};
@@ -95,7 +107,13 @@
 		resultElement.innerHTML = '<span class="elp">' + vwResultCreate() + '</span> vw';
 	};
 	btnVWGenerator.addEventListener('click', vwGenerator);
+	function vwResultCopy () {
+		var cssCode = document.querySelector('.vw_generator_wrap .result_text .elp').innerHTML + 'vw';
+		clipboard.copy(cssCode).then(this.codeMsg.text('Code is successfully copied!!'));		
+	}
+	btnVwCopy.addEventListener('click', vwResultCopy);
 
+	// percent Generate
 	function percentGenerator () {
 		percentResultValueAdd();
 	};
@@ -112,5 +130,12 @@
 		resultElement.innerHTML = '<span class="elp">' + percentResultCreate() + '</span> %';
 	};
 	btnPercentGenerator.addEventListener('click', percentGenerator);
+
+	function percentResultCopy () {
+		var cssCode = document.querySelector('.percent_generator_wrap .result_text .elp').innerHTML + '%';
+		clipboard.copy(cssCode).then(this.codeMsg.text('Code is successfully copied!!'));		
+	}
+	btnPercentCopy.addEventListener('click', percentResultCopy);
+
 </script>
 </html>

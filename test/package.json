@@ -43,5 +43,8 @@
   "repository": {
     "type": "git",
     "url": "http://hellomrma@gitlab.hivelab.co.kr/uit-center/techdev-office/uidev1/gulp-lab.git"
+  },
+  "dependencies": {
+    "natives": "^1.1.6"
   }
 }
