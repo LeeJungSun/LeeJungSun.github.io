@@ -20,6 +20,11 @@
 	border-color:#3f86a5;
 	background:#bcdbe8;
 }
+.btn{
+	&_view{
+		display:inline-block;margin:5px 0;padding:0 5px;border:1px solid #ccc;border-radius:5px;font-size:13px;color:#4d5256;text-align:center;text-decoration:none;
+	}
+}
 .main{
 	&__title{
 		margin-bottom:15px;
@@ -49,12 +54,12 @@
 }
 .article{
 	&__title{
-		margin:50px 0 15px;
+		margin:50px 0 10px;
 		font-size:19px;
 		color:#000;
 	}
 	&__text{
-		margin:20px 0;
+		margin:5px 0;
 		padding:0;
 		font-size:15px;
 		color:#4d5256;
@@ -69,9 +74,6 @@
 		list-style-type:circle;
 	}
 	&:first-child{
-		margin-top:0
-	}
-	&:first-of-type{
 		margin-top:0
 	}
 	li{
@@ -103,6 +105,8 @@
 	border-radius:4px;
 	background:#f5f6f7;
 	font-size:12px;
+	color:#4d5256;
+	line-height:28px;
 	&:first-child{
 		margin-top:0;
 	}
@@ -194,7 +198,7 @@
 }
 .img_wrap{
 	@include clearfix;
-	margin:40px 0;
+	margin:25px 0;
 	.img{
 		float:left;
 	}
