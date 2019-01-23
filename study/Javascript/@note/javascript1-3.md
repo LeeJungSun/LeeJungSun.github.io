@@ -12,6 +12,30 @@
 
 **OOP 개념 이해!!!!**
 
+- 캡슐화
+
+  - 외부에서 접근하지 못하게 private화 하는 것
+
+- 다형성
+
+  - 상속을 통해서 다른 동작을 가능하게 해 준다. 오버라이딩/오버로딩
+
+- 추상화
+
+  - 추상 클래스를 만든다. (타입스크립트에서 많이 사용)
+
+  - ```
+    class user interface 
+    	name : string
+    	age : number
+    	
+    	interface에서 끌어다가 쓸 수 있음
+    ```
+
+- 상속성
+
+
+
 
 ## 랜더링
 - Rendering
@@ -31,16 +55,16 @@
 	- 빌트인 연산자
 	- 빌트인 오브젝트
 
-- 값(데이터) 타입
+- 값(데이터) 타입 (자바스크립트의 원시 타입)
 	- undefined, Null, boolean, number, string, object
 
 - 연산자
 	- ++, --, +, -, *, /, %, new 등
 
-- 오브젝트
+- 오브젝트 (모든 언어에서 사용하게끔 빌트인된 객체?)
 	- Global, Object, Function, Array
 	- String, Boolean, Number
-	- Math, Date, RegExp, JSON
+	- Math(자바스크립트에만 있음), Date, RegExp, JSON(모든 언어에서 사용할 수 있음)
 	- Error, EvalError, RangeError, ReferenceError 등
 
 ## 함수
@@ -206,7 +230,16 @@ constructor 위치에 작성 가능한 생성자
 	- var Sports = function () {}형태에서 Sports
 
 파라미터
+
 	- 소괄호 안에 원하는 파라미터 값 입력
+
+fallback (pollyfill)
+
+- 
+
+프로퍼티
+
+- key와 value를 가지고 있는 것
 
 
 ## instanceof
@@ -218,6 +251,8 @@ console.log(obj == String); // false 반환
 console.log(obj instanceof String); // true 반환
 
 
+
+
 # Object 오브젝트
 
 ## Object 분류
@@ -227,7 +262,7 @@ console.log(obj instanceof String); // true 반환
 	- 네이티브 오브젝트(Natice Object)
 	- 호스트 오브젝트(Host Object)
 네이티브 오브젝트
-	- Arguments 오브제트와 같이
+	- Arguments 오브젝트와 같이
 	- 자바스크립트 프로그램을 실행할 때 생성하는 오브젝트
 호스트 오브젝트 -> 대표적으로 DOM
 	- 자바스크립트 실행 환경을 지원하기 위한 오브젝트
@@ -302,10 +337,12 @@ Object 인스턴스 생성
 
 ## propertyIsEnumerable()
 - 개요
-	- 오브젝트에서 프로퍼티 이름을 열거할 수 있으면 true 변환
-		- 열거할 수 없으면 false 반환
-	- prototype에 프로퍼티를 연결하면
-		- 1단계 아래 작성한 것이며 오브젝트 1차 프로퍼티가 아니므로 false 반환
+  - 오브젝트에서 프로퍼티 이름을 열거할 수 있으면 true 변환
+    - 열거할 수 없으면 false 반환
+  - prototype에 프로퍼티를 연결하면
+    - 1단계 아래 작성한 것이며 오브젝트 1차 프로퍼티가 아니므로 false 반환
+
+    
 
 
 # Global 오브젝트
@@ -376,22 +413,21 @@ window 오브젝트는 window에서 제공
 ## parseFloat()
 
 
+
 ## eval() -> 쓰지 말것 / 보안 이슈
-파라미터의 문자열 값을 자바스크립트 코드로 간주하여 컴파일, 실행
+
+파라미터의 문자열 값을 자바스크립트 코드로 간주하여 컴파일, 실행 => 메모리에 쌓이지 않음
 예 : eval('parseInt('-123.45')')
 
 
-## encodeURI()
 
+
+## encodeURI()
 
 ## decodeURI()
 
 
 # String 오브젝트
-
-
-
-
 
 
 

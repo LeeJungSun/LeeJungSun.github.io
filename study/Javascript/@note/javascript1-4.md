@@ -36,7 +36,7 @@
 
 ```
 - 객체 지향에서는 추가와 삭제를 함께하는건(두가지 이상의 함수를 한 번에 실행) 바람직하지 않음
-- crud(create, read, ,u..? ,delete)를 복합적으로 사용하는건 바람직하지 않으므로 쪼개서 사용!
+- crud(create, read, ,update ,delete)를 복합적으로 사용하는건 바람직하지 않으므로 쪼개서 사용!
 - 코드를 프로그램으로 풀면 안됨, 프로세스로 풀어야한다.
   프로세스 -> 로직을 정리
   시나리오를 먼저 만듦
@@ -51,6 +51,62 @@
 - 배열 오브젝트에 length 프로퍼티가 자동으로 설정됨
 - 열거, 삭제는 할 수 없지만 변경은 가능
 - length 프로퍼티 값을 변경하면 배열의 엘리먼트 수에 반영됨
+
+```javascript
+var value = [1, 2, 3];
+value.length // 3
+
+value.length = 4
+value // value[1, 2, 3, undefined]
+
+vale.length = 2
+value // value[1, 2]
+
+** index값과 length값 헷갈릴 수 있으니 주의!
+```
+
+
+
+## 엘리먼트 추가
+
+- 생성된 배열에 엘리먼트를 추가 할 수 있다. (표현식으로도 사용이 가능)
+
+```javascript
+var data = [1, 2, 3];
+data[3] = 55;
+data // data = [1,2,3,55]
+
+// 표현식으로 사용할 경우
+var value = 5;
+data[value+1] = 7;
+data // data = [1,2,3,undefined,undefined,undefined,7]
+
+```
+
+
+
+## 엘리먼트 삭제
+
+- 배열의 엘리먼트를 삭제하는 것과 엘리먼트의 값을 지우는것은 다름
+- 엘리먼트 삭제 -> 배열의 엘리먼트수가 줄어듦, length 값이 줄어듦
+- 엘리먼트 값을 지움 -> 엘리먼트 수가 줄지않고 유지
+
+```javascript
+var data = [1, 2, 3, 4, 5];
+data[2] = '';
+data // data[1, 2, '', 4, 5];
+
+var data2 = [1, 2, 3, 4, 5];
+delete data2[3];
+data2 //data2[1, 2, 3, undefined, 5];
+```
+
+
+
+## new Array()
+
+- array 오브젝트를 생성하여 반환한다.
+- 
 
 
 
