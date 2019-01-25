@@ -1,0 +1,39 @@
+@import 'utils';
+
+.todo-item {
+	display: flex;
+	padding: 1rem;
+	border-top : 1px solid $oc-gray-1;
+	align-items: center;
+	cursor: pointer;
+	&:first-child {
+		border-top: 0;
+	}
+	&:hover {
+		background: $oc-gray-0;
+	}
+	.tick {
+		margin-right: 1rem;
+	}
+	.text {
+		flex: 1;
+		word-break: break-all;
+		&.done {
+			text-decoration: line-through;
+		}
+	}
+	.delete {
+		margin-left: 1rem;
+		border: 0;
+		background: none;
+		color: $oc-red-7;
+		font-size: .8rem;
+		&:hover {
+			color: $oc-red-5;
+			text-decoration: underline;
+		}
+	}
+	&:nth-child(odd) {
+		background: $oc-gray-0;
+	}
+}
