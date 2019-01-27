@@ -61,7 +61,7 @@ Did 접두사 - 어떤 작업을 **작동한 후**에 실행되는 메소드
 
     - false를 반환하면 아래 메소드들을 호출하지 않음 (기본 true 반환)
 
-    - 컴포넌트를 최적화하는 작업에서 매우 유용하게 사용 
+    - **컴포넌트를 최적화하는 작업에서 매우 유용하게 사용** 
 
       ```javascript
       shouldComponentUpdate (nextProps, nextState) {
