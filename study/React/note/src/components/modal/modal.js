@@ -5,7 +5,7 @@ class ModalPage extends Component {
 	render() {
 		return (
 			<div className="modal">
-				<div className="modal-card">{this.props.children && this.props.childeren}</div>
+				<div className="modal-card">{this.props.children && this.props.children}</div>
 			</div>
 		);
 	}

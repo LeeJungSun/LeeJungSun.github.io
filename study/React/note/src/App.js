@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import NoteList from './components/note-list/note-list';
 import ModalPage from './components/modal/modal';
 import NoteRaw from './components/note-raw/note-raw';
+import SearchBarComponent from './components/search-bar/search-bar';
 
 // 컨벤션 같은
 const Container = styled.div`
@@ -62,9 +63,29 @@ class App extends Component {
     })
   }
 
+  onChagneSearchText = e => {
+    this.setState({
+      search : e.target.value
+    })
+  }
+
   createNote = (title, text) => {
     this.setState({
       notes: [...this.state.notes, {title, text, date: new Date(), edited: false}]
+    })
+  }
+  changeNote = (title, text, number) => {
+    this.setState({
+      notes: this.state.notes.map(
+        (note, idx) => (idx === number ? {...note, title, text, edited: true} : note)
+      )
+    })
+  }
+  deleteNote = number => {
+    this.setState({
+      notes: this.state.notes.filter(
+        (note, idx) => (idx === number ? false : true)
+      )
     })
   }
 
@@ -73,7 +94,7 @@ class App extends Component {
       <Container>
         {this.state.modalToggle && (
             <ModalPage>
-                <NoteRaw />
+                <NoteRaw action={this.createNote} close={this.toggleModal} />
             </ModalPage>
         )}
         <AppDiv>
@@ -83,10 +104,14 @@ class App extends Component {
             </div>
             <div>
               <button onClick={this.toggleModal}>노트 작성</button>
-              <div id="search-bar" />
+              <SearchBarComponent search={this.state.search} onChageSearchText={this.onChagneSearchText} />
             </div>
           </SearchBar>
-          <NoteList notes={this.state.notes} />
+          <NoteList
+            notes={this.state.notes}
+            changeNote={this.changeNote}
+            deleteNote={this.deleteNote}
+          />
         </AppDiv>
       </Container>
     );

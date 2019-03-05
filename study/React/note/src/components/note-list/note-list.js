@@ -12,7 +12,16 @@ class NoteList extends Component {
 		const noteListReturn = notes => {
 			return notes.map((note, idx) => {
 				return (
-					<Note key={idx} title={note.title} text={note.text} date={note.date} edited={note.edited} />
+					<Note
+						key={idx}
+						noteNumber={idx}
+						title={note.title}
+						text={note.text}
+						date={note.date}
+						edited={note.edited}
+						changeNote={this.props.changeNote}
+						deleteNote={this.props.deleteNote}
+					/>
 				)
 			})
 		}
