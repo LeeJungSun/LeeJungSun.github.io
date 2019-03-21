@@ -25,7 +25,7 @@
         initLayout : function () {
             var initHash = win.location.hash,
                 hashTarget = this.castContChild.filter(initHash);
-            // console.log(hashTarget)
+            console.log(hashTarget)
             this.castTabList.removeClass('active');
             this.castContChild.hide();
             this.currentIndex = (hashTarget.length) ? hashTarget.index() : 0;
