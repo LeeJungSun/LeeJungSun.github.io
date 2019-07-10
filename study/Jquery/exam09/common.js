@@ -25,10 +25,11 @@
         initLayout : function () {
             var initHash = win.location.hash,
                 hashTarget = this.castContChild.filter(initHash);
-            console.log(hashTarget)
             this.castTabList.removeClass('active');
             this.castContChild.hide();
             this.currentIndex = (hashTarget.length) ? hashTarget.index() : 0;
+
+            console.log(this.currentIndex)
             this.castNumTotal.text(this.castTabList.length);
             this.viewLayout();
             this.numUpdate();
