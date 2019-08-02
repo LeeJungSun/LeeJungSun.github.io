@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<style>
+	*{margin:0;padding:0}
+	html,body{max-width:1280px;margin:0 auto;padding:20px 0}
+	body{background-color:#fff;font-family:"나눔고딕",NanumGothic,"NanumGothicRegular","굴림",Gulim,Sans-serif;font-size:14px;color:#555;line-height:1.5;-webkit-text-size-adjust:none}
+	h1,h2,h3,h4,h5,h6{text-align:left}
+	img,fieldset,iframe{border:0 none}
+	li{list-style:none}
+	a{color:#555;text-decoration:none}
+	a:hover{text-decoration:underline}
+	em,address{font-style:normal}
+	button,label{cursor:pointer}
+	input[type=text],input[type=password],input[type=image],textarea{-webkit-appearance:none;-webkit-text-size-adjust:none;-webkit-border-radius:0}
+	textarea{overflow:auto}
+	select{height:20px;border:1px solid #bfbfbf}
+	html:first-child select{height:20px;padding-right:6px}
+	option{padding-right:6px}
+	.input_text, textarea{margin:-1px 0;padding-right:1px;border-top:1px solid #d1d1d2;border-right:1px solid #eeeef0;border-bottom:1px solid #eeeef0;border-left:1px solid #d1d1d2}
+	hr,caption{display:none}
+	legend{*width:0}
+	.blind,legend{display:block;overflow:hidden;position:absolute;left:0;top:-5000px}
+	.exam_wrap{margin-top:30px}
+    .exam_a{margin-top:10px;font-weight:bold;color:red}
+	</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] -->
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 배열에 본인 이름을 한글자씩 담은 다음 문자열로 출력하세요.</h1>
+			<div class="exam_q">예시) ['Lee', 'Hwan'] => 'Lee Hwan'</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 'question' 문자열을 거꾸로 출력하세요. (for문 사용)</h1>
+			<div class="exam_q">예시) 'question' => 'noitseuq'</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. [40, 100, 1, 5, 25, 10] 에서 가장 큰 수 순서대로 index 를 배열로 출력하세요.  (for/if문 사용)</h1>
+			<div class="exam_q">예시) [40, 100, 1, 5, 25, 10] => [1, 0, 5, 4, 2, 3]</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 2중 배열로 구구단을 만드세요. (for문 사용)</h1>
+			<div class="exam_q">예시) [[2,4,6...],[3,6,9...]...]</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 배열에 숫자 0 ~ 9까지 담아보세요. (for문 사용)</h1>
+			<div class="exam_q">예시) [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 배열에 숫자 0 ~ 5 사이의 랜덤한 숫자를 6개 담아보세요. (for문 사용)</h1>
+			<div class="exam_q">예시) [4, 2, 3, 2, 3, 0]</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 배열에 숫자 0 ~ 9까지 담고, 버튼 클릭시 랜덤한 숫자를 하나씩 빼주세요.</h1>
+			<div class="exam_q">예시) [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] => [0, 1, 2, 3, 4, 5, 7, 8, 9] => [0, 1, 3, 4, 5, 7, 8, 9]</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 배열에 숫자 0 ~ 5 사이의 랜덤한 숫자를 중복되는 값이 없도록 6개 담아보세요. (for/if문 사용)</h1>
+			<div class="exam_q">예시) [4, 2, 3, 1, 5, 0]</div>
+            <button type="button">버튼</button>
+            <p class="exam_a"></p>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function () {
+    var container = $('.exam_wrap');
+
+    // Q. 배열에 본인 이름을 한글자씩 담은 다음 문자열로 출력하세요.
+	var exam01 = function () {
+        var examButton = container.eq(0).find('button'),
+            examText = container.eq(0).find('.exam_a');
+        var btnFunc = function () {
+            var name = ['Lee', 'Jung', 'Sun'];
+		    name = name.join(' ');
+            examText.text('['+ name +']');
+        }
+        examButton.on('click', btnFunc);
+	}
+	exam01();
+
+    // Q. 'question' 문자열을 거꾸로 출력하세요. (for문 사용)
+	var exam02 = function () {
+        var examButton = container.eq(1).find('button'),
+            examText = container.eq(1).find('.exam_a');
+        var btnFunc = function () {
+            var str = 'question',
+                nameString = '';
+            for (var i = str.length - 1; i >= 0 ; i--) {
+                nameString += str[i];
+            }
+            examText.text(nameString);
+        }
+        examButton.on('click', btnFunc);
+	}
+	exam02();
+
+    // Q. [40, 100, 1, 5, 25, 10] 에서 가장 큰 수 순서대로 index 를 배열로 출력하세요. (for/if문 사용)
+    var exam03 = function () {
+        var examButton = container.eq(2).find('button'),
+            examText = container.eq(2).find('.exam_a');
+        var arr = [40, 100, 1, 5, 25, 10],
+            arrIndex = [];
+        var arrCopy = arr.slice().sort(function (a, b) {
+            return b - a;
+        });
+        // console.log(arrCopy) // [100, 40, 25, 10, 5, 1]  
+        var btnFunc = function () {
+            for (var i = 0 ; i < arrCopy.length ; i++) {
+                var arrCompare = $.inArray(arr[i], arrCopy);
+                arrIndex.push(arrCompare);
+            }
+            examText.text('['+ arrIndex +']');
+        }
+        examButton.on('click', btnFunc);
+    }
+    exam03();
+
+	// Q. 2중 배열로 구구단을 만드세요. (for문 사용)
+	// empty 씨앗...
+    var exam04 = function () {
+        var examButton = container.eq(3).find('button'),
+            examText = container.eq(3).find('.exam_a');
+        var btnFunc = function () {
+            // debugger;
+            var gugudan = [];
+            for (var i = 0 ; i < 8 ; i++) {
+                gugudan[i] = [];
+                for (var a = 0 ; a < 9 ; a++) {
+                    gugudan[i][a] = (i+2) * (a+1);
+                }
+            }
+            examText.text('콘솔 봐주세요옹');
+            console.log(gugudan);
+        }
+        examButton.on('click', btnFunc);
+    }
+    exam04();
+
+    // Q. 배열에 숫자 0 ~ 9까지 담아보세요. (for문 사용)
+    var exam05 = function () {
+        var examButton = container.eq(4).find('button'),
+            examText = container.eq(4).find('.exam_a');
+
+        var btnFunc = function () {
+            var arr = [];
+            for (var i = 0 ; i <= 9 ; i++) {
+                arr.push(i)
+            }
+            examText.text('['+ arr +']');
+        }
+        examButton.on('click', btnFunc);
+    }
+    exam05();
+
+    // Q. 배열에 숫자 0 ~ 5 사이의 랜덤한 숫자를 6개 담아보세요. (for문 사용)
+    var exam06 = function () {
+        var examButton = container.eq(5).find('button'),
+            examText = container.eq(5).find('.exam_a');
+
+        var btnFunc = function () {
+            var arr = [];
+            for (var i = 0 ; i <= 5 ; i++) {
+                var arrRandom = Math.floor(Math.random() * i);
+                arr.push(arrRandom)
+            }
+            examText.text('['+ arr +']');
+        }
+        examButton.on('click', btnFunc);
+    }
+    exam06();
+
+    // Q. 배열에 숫자 0 ~ 9까지 담고, 버튼 클릭시 랜덤한 숫자를 하나씩 빼주세요.
+    var exam07 = function () {
+        var examButton = container.eq(6).find('button'),
+            examText = container.eq(6).find('.exam_a'),
+            arr = [];
+        if (arr.length === 0) {
+            for (var i = 0 ; i < 10 ; i++) {
+                arr.push(i);
+            }
+        }
+        examText.text('['+ arr +']');
+        var btnFunc = function () {
+            var number = Math.floor(Math.random() * arr.length);
+            arr.splice(number, 1);
+            examText.text('['+ arr +']');
+        }
+        examButton.on('click', btnFunc);
+    }
+    exam07();
+
+    // Q. 배열에 숫자 0 ~ 5 사이의 랜덤한 숫자를 중복되는 값이 없도록 6개 담아보세요. (for/if문 사용)
+    var exam08 = function () {
+        var examButton = container.eq(7).find('button'),
+            examText = container.eq(7).find('.exam_a');
+		var btnFunc = function () {
+            var arr = [],
+                count = 0, // 배열에 체크된 count
+                overlapChk = true;
+            // count가 5가 될 때 까지 반복
+            for (var i = 0 ; count < 6 ; i++) {
+                var number = 0; // 랜덤하게 뽑아둔 숫자 담아둠
+                number = Math.floor(Math.random() * 6);
+                // debugger;
+                // 중복 체크
+                for (var j = 0 ; j < count ; j++) { 
+                    if (arr[j] === number) {
+                        overlapChk = false; // 중복 될 경우 false
+                    }
+                }
+                // 중복되지 않았을 경우
+                if (overlapChk) {
+                    arr[count] = number;
+                    count ++;
+                }
+                overlapChk = true;
+            }
+            examText.text('['+ arr +']');
+        }
+        examButton.on('click', btnFunc);
+    }
+    exam08();
+})
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>exam</title>
+<style>
+*{margin:0;padding:0}
+html,body{max-width:1280px;margin:0 auto;padding:20px 0}
+body{background-color:#fff;font-family:"나눔고딕",NanumGothic,"NanumGothicRegular","굴림",Gulim,Sans-serif;font-size:14px;color:#555;line-height:1.5;-webkit-text-size-adjust:none}
+h1,h2,h3,h4,h5,h6{text-align:left}
+img,fieldset,iframe{border:0 none}
+li{list-style:none}
+a{color:#555;text-decoration:none}
+a:hover{text-decoration:underline}
+em,address{font-style:normal}
+button,label{cursor:pointer}
+input[type=text],input[type=password],input[type=image],textarea{-webkit-appearance:none;-webkit-text-size-adjust:none;-webkit-border-radius:0}
+textarea{overflow:auto}
+select{height:20px;border:1px solid #bfbfbf}
+html:first-child select{height:20px;padding-right:6px}
+option{padding-right:6px}
+.input_text, textarea{margin:-1px 0;padding-right:1px;border-top:1px solid #d1d1d2;border-right:1px solid #eeeef0;border-bottom:1px solid #eeeef0;border-left:1px solid #d1d1d2}
+hr,caption{display:none}
+legend{*width:0}
+.blind,legend{display:block;overflow:hidden;position:absolute;left:0;top:-5000px}
+.exam_wrap{margin-top:30px}
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+	<!-- header [s] --> 
+	<div id="header">
+	</div>
+	<!-- header [e] -->
+	<hr />
+	<!-- container [s] -->
+	<div id="container">
+		<div class="exam_wrap">
+			<h1>Q. 함수 호출시 new 를 붙인 것과 안 붙인 것의 차이를 설명하세요.</h1>
+			<div class="exam_q">예시)<br>
+			var obj = function () {<br>
+			&nbsp;&nbsp;&nbsp;console.log(this);<br>
+			};<br>
+			obj();<br>
+			// new obj();
+            </div>
+            <script>
+                console.log('Q. 함수 호출시 new 를 붙인 것과 안 붙인 것의 차이를 설명하세요.');
+                console.log('1) 함수를 객체가 없이 호출할 경우 해당 함수 내 this는 전역 객체(window)를 가르키게된다.');
+                console.log('- strict mode인 경우엔 this의 값은 undefined가 된다.');
+                console.log('- 전역객체 window를 붙여서 호출하면 strict mode에서도 this는 window를 가르키게된다.');
+                console.log('- 일반 함수는 전역객체(window)의 프로퍼티로 있음 (obj() === window.obj())');
+                console.log('2) 생성자 함수로 호출할 경우 새로운 객체가 생성이 되며, this의 값은 함수가 호출될 때 만들어지는 새 객체를 바라보게 된다.');
+
+                'use strict';
+                var obj = function () {
+                    // console.log(this);
+                }
+                obj();
+                var obj2 = function () {
+                    // console.log(this);
+                }
+                new obj2();
+                // console.log(this);
+            </script>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 객체 내에서의 this 를 설명하세요.</h1>
+			<div class="exam_q">예시)<br>
+			var obj = {<br>
+			&nbsp;&nbsp;&nbsp;init : function () {<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(this);<br>
+			&nbsp;&nbsp;&nbsp;}<br>
+			};<br>
+			obj.init();<br>
+            </div>
+            <script>
+                console.log('Q. 객체 내에서의 this 를 설명하세요.');
+                console.log('- 객체 내의 메소드를 실행할 경우 해당 메소드 내의 this는 객체 자신을 바라보게 된다.');
+                console.log('- 메소드가 아닌 함수를 실행할 경우 해당 함수 내 this는 전역 객체인 window를 바라보게 된다.');
+
+                var obj = {
+                    init : function () {
+                        // console.log(this === obj);
+                        function test () {
+                            // console.log(this === obj); // 메소드 실행이 아닌 함수 실행이므로 해당 함수 내 this는 전역 객체는 window이다.
+                        }
+                        test();
+
+                        this.set();
+                    },
+                    set : function () {
+                        // console.log(this === obj);
+                    }
+                };
+                obj.init();
+            </script>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 객체 내의 다른 메서드를 호출해보세요.</h1>
+			<div class="exam_q">예시)<br>
+			var obj = {<br>
+			&nbsp;&nbsp;&nbsp;init : function () {<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// setElements 함수를 호출해봐요~<br>
+			&nbsp;&nbsp;&nbsp;},<br>
+			&nbsp;&nbsp;&nbsp;setElements : function () {<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('call');<br>
+			&nbsp;&nbsp;&nbsp;}<br>
+			};<br>
+			obj.init();<br>
+            </div>
+            <script>
+                console.log('Q. 객체 내의 다른 메서드를 호출해보세요.');
+                var obj = {
+                    init : function () {
+                        this.setElements();
+                        // setElements 함수를 호출해봐요~
+                    },
+                    setElements : function () {
+                        console.log('요깄지롱');
+                    }
+                };
+                obj.init();
+            </script>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 객체 내에서 다른 객체의 메서드를 호출해보세요.</h1>
+			<div class="exam_q">예시)<br>
+			var obj = {<br>
+			&nbsp;&nbsp;&nbsp;init : function () {<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 객체 obj2 의 init 을 호출해봐요~<br>
+			&nbsp;&nbsp;&nbsp;}<br>
+			};<br>
+			var obj2 = {<br>
+			&nbsp;&nbsp;&nbsp;init : function () {<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('call');<br>
+			&nbsp;&nbsp;&nbsp;}<br>
+			};<br>
+			obj.init();<br>
+            </div>
+            <script>
+                console.log('Q. 객체 내에서 다른 객체의 메서드를 호출해보세요.');
+                var obj = {
+                    init : function () {
+                        // 객체 obj2 의 init 을 호출해봐요~
+                        obj2.init();
+                    }
+                };
+                var obj2 = {
+                    init : function () {
+                        console.log('요기이따');
+                    }
+                };
+                obj.init();
+            </script>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 데이터 타입들을 모두 넣은후, 값들을 출력해보세요.</h1>
+			<div class="exam_q">예시)<br>
+			var obj = {<br>
+			&nbsp;&nbsp;&nbsp;func : function () {<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('func');<br>
+			&nbsp;&nbsp;&nbsp;},<br>
+			&nbsp;&nbsp;&nbsp;num : 3,<br>
+			&nbsp;&nbsp;&nbsp;...<br>
+			};<br>
+			console.log(obj.func);<br>
+			console.log(obj.num);
+            </div>
+            <script>
+                console.log('Q. 데이터 타입들을 모두 넣은후, 값들을 출력해보세요.');
+                var obj = {
+                    num : 3,
+                    str : 'string',
+                    boolean : true,
+                    undefined : undefined,
+                    null : null,
+                    object : {
+                        color : 'red'
+                    },
+                    array : [123],
+                    func : function () {
+                        console.log('func');
+                    }
+                };
+                console.log(obj.num);
+                console.log(obj.str);
+                console.log(obj.boolean);
+                console.log(obj.undefined);
+                console.log(obj.null);
+                console.log(obj.object);
+                console.log(obj.array);
+                console.log(obj.func);
+            </script>
+		</div>
+		<div class="exam_wrap">
+			<h1>Q. 객체내의 모든 속성들의 값을 배열에 저장한후, abc 순으로 sorting 하여, 'abcdefg' 문자열로 출력해보세요.</h1>
+			<div class="exam_q">예시)<br>
+			var obj = {<br>
+			&nbsp;&nbsp;&nbsp;e : 'e',<br>
+			&nbsp;&nbsp;&nbsp;d : 'd',<br>
+			&nbsp;&nbsp;&nbsp;b : 'b',<br>
+			&nbsp;&nbsp;&nbsp;g : 'g',<br>
+			&nbsp;&nbsp;&nbsp;c : 'c',<br>
+			&nbsp;&nbsp;&nbsp;f : 'f',<br>
+			&nbsp;&nbsp;&nbsp;a : 'a'<br>
+			};<br>
+            </div>
+            <script>
+                console.log('Q. 객체내의 모든 속성들의 값을 배열에 저장한후, abc 순으로 sorting 하여, abcdefg 문자열로 출력해보세요.');
+                var arr = [],
+                    obj = {
+                        ee : 'e',
+                        dd : 'd',
+                        bb : 'b',
+                        gg : 'g',
+                        cc : 'c',
+                        ff : 'f',
+                        aa : 'a'
+                    };
+                for (key in obj) {
+                    arr.push(obj[key])
+                }
+                var result = arr.sort().join('');
+                console.log(result);
+            </script>
+		</div>
+		<div class="exam_wrap">
+            <h1>Q. 'bcaebe' 문자열을 hasOwnProperty 를 사용해서, {a : 1, b : 2, c : 1, e : 2} 로 변경해보세요.</h1>
+            <script>
+                console.log('Q. bcaebe 문자열을 hasOwnProperty 를 사용해서, {a : 1, b : 2, c : 1, e : 2} 로 변경해보세요.');
+                var str = 'bcaebe',
+                    obj = {};
+                arr = str.split('').sort();
+                // console.log(arr) // ["a", "b", "b", "c", "e", "e"]
+                for (var i = 0 ; i < arr.length ; i++) {
+                    var prop = arr[i];
+                    if (!obj.hasOwnProperty(prop)) { // obj 객체에 prop 키값이 없을 경우 
+                        obj[prop] = 1;
+                    } else {
+                        obj[prop] = obj[prop] + 1;
+                    }
+                }
+                console.log(obj)
+            </script>
+		</div>
+	</div>
+	<!-- container [e] -->
+	<hr />
+	<!-- footer [s] -->
+	<div id="footer">
+	</div>
+	<!-- footer [e] -->
+</div>
+<!-- wrapper [e] -->
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+</body>
+</html>
