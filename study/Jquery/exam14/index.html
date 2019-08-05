@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi"> -->
+<title>bear</title>
+<link rel="stylesheet" type="text/css" href="css/coca.css">
+</head>
+<body>
+<div class="evt_wrap evt_type2">
+    <div class="evt_tit">
+        <div class="tit_area">
+            <h2 class="blind">1등 곰도 맞추고 100% 경품까지 폴라베어를 잡아라!</h2>
+        </div>
+    </div>
+
+    <div class="evt_ct">
+        <div class="evt_area">
+            <p class="blind">100% 당첨! 가장먼저 도착하는 폴라베어를 맞춰주세요</p>
+            <ul class="bxlst" id="clickLst">
+            <li class="rabx">
+                <input type="radio" name="beautybox" id="bx"/>
+                <label for="bx"><span class="blind">스키타는 베어</span></label>
+            </li>
+            <li class="rabx">
+                <input type="radio" name="beautybox" id="bx2"/>
+                <label for="bx2"><span class="blind">보드타는 베어</span></label>
+            </li>
+            <li class="rabx">
+                <input type="radio" name="beautybox" id="bx3"/>
+                <label for="bx3"><span class="blind">스케이트 베어</span></label>
+            </li>
+            </ul>
+            <a href="#" class="btn btn_app">choice</a>
+        </div>
+    </div>
+
+    <div class="evt_ct2">
+        <ul class="game_area sp" id="gameLst">
+        <!-- [D] active : .winlane 클래스 추가 -->
+        <li class="lane"><div class="sp gom"></div></li>
+        <li class="lane2"><div class="sp gom"></div></li>
+        <li class="lane3"><div class="sp gom"></div></li>
+        </ul>
+    </div>
+
+    <div style="height:2000px"></div>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(function () {
+    var cocaEvent = {
+        init : function () {
+            this.setElement();
+            this.bindEvents();
+        },
+        setElement : function () {
+            this.obj = $('.evt_wrap');
+            this.bearArea = this.obj.find('.evt_area');
+            this.radioList = this.bearArea.find('.bxlst');
+            this.radio = this.radioList.find('input');
+            this.btnChoice = this.obj.find('.btn_app');
+            this.gameArea = this.obj.find('.game_area');
+            this.gomBox = this.gameArea.find('li');
+            this.eventType = true;
+        },
+        bindEvents : function () {
+            this.radio.on('focus', $.proxy(this.radioCheckFunc, this));
+            this.btnChoice.on('click', $.proxy(this.btnEvtFunc, this));
+        },
+        setInitFunc : function () {
+            this.propType = false;
+            for (var i = 0 ; i < this.radio.length ; i++) {
+                if (this.radioList.find(this.radio[i]).prop('checked') === true) {
+                    this.propType = true;
+                }
+            }
+        },
+        btnEvtFunc : function () {
+            this.setInitFunc();
+            if (this.propType) {
+                if (this.gomBox.hasClass('winlane')) {
+                    return alert('이벤트 참여 완료하셨습니다.');
+                };
+                this.gomFunc(this.eventType);
+            } else {
+                alert('폴라베어를 선택해주세요.');
+            }
+        },
+        radioCheckFunc : function (e) {
+            var target = $(e.currentTarget);
+            this.targetIndex = target.parent('.rabx').index();
+        },
+        gomFunc : function (type) {
+            this.eventBlockFunc();
+            if (type) {
+                this.gomEventType1();
+            } else {
+                this.gomEventType2();
+            }
+            this.gomAnimationFunc();
+        },
+        gomEventType1 : function () {
+            this.gomTarget = this.gomBox.eq(this.targetIndex);
+            this.gom = this.gomTarget.find('.gom');
+        },
+        gomEventType2 : function () {
+            var gomTargetIndex = Math.floor(Math.random() * this.radio.length);
+            if (this.targetIndex === gomTargetIndex) {
+                gomTargetIndex--;
+            }
+            this.gomTarget = this.gomBox.eq(gomTargetIndex);
+            this.gom = this.gomTarget.find('.gom');
+        },
+        gomAnimationFunc : function () {
+            var _this = this;
+            this.gom.animate({
+                top: 110
+            }, 1000, 'swing', function () {
+                _this.gomFinishFunc();
+            });
+        },
+        eventBlockFunc : function () {
+            this.btnChoice.off('click');
+            this.radio.attr('disabled', true);
+        },
+        gomFinishFunc : function () {
+            this.gomTarget.addClass('winlane');
+            this.btnChoice.on('click', $.proxy(this.btnEvtFunc, this));
+            alert('Finish');
+        }
+    };
+    cocaEvent.init();
+})
+</script>
+</div>
+</body>
+</html>
