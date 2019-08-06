@@ -1,67 +1,73 @@
-(function(win, $) {
+(function(win, $, doc) {
     'use strict';
 
-    var randomObj = {
+    win.examProject = win.examProject || {};
+    win.examProject.randomObj = function (args) {
+        var defParams = {
+            obj : '.create_wrap',
+            avatarWrap : '.swiper-wrapper',
+            avatarArea : '.swiper-slide',
+            randomBtn : '.btn_random'
+        }
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.obj = $(this.opts.obj)).length) return;
+        this.init();
+    }
+    win.examProject.randomObj.prototype = {
         init : function () {
             this.setElements();
             this.initLayout();
             this.blindEvent();
         }, 
         setElements : function () {
-            this.obj = $('.swiper-slide');
-            this.objLength = $('.swiper-slide').length;
-            this.btn = $('.btn_random');            
+            this.obj = $(this.opts.obj);
+            this.avatarWrap = this.obj.find(this.opts.avatarWrap);
+            this.avatarArea = this.avatarWrap.find(this.opts.avatarArea);
+            this.randomBtn = this.obj.find(this.opts.randomBtn);
         },
-        initLayout : function () { //초기값
-            this.obj.hide(); //전체 오브젝트 블라인드
-            this.arrayCreate(); //배열 생성
-            this.arrayRandom(); //생성된 배열 랜덤으로 돌림
-            while (this.arrRandom === this.oldIndex) { //배열값이 추출된 인덱스값과 같을 경우
-                this.arrayRandom(); //랜덤 다시 돌림
-            }
-            this.objView(); //돌려서 추출된값 show
-        },
-        btnFunc : function () {
-            this.arrayextract(); //돌린 인덱스값
-            this.arrayRandom(); //남은 값을 다시 돌림
-            this.objView(); //돌린 인덱스값 view
-            while (this.array.length === 0) { //배열에 담긴값이 없을 경우
-                this.initLayout(); // 초기값으로 다시 돌림
-            }
-            // console.log(this.objIndex)
+        initLayout : function () {
+            this.avatarArea.hide();
+            this.createArray(); // array 생성
+            this.viewLayoutFunc();
         },
         blindEvent : function () {
-            this.btn.on('click', $.proxy(this.btnFunc, this));
+            this.randomBtn.on('click', $.proxy(this.btnFunc, this));
         },
-        arrayCreate : function () {
-            this.array = [];
-            for (var i = 0, imax = this.objLength ; i < imax ; i++) {
-                this.array.push(i)
+        btnFunc : function () {
+            if (this.createArr.length === 0) {
+                this.createArray();
+            }
+            this.viewLayoutFunc();
+        },
+        createArray : function () {
+            this.createArr = [];
+            for (var i = 0, imax = this.avatarArea.length ; i < imax ; i++ ) {
+                this.createArr.push(i)
             }
         },
-        arrayRandom : function () {
-            this.arrRandom = Math.floor((Math.random() * this.array.length)); //생성한 배열을 랜덤하게 돌림
-            this.objIndex = this.array[this.arrRandom]; //랜덤하게 돌린 배열을 obj index값으로 담음
-            // console.log(this.objIndex)
+        createRandomIndex : function () {
+            // console.log(this.createArr);
+            this.arrRandom = Math.floor(Math.random() * this.createArr.length);
+            this.currentIndex = this.createArr[this.arrRandom];
+            // console.log('currentIndex :', this.currentIndex);
+            // console.log('oldIndex : ', this.oldIndex);
+            if (this.oldIndex === this.currentIndex) {
+                // console.log('return');
+                this.createRandomIndex();
+                return false;
+            }
+            this.createArr.splice(this.arrRandom, 1);
         },
-        objView : function () {
-            this.obj.eq(this.objIndex).show();
-        },
-        objHide : function () {
-            this.obj.eq(this.oldIndex).hide();
-        },
-        arrayextract : function () {
-            // console.log(this.array)
-            this.array.splice(this.arrRandom, 1); // objIndex 인덱스값을 제거함
-            // console.log(this.arrRandom)
-            // console.log(this.array)
-            this.oldIndex = this.objIndex; // 제거된 인덱스를 담음
-            // console.log(this.objIndex)
-            this.objHide(); //이전에 선택된 값 hide
+        viewLayoutFunc : function () {
+            // console.log(this.currentIndex);
+            this.createRandomIndex(); // 생성된 array에서 랜덤하게 index값 추출
+            this.avatarArea.eq(this.oldIndex).hide(); // oldindex hide
+            this.avatarArea.eq(this.currentIndex).show(); // 추출된 index로 show
+            this.oldIndex = this.currentIndex; // 이미 노출된 index는 oldindex로
+            // console.log(this.oldIndex);
         }
     }
-
     $(function () {
-    	randomObj.init();
+        new win.examProject.randomObj();
     })
-})(window, window.jQuery);
+})(window, window.jQuery, window.document);
