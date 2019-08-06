@@ -118,10 +118,14 @@ $(function () {
             examText = container.eq(1).find('.exam_a');
         var btnFunc = function () {
             var str = 'question',
-                nameString = '';
-            for (var i = str.length - 1; i >= 0 ; i--) {
-                nameString += str[i];
+                arr = [];
+            for (var i = 0 ; i < str.length ; i++) {
+                arr.push(str[i])
             }
+            var nameString = arr.reverse().join('');
+            // for (var i = str.length - 1; i >= 0 ; i--) {
+            //     nameString += str[i];
+            // }
             examText.text(nameString);
         }
         examButton.on('click', btnFunc);
@@ -228,28 +232,40 @@ $(function () {
         var examButton = container.eq(7).find('button'),
             examText = container.eq(7).find('.exam_a');
 		var btnFunc = function () {
-            var arr = [],
-                count = 0, // 배열에 체크된 count
-                overlapChk = true;
-            // count가 5가 될 때 까지 반복
-            for (var i = 0 ; count < 6 ; i++) {
-                var number = 0; // 랜덤하게 뽑아둔 숫자 담아둠
-                number = Math.floor(Math.random() * 6);
-                // debugger;
-                // 중복 체크
-                for (var j = 0 ; j < count ; j++) { 
-                    if (arr[j] === number) {
-                        overlapChk = false; // 중복 될 경우 false
+            var arr = [];
+            for (var i = 0, imax = 6 ; i < imax ; i++) {
+                arr[i] = Math.floor(Math.random() * imax);
+                // console.log(arr)
+                for (var j = 0 ; j < i ; j++) {
+                    if (arr[i] === arr[j]) {
+                        i--;
                     }
                 }
-                // 중복되지 않았을 경우
-                if (overlapChk) {
-                    arr[count] = number;
-                    count ++;
-                }
-                overlapChk = true;
             }
-            examText.text('['+ arr +']');
+            console.log(arr)
+
+            // var arr = [],
+            //     count = 0, // 배열에 체크된 count
+            //     overlapChk = true;
+            // // count가 5가 될 때 까지 반복
+            // for (var i = 0 ; count < 6 ; i++) {
+            //     var number = 0; // 랜덤하게 뽑아둔 숫자 담아둠
+            //     number = Math.floor(Math.random() * 6);
+            //     // debugger;
+            //     // 중복 체크
+            //     for (var j = 0 ; j < count ; j++) { 
+            //         if (arr[j] === number) {
+            //             overlapChk = false; // 중복 될 경우 false
+            //         }
+            //     }
+            //     // 중복되지 않았을 경우
+            //     if (overlapChk) {
+            //         arr[count] = number;
+            //         count ++;
+            //     }
+            //     overlapChk = true;
+            // }
+            // examText.text('['+ arr +']');
         }
         examButton.on('click', btnFunc);
     }
