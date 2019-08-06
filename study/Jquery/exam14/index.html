@@ -48,24 +48,49 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-$(function () {
-    var cocaEvent = {
+(function (win, $, doc) {
+    'use strict';
+    win.examProject = win.examProject || {};
+    win.examProject.cocaEvent = function (args) {
+        var defParams = {
+            obj : '.evt_wrap',
+            evtArea : '.evt_area',
+            radioList : '.bxlst',
+            radioBox : '.rabx',
+            radio : 'input[type="radio"]',
+            evtBtn : '.btn_app',
+            gameArea : '.game_area',
+            gameBox : '>li',
+            gameItem : '.gom',
+            gameFinishClass : 'winlane',
+            animateOpts : {
+                top : 110,
+                speed : 1000,
+                easing : 'swing'
+            },
+            eventType : null
+        }
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.obj = $(this.opts.obj)).length) return;
+        this.init();
+        console.log(this)
+    }
+    win.examProject.cocaEvent.prototype = {
         init : function () {
             this.setElement();
             this.bindEvents();
         },
         setElement : function () {
-            this.obj = $('.evt_wrap');
-            this.bearArea = this.obj.find('.evt_area');
-            this.radioList = this.bearArea.find('.bxlst');
-            this.radio = this.radioList.find('input');
-            this.btnChoice = this.obj.find('.btn_app');
-            this.gameArea = this.obj.find('.game_area');
-            this.gomBox = this.gameArea.find('li');
-            this.eventType = true;
+            this.obj = $(this.opts.obj);
+            this.evtArea = this.obj.find(this.opts.evtArea);
+            this.radioList = this.evtArea.find(this.opts.radioList);
+            this.radio = this.radioList.find(this.opts.radio);
+            this.btnChoice = this.obj.find(this.opts.evtBtn);
+            this.gameArea = this.obj.find(this.opts.gameArea);
+            this.gameBox = this.gameArea.find(this.opts.gameBox);
         },
         bindEvents : function () {
-            this.radio.on('focus', $.proxy(this.radioCheckFunc, this));
+            this.radio.on('change', $.proxy(this.radioCheckFunc, this));
             this.btnChoice.on('click', $.proxy(this.btnEvtFunc, this));
         },
         setInitFunc : function () {
@@ -79,17 +104,17 @@ $(function () {
         btnEvtFunc : function () {
             this.setInitFunc();
             if (this.propType) {
-                if (this.gomBox.hasClass('winlane')) {
+                if (this.gameBox.hasClass(this.opts.gameFinishClass)) {
                     return alert('이벤트 참여 완료하셨습니다.');
                 };
-                this.gomFunc(this.eventType);
+                this.gomFunc(this.opts.eventType);
             } else {
                 alert('폴라베어를 선택해주세요.');
             }
         },
         radioCheckFunc : function (e) {
             var target = $(e.currentTarget);
-            this.targetIndex = target.parent('.rabx').index();
+            this.targetIndex = target.parent(this.opts.radioBox).index();
         },
         gomFunc : function (type) {
             this.eventBlockFunc();
@@ -101,22 +126,22 @@ $(function () {
             this.gomAnimationFunc();
         },
         gomEventType1 : function () {
-            this.gomTarget = this.gomBox.eq(this.targetIndex);
-            this.gom = this.gomTarget.find('.gom');
+            this.gomTarget = this.gameBox.eq(this.targetIndex);
+            this.gom = this.gomTarget.find(this.opts.gameItem);
         },
         gomEventType2 : function () {
             var gomTargetIndex = Math.floor(Math.random() * this.radio.length);
             if (this.targetIndex === gomTargetIndex) {
                 gomTargetIndex--;
             }
-            this.gomTarget = this.gomBox.eq(gomTargetIndex);
-            this.gom = this.gomTarget.find('.gom');
+            this.gomTarget = this.gameBox.eq(gomTargetIndex);
+            this.gom = this.gomTarget.find(this.opts.gameItem);
         },
         gomAnimationFunc : function () {
             var _this = this;
             this.gom.animate({
-                top: 110
-            }, 1000, 'swing', function () {
+                top: this.opts.animateOpts.top
+            }, this.opts.animateOpts.speed, this.opts.animateOpts.easing, function () {
                 _this.gomFinishFunc();
             });
         },
@@ -125,13 +150,19 @@ $(function () {
             this.radio.attr('disabled', true);
         },
         gomFinishFunc : function () {
-            this.gomTarget.addClass('winlane');
+            this.gomTarget.addClass(this.opts.gameFinishClass);
             this.btnChoice.on('click', $.proxy(this.btnEvtFunc, this));
             alert('Finish');
         }
-    };
-    cocaEvent.init();
-})
+    }
+    $(function () {
+        new win.examProject.cocaEvent({
+            // true : index 매칭
+            // false : 매칭된 index 이외의 index 선택
+            eventType : true
+        });
+    });
+})(window, window.jQuery, window.document);
 </script>
 </div>
 </body>
