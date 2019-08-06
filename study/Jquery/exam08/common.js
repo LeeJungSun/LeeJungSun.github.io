@@ -1,6 +1,5 @@
 (function(win, $, doc) {
     'use strict';
-
     win.examProject = win.examProject || {};
     win.examProject.randomObj = function (args) {
         var defParams = {
