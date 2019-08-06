@@ -19,7 +19,6 @@
             this.blindEvent();
         }, 
         setElements : function () {
-            this.obj = $(this.opts.obj);
             this.avatarWrap = this.obj.find(this.opts.avatarWrap);
             this.avatarArea = this.avatarWrap.find(this.opts.avatarArea);
             this.randomBtn = this.obj.find(this.opts.randomBtn);
