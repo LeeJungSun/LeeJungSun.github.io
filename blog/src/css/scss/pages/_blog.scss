@@ -20,15 +20,15 @@
     }
 }
 .alert_article {
-    .img_wrap {
+    .img__wrap {
         .img {
             width: 33.3%;
         }		
     }
 }
 .live_region_article {
-    .img_wrap {
-        .img_area {
+    .img__wrap {
+        .img__area {
             &:first-child {
                 padding-left: 0;
             }
@@ -39,7 +39,7 @@
     }	
 }
 .waga_article  {
-    .img_wrap {
+    .img__wrap {
         .img {
             width: 70%;
         }

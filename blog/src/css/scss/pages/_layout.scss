@@ -33,7 +33,7 @@
 }
 .main {
     &__title {
-        margin-bottom: 15px;
+        margin-bottom: 25px;
         padding: 0;
         font-size: 34px;
         color: #333;
@@ -43,7 +43,7 @@
         padding: 0;
         font-size: 15px;
         color: #4d5256;
-        line-height: 26px;
+        line-height: 30px;
     }
 }
 .sub {
@@ -53,7 +53,7 @@
         border-bottom: 1px solid #ccc;
         font-size: 27px;
         color: #333;
-        & + article {
+        & + .article_wrap {
             .article {
                 &__title {
                     &:first-child {
@@ -156,6 +156,13 @@
         &:first-child {
             margin-top: 20px;
         }
+    }
+    &__text {
+        margin: 8px 0;
+        padding: 0; 
+        font-size: 14px;
+        color: #4d5256;
+        line-height: 25px;
     }
 }
 .example_area {
@@ -266,34 +273,45 @@
         line-height: 26px;
     }
 }
-.img_wrap {
-    display: table;
-    width: 100%;
-    margin: 50px 0;
-    text-align: center;
-    table-layout: fixed;
-    .img_area {
-        display: table-cell;
-        padding: 0 10px;
-    }
-    .img {
-        display: block;
-        overflow: hidden;
-        margin: 0 auto;
-        border: 1px solid #ccc;
-    }
+.img {
+    display: block;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 1px solid #ccc;
     img {
         width: 100%;
         & + .img_text {
             margin-top: 15px;
         }
     }
-    .img_title {
+    &__wrap {
+        display: table;
+        width: 100%;
+        margin: 50px 0;
+        text-align: center;
+        table-layout: fixed;
+        &.type2 {
+            display: block;
+            .img__area {
+                display: block;
+                margin-top: 70px;
+                padding: 0;
+                &:first-child {
+                    margin-top: 50px;
+                }
+            }
+        }
+    }
+    &__area {
+        display: table-cell;
+        padding: 0 10px;
+    }    
+    &__title {
         display: block;
         margin-bottom: 15px;
         font-size: 15px;
     }
-    .img_text {
+    &__text {
         display: block;
         width: 80%;
         margin: 20px auto;
@@ -302,23 +320,12 @@
         line-height: 21px;
         word-break: keep-all;
     }
-    .comment {
+    &__comment {
         display: block;
         margin-top: 12px;
         font-size: 11px;
         color: #999;
         text-align: center;
-    }
-    &.type2 {
-        display: block;
-        .img_area {
-            display: block;
-            margin-top: 70px;
-            padding: 0;
-            &:first-child {
-                margin-top: 50px;
-            }
-        }
     }
 }
 .table_wrap {
@@ -369,30 +376,3 @@
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// .quote{
-// 	&__wrap{
-// 		margin: 30px 0 25px;
-// 		padding-left: 25px;
-// 		border-left: 3px solid #e1e4e6;
-// 		color: #777;
-// 		&.type2{
-// 			padding: 15px 15px 15px 25px;
-// 			border-left: 5px solid #3f87a6;
-// 			background: #e4f0f5;
-// 		}
-// 		
-// 	}
-
-// }

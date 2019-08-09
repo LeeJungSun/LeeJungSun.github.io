@@ -6,18 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>WAQA Trouble Shooting : Accessibility</title>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/study-sass.css">
+<link rel="stylesheet" href="../css/blog-sass.css">
 </head>
 <body>
 <div id="wrap" class="waga_article">
     <h1 class="main__title">WAQA Trouble Shooting 실무 적용</h1>
-    <p class="main__text">main textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain textmain text</p>
-
-    <p class="main__text">마이너 한 이슈를 제외한 5가지 이슈 / 모바일 IOS 이슈가 많았음</p>
+    <p class="main__text">삼성닷컴 샵통합 프로젝트 buying PD 대상으로 진행되었던 웹 접근성 QA를 어떻게 실무에 적용하고 해결하였는지<br> QA 이슈 목록 중 마이너 한 이슈를 제외한 총 5가지 이슈를 선정하여 정리해보았습니다.</p>
     
-    <section>
+    <section class="section_wrap">
         <h2 class="sub__title">레이어 팝업 내부 포커스 접근 이슈</h2>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
@@ -31,7 +29,7 @@
                 </ul>
             </div>
         </article>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Trouble Shooting]</h3>
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
@@ -48,35 +46,35 @@
                         }
                     </code>
                 </div>
-                <div class="img_wrap">
-                    <div class="img_area">
-                        <strong class="img_title">[AS-IS]</strong>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue01_asis.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">버튼 클릭 후 레이어 팝업 노출 시 팝업 버튼에 포커스가 Trap 되어 다음 요소를 탐색하지 못함.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">버튼 클릭 후 레이어 팝업 노출 시 팝업 버튼에 포커스가 Trap 되어 다음 요소를 탐색하지 못함.</p>
                     </div>
-                    <div class="img_area">
-                        <strong class="img_title">[TO-BE]</strong>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue01_tobe.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">정상적으로 다음 요소 탐색 가능.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">정상적으로 다음 요소 탐색 가능.</p>
                     </div>
                 </div>
             </div>
         </article>
     </section>
 
-    <section>
+    <section class="section_wrap">
         <h2 class="sub__title">레이어 팝업 포커스 튕김 이슈</h2>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
-                <p class="article__text">IOS</p>
+                <p class="box__text">IOS</p>
 
                 <h4 class="box__title">이슈 내용</h4>
                 <ul class="list text_type">
@@ -85,12 +83,12 @@
                 </ul>
             </div>
         </article>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Trouble Shooting]</h3>
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
-                <p class="article__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
-                <p class="article__text">** Iphone5 : 수정 적용 전, 후 동일하게 포커스 이동할때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있음.</p>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
+                <p class="box__text">** Iphone5 : 수정 적용 전, 후 동일하게 포커스 이동할때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있음.</p>
                 <h4 class="box__title">이슈 개선</h4>
                 <ul class="list text_type">
                 <li>스크립트로 팝업이 열린 다음에 팝업에 선언된 <code class="code">role="dialog"</code>를 삭제하는 방향으로 이슈 해결.</li>
@@ -98,35 +96,35 @@
                 <div class="example_area">
                     <code>&lt;div class="cm-s-layer__layer" tabindex="-1" <strong class="point">role="dialog"</strong>&gt;</code>
                 </div>
-                <div class="img_wrap">
-                    <div class="img_area">
-                        <strong class="img_title">[AS-IS]</strong>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue02_asis.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">라디오 버튼 선택 후 체크박스 선택 시<br> 상단 'Samsung Care+' 로 포커스 튕김.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">라디오 버튼 선택 후 체크박스 선택 시<br> 상단 'Samsung Care+' 로 포커스 튕김.</p>
                     </div>
-                    <div class="img_area">
-                        <strong class="img_title">[TO-BE]</strong>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue02_tobe.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">포커스 튕김 현상 없음.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">포커스 튕김 현상 없음.</p>
                     </div>
                 </div>
             </div>
         </article>
     </section>
 
-    <section>
+    <section class="section_wrap">
         <h2 class="sub__title">Thumbnail 포커스 이슈</h2>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
-                <p class="article__text">IE, Chrome, Opera, Firefox (Window)</p>
+                <p class="box__text">IE, Chrome, Opera, Firefox (Window)</p>
                 <ul class="list">
                 <li>
                     <strong class="list__title">NVDA</strong>
@@ -154,7 +152,7 @@
                 </ul>
             </div>
         </article>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Trouble Shooting]</h3>
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
@@ -188,22 +186,22 @@
                         &lt;/div&gt;
                     </code>
                 </div>
-                <div class="img_wrap type2">
-                    <div class="img_area">
+                <div class="img__wrap type2">
+                    <div class="img__area">
                         <strong class="img_title">[AS-IS]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue03_asis.gif" alt="" style="margin-top: -11%">
                         </div>
-                        <p class="comment">테스트 환경 : Window10 Chrome Jaws</p>
-                        <p class="img_text">indicator 두 번째 썸네일 클릭 시 상단 배너로 포커스 이동 후 해당 배너가 열림.</p>
+                        <p class="img__comment">테스트 환경 : Window10 Chrome Jaws</p>
+                        <p class="img__text">indicator 두 번째 썸네일 클릭 시 상단 배너로 포커스 이동 후 해당 배너가 열림.</p>
                     </div>
-                    <div class="img_area">
-                        <strong class="img_title">[TO-BE]</strong>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue03_tobe.gif" alt="" style="margin-top: -11%">
                         </div>
-                        <p class="comment">테스트 환경 : Window10 Chrome Jaws</p>
-                        <p class="img_text">indicator 두 번째 썸네일 클릭 시 우측 슬라이드가 정상적으로 바뀜.</p>
+                        <p class="img__comment">테스트 환경 : Window10 Chrome Jaws</p>
+                        <p class="img__text">indicator 두 번째 썸네일 클릭 시 우측 슬라이드가 정상적으로 바뀜.</p>
                     </div>
                 </div>
             </div>
@@ -227,13 +225,13 @@
         </article>
     </section>
 
-    <section>
+    <section class="section_wrap">
         <h2 class="sub__title">Slick 호출 후 접근 이슈</h2>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
-                <p class="article__text">IOS</p>
+                <p class="box__text">IOS</p>
 
                 <h4 class="box__title">이슈 내용</h4>
                 <ul class="list text_type">
@@ -241,11 +239,11 @@
                 </ul>
             </div>
         </article>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Trouble Shooting]</h3>
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
-                <p class="article__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
                 
                 <h4 class="box__title">이슈 개선</h4>
                 <ul class="list text_type">
@@ -272,35 +270,35 @@
                         }
                     </code>
                 </div>
-                <div class="img_wrap">
-                    <div class="img_area">
-                        <strong class="img_title">[AS-IS]</strong>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue04_asis.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">팝업 오픈 시 '1. On~~' 부분을 읽어주며,<br> 'test link' 영역으로 포커스 이동하지 않음.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">팝업 오픈 시 '1. On~~' 부분을 읽어주며,<br> 'test link' 영역으로 포커스 이동하지 않음.</p>
                     </div>
-                    <div class="img_area">
-                        <strong class="img_title">[TO-BE]</strong>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue04_tobe.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">팝업 오픈 시 slick 내부 텍스트 읽어주지 않으며,<br> slick 내부 정상적으로 탐색 가능.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">팝업 오픈 시 slick 내부 텍스트 읽어주지 않으며,<br> slick 내부 정상적으로 탐색 가능.</p>
                     </div>
                 </div>
             </div>
         </article>
     </section>
 
-    <section>
+    <section class="section_wrap">
         <h2 class="sub__title">Slick indicator 포커스 이슈</h2>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
-                <p class="article__text">IOS, Android</p>
+                <p class="box__text">IOS, Android</p>
                 
                 <h4 class="box__title">이슈 내용</h4>
                 <ul class="list text_type">
@@ -309,11 +307,11 @@
                 </ul>
             </div>
         </article>
-        <article>
+        <article class="article__wrap">
             <h3 class="article__title">[Trouble Shooting]</h3>
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
-                <p class="article__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4 / GalaxyS8 7.0</p>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4 / GalaxyS8 7.0</p>
 
                 <h4 class="box__title">이슈 개선</h4>
                 <ul class="list text_type">
@@ -340,29 +338,29 @@
                         }
                     </code>
                 </div>
-                <div class="img_wrap">
-                    <div class="img_area">
-                        <strong class="img_title">[AS-IS]</strong>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue05_asis.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">첫 번째 indicator 다음 버튼으로 포커스 이동하지 않고 팝업 닫기 버튼으로 포커스 이동.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">첫 번째 indicator 다음 버튼으로 포커스 이동하지 않고 팝업 닫기 버튼으로 포커스 이동.</p>
                     </div>
-                    <div class="img_area">
-                        <strong class="img_title">[TO-BE]</strong>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
                         <div class="img">
                             <img src="../img/waqa/issue05_tobe.gif" alt="">
                         </div>
-                        <p class="comment">캡쳐 화면 : IphoneX 12.3.1</p>
-                        <p class="img_text">정상적으로 indicator 버튼 탐색 가능.</p>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">정상적으로 indicator 버튼 탐색 가능.</p>
                     </div>
                 </div>
             </div>
         </article>
     </section>
 
-    <section>
+    <section class="section_wrap">
         <h2 class="sub__title">마치며</h2>
         <p class="sub__text">느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!느낀점 넣쟈!</p>
     </section>
