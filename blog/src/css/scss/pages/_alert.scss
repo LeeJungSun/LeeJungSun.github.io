@@ -1,117 +1,120 @@
-.example_wrap{
-	.main{
-		&__title{
-			font-size:27px;
-		}
-	}
-	.sub{
-		&__title{
-			margin-top:50px;
-			font-size:20px;
-			border-bottom:0;
-		}
-	}
-	.btn_submit{
-		float:right;
-		width:80px;
-		height:30px;
-		margin-top:30px;
-		font-size:14px;
-	}
+.example_wrap {
+    .main {
+        &__title {
+            font-size: 27px;
+        }
+    }
+    .sub {
+        &__title {
+            margin-top: 50px;
+            font-size: 20px;
+            border-bottom: 0;
+        }
+    }
+    .btn_submit {
+        float: right;
+        width: 80px;
+        height: 30px;
+        margin-top: 30px;
+        font-size: 14px;
+    }
 }
-.alert_article{
-	.img_wrap{
-		.img{
-			width:33.3%;
-		}		
-	}
+.alert_article {
+    .img_wrap {
+        .img {
+            width: 33.3%;
+        }		
+    }
 }
-.live_region_article{
-	.img_wrap{
-		display:table;
-		width:100%;
-		table-layout:fixed;
-		&:after{
-			display:none;
-		}
-		.img{
-			display:table-cell;
-			float:none;
-			padding:0 10px;
-			&:first-child{
-				padding-left:0;
-			}
-			&:last-child{
-				padding-right:0;
-			}
-		}		
-	}	
+.live_region_article {
+    .img_wrap {
+        .img_area {
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }		
+    }	
+}
+.waga_article  {
+    .img_wrap {
+        .img {
+            width: 70%;
+        }
+        &.type2 {
+            .img {
+                width: 100%;
+            }
+        }
+    }
 }
 
-.alert_form_wrap{
-	.input{
-		&_wrap{
-			margin-top:40px;
-			&:first-of-type{
-				margin-top:0
-			}
-		}
-		&_text{
-			margin-top:8px;
-		}
-	}
-	.btn{
-		display:inline-block;
-		padding:8px 12px;
-		border:1px solid #ccc;
-		border-radius:6px;
-		font-size:13px;
-		&:hover{
-			border-color:#adadad;
-			background:#e6e6e6;
-		}
-	}
-	.alert_text{
-		@include position (absolute, $top:100%, $left:0);
-		margin-top:3px;
-		font-size:12px;
-		color:#f00;
-		line-height:16px;
-	}
-	.alert_text2{
-		padding:15px;
-		border:1px solid #ebccd1;
-		border-radius:4px;
-		background:#f2dede;
-		color:#a94442;
-	}
+.alert_form_wrap {
+    .input {
+        &_wrap {
+            margin-top: 40px;
+            &:first-of-type {
+                margin-top: 0
+            }
+        }
+        &_text {
+            margin-top: 8px;
+        }
+    }
+    .btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 13px;
+        &:hover {
+            border-color: #adadad;
+            background: #e6e6e6;
+        }
+    }
+    .alert_text {
+        @include position (absolute, $top: 100%, $left: 0);
+        margin-top: 3px;
+        font-size: 12px;
+        color: #f00;
+        line-height: 16px;
+    }
+    .alert_text2 {
+        padding: 15px;
+        border: 1px solid #ebccd1;
+        border-radius: 4px;
+        background: #f2dede;
+        color: #a94442;
+    }
 }
-.input{
-	&_wrap{
-		position:relative;
-		&:first-child{
-			margin-top:0;
-		}
-	}
-	&_label{
-		display:block;
-		font-size:13px;
-	}
-	&_text{
-		border:1px solid #c3c3c3;
-		box-sizing:border-box;
-		input{
-			display:block;
-			width:100%;
-			padding:8px 10px;
-			-moz-appearance:none;
-			-webkit-appearance:none;
-			border:none;
-			font-size:13px;
-			box-sizing:border-box;
-		}
-		&.error{
-			border-color:#f00;
-		}
-	}
+.input {
+    &_wrap {
+        position: relative;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    &_label {
+        display: block;
+        font-size: 13px;
+    }
+    &_text {
+        border: 1px solid #c3c3c3;
+        box-sizing: border-box;
+        input {
+            display: block;
+            width: 100%;
+            padding: 8px 10px;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            border: none;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        &.error {
+            border-color: #f00;
+        }
+    }
 }
