@@ -68,21 +68,6 @@ button::-moz-focus-inner{padding:0;border:0}
     'use strict';
 
     win.examProject = win.examProject || {};
-    // win.examProject.layerPopup = (function () {
-    //     var defParams = {
-    //         obj : '.js-layer_area'
-    //     }
-    //     return {
-    //         init : function () {
-    //             this.setElement();
-    //         },
-    //         setElement : function () {
-    //             this.obj = $(defParams.obj);
-    //             console.log(this.obj)
-    //         }
-    //     }
-    // })();
-
     win.examProject.commonLayerPopup = function (args) {
         var defParams = {
             obj : '.js-layer_area',
@@ -91,7 +76,7 @@ button::-moz-focus-inner{padding:0;border:0}
             layerCloseBtn : '.layer_close button'
         }
         this.opts = $.extend({}, defParams, (args || {}));
-        if (!(this.layerBtn = $(this.opts.layerBtn)).length) return;
+        if (!(this.layerWrap = $(this.opts.obj)).length) return;
         this.init();
     };
     win.examProject.commonLayerPopup.prototype = {
@@ -101,8 +86,8 @@ button::-moz-focus-inner{padding:0;border:0}
             this.bindEvents(true);
         },
         setElement : function () {
-            this.layerWrap = $(this.opts.obj);
             this.layerObj = this.layerWrap.find(this.opts.layerObj);
+            this.layerBtn = $(this.opts.layerBtn);
             this.layerCloseBtn = this.layerObj.find(this.opts.layerCloseBtn);
         },
         initLayout : function () {
@@ -139,24 +124,10 @@ button::-moz-focus-inner{padding:0;border:0}
                 console.log('outside off');
             }
         },
-        layerOpenAfter : function () {
-            this.bindOutsideEvents(true);
-        },
-        layerView : function (e) {
-            this.currentBtn = $(e.currentTarget);
-            this.layerWrap.show();
-            this.layerObj.focus();
-            setTimeout($.proxy(this.layerOpenAfter, this), 50); // setTimeout 사용 안하면 열리자마자 outside 호출돼서 닫힘
-            this.ariaAccessbility();
-        },
-        layerClose : function () {
-            this.layerCloseAfter();
-            this.bindOutsideEvents(false);
-        },
         esckeyClose : function (e) {
             var key = e.KeyCode || e.which; //e.which = FF 대응
             if (key !== 27) return; // esc키 아니면 return
-            this.layerClose();
+            this.layerCloseBtn.trigger('click');
         },
         prevFocusFunc : function () {
             this.layerCloseBtn.focus();
@@ -164,18 +135,33 @@ button::-moz-focus-inner{padding:0;border:0}
         nextFocusFunc : function () {
             this.layerObj.focus();
         },
-        layerCloseAfter : function () {
+        layerOpenAfter : function () {
+            this.bindOutsideEvents(true);
+        },
+        layerView : function (e) {
+            this.currentBtn = $(e.currentTarget);
+            this.layerWrap.show();
+            this.layerObj.focus();
+            win.setTimeout($.proxy(this.layerOpenAfter, this), 50); // setTimeout 사용 안하면 열리자마자 outside 호출돼서 닫힘
+            this.ariaAccessbility(true);
+        },
+        layerClose : function () {
             this.layerWrap.hide();
             this.currentBtn.focus();
-        },
-        layerOutsideFunc : function () {
-            // trigger 날리는거랑 메소드 호출하는거랑 무슨 차이징
-            setTimeout($.proxy(this.layerCloseAfter, this), 50);
+            this.ariaAccessbility(false);
             this.bindOutsideEvents(false);
         },
-        ariaAccessbility : function () {
-            this.layerWrap.siblings().attr('aria-hidden', 'true');
-            this.layerWrap.parent().siblings().attr('aria-hidden', 'true');
+        layerOutsideFunc : function () {
+            win.setTimeout($.proxy(this.layerClose, this), 50);
+        },
+        ariaAccessbility : function (type) {
+            if (type) {
+                this.layerWrap.siblings().attr('aria-hidden', type);
+                this.layerWrap.parent().siblings().attr('aria-hidden', type);
+            } else {
+                this.layerWrap.siblings().removeAttr('aria-hidden');
+                this.layerWrap.parent().siblings().removeAttr('aria-hidden');
+            }
         }
     }
     $(function () {
