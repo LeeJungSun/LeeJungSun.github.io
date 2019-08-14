@@ -34,7 +34,6 @@
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
                 <p class="article__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
-                <p class="article__text">** Iphone5 : 수정 적용해도 동일 이슈 발생.</p>
                 <h4 class="box__title">이슈 개선</h4>
                 <ul class="list text_type">
                 <li>레이어 팝업 닫기 버튼 요소에 CSS <code class="code">text-transform:capitalize</code> 속성 추가.</li>
@@ -64,6 +63,13 @@
                         <p class="img__text">정상적으로 다음 요소 탐색 가능.</p>
                     </div>
                 </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li><strong>Iphone5 9.3.4 버전대의 경우 이슈 개선 사항대로 수정 적용해도 동일한 이슈 발생</strong>하므로, 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
+                    <li><strong class="point2">왜 text-transform:capitalize 속성 추가하면 정상적으로 작동이 되는지?</strong></li>
+                    </ul>
+                </div>
             </div>
         </article>
     </section>
@@ -88,11 +94,11 @@
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
                 <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
-                <p class="box__text">** Iphone5 : 수정 적용 전, 후 동일하게 포커스 이동할때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있음.</p>
                 <h4 class="box__title">이슈 개선</h4>
                 <ul class="list text_type">
                 <li>스크립트로 팝업이 열린 다음에 팝업에 선언된 <code class="code">role="dialog"</code>를 삭제하는 방향으로 이슈 해결.</li>
                 </ul>
+
                 <div class="example_area">
                     <code>&lt;div class="cm-s-layer__layer" tabindex="-1" <strong class="point">role="dialog"</strong>&gt;</code>
                 </div>
@@ -113,6 +119,13 @@
                         <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
                         <p class="img__text">포커스 튕김 현상 없음.</p>
                     </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>Iphone5 9.3.4 버전대의 경우 수정 적용 전, 후 동일하게 포커스 이동할 때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있습니다. 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
+                    <li><strong class="point2">role="dialog"를 사용한 이유와 dialog를 삭제해도 이슈가 없는건지?</strong></li>
+                    </ul>
                 </div>
             </div>
         </article>
@@ -186,6 +199,8 @@
                         &lt;/div&gt;
                     </code>
                 </div>
+
+                <strong class="point2"></strong>
                 <div class="img__wrap type2">
                     <div class="img__area">
                         <strong class="img__title">[AS-IS]</strong>
@@ -203,6 +218,12 @@
                         <p class="img__comment">테스트 환경 : Window10 Chrome Jaws</p>
                         <p class="img__text">indicator 두 번째 썸네일 클릭 시 우측 슬라이드가 정상적으로 바뀜.</p>
                     </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li><strong class="point2">왜 tabindex="-1"을 추가 해야하는지?</strong></li>
+                    </ul>
                 </div>
             </div>
 
@@ -250,6 +271,13 @@
                 <li>.slick-list에 선언된 <code class="code">aria-live:"polite"</code> 속성을 <code class="code">aria-live:"off"</code> 속성으로 변경.</li>
                 <li>.slick-track, .slick-slide에 선언된 <code class="code">role</code>값 제거.<br> (role값을 제거할 때 slick이 호출되는 스크립트 구문과 시간 차 이슈로 role값이 지워지지 않기 때문에 setTimeout 사용하여 제거해야 한다.)</li>
                 </ul>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li><strong class="point2">왜 aria-live:"off"로 바꾸어야 하는지?</strong></li>
+                    <li><strong class="point2">왜 role값을 제거해야하는지? 이슈 없는지?</strong></li>
+                    </ul>
+                </div>
                 <div class="example_area">
                     <code>
                         buildSlick : function () {<br>
@@ -318,6 +346,12 @@
                 <li>스크립트로 <code class="code">aria-hidden</code> attr 값 제거</li>
                 <li>slick 호출 구문에서 init, beforeChange 상태 일 때 attr 값을 제거한다.<br> (beforeChange가 아닌 afterChange에 넣으면 슬라이드 동작 중일 때 dot 포커스를 이동시키면 다른 곳으로 포커싱이 튕김.)</li>
                 </ul>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li><strong class="point2">aria-hidden attr 값을 제거해야하는 이유?</strong></li>
+                    </ul>
+                </div>
                 <div class="example_area">
                     <code>
                         buildSlick : function () {<br>
