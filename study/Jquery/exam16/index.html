@@ -61,7 +61,7 @@ button::-moz-focus-inner{padding:0;border:0}
     <hr />
     <!-- container [s] -->
     <div id="container">
-        <!-- <div class="cast_box js-tab-wrap">
+        <div class="cast_box js-tab-wrap">
             <div class="cast_tab">
                 <ul>
                 <li class="active"><a href="#thema1">테마1</a></li>
@@ -90,7 +90,7 @@ button::-moz-focus-inner{padding:0;border:0}
                 </div>
                 <div class="cast_num"><span class="current">1</span> / <span class="total">8</span></div>
             </div>
-        </div> -->
+        </div>
 
         <div class="slide_box js-slide-wrap">
             <div class="slide_tab">
@@ -137,7 +137,6 @@ button::-moz-focus-inner{padding:0;border:0}
     // [Tab] hashchange를 사용하여 구현
     // [Tab] 주소 뒤의 hash값을 포함하여 새창에서 주소를 입력하면 해당 hash값을 가진 tab 활성화
     // [Tab] 해쉬 주소와 일치하는 content가 없는 경우 무조건 첫번째 탭 활성화
-
     win.examProject.tab = function (args) {
         var defParams = {
             obj : '.js-tab-wrap',
@@ -258,6 +257,7 @@ button::-moz-focus-inner{padding:0;border:0}
         }
     }
 
+
     // [Slide] slide/fade 2가지 타입으로 구현
     // [Slide] 자동재생 옵션 구현
     // [Slide] 자동재생 옵션 on인 경우, 슬라이드에 마우스 오버시 일시정지, 슬라이드 밖으로 마우스 나갈시 다시 플레이
@@ -265,20 +265,17 @@ button::-moz-focus-inner{padding:0;border:0}
         var defParams = {
             obj : '.js-slide-wrap',
             option : null, // slide, fade
+            autoPlay : null, // true, false
             slideTab : '.slide_tab ul',
             slideTabList : 'li',
             tab : 'a',
             slideCont : '.slide_cont',
             slideArticle : '.slide_article',
-            slideBtn : '.slide_btn',
+            slideBtn : '.slide_setting',
             prevBtn : '.btn_prev',
             nextBtn : '.btn_next',
             activeClass : 'active',
-            animateOpts : {
-                left : 0,
-                speed : 1000,
-                easing : 'swing'
-            }
+            animateSpeed : 2000
         }
         this.opts = $.extend({}, defParams, (args || {}));
         if (!(this.obj = $(this.opts.obj)).length) return;
@@ -294,6 +291,7 @@ button::-moz-focus-inner{padding:0;border:0}
             this.slideTab = this.obj.find(this.opts.slideTab);
             this.slideTabList = this.slideTab.find(this.opts.slideTabList);
             this.tab = this.slideTab.find(this.opts.tab);
+            console.log(this.obj)
 
             this.slideCont = this.obj.find(this.opts.slideCont);
             this.slideArticle = this.slideCont.find(this.opts.slideArticle);
@@ -322,21 +320,24 @@ button::-moz-focus-inner{padding:0;border:0}
             // console.log(targetContent)
             // console.log(this.currentIndex)
         },
-        initHash : function () {
+        hashUpdate : function () {
             var targetHash = this.slideArticle.eq(this.currentIndex).attr('id');
             win.location.hash = '#' + targetHash;
-            // console.log(targetHash)
+            console.log(win.location.hash)
         },
         hashChangeFunc : function () {
-            this.initHash();
+            this.filterHash();
             this.slideViewLayout();
         },
         initLayout : function () {
             this.filterHash();
             this.slideTabList.removeClass(this.opts.activeClass);
             this.slideArticle.hide();
-            this.direction = 'next';
+            this.direction = 'default';
             this.slideViewLayout();
+
+            this.autoPlayEvents(this.opts.autoPlay);
+            
         },
         tabClick : function (e) {
             e.preventDefault();
@@ -353,7 +354,7 @@ button::-moz-focus-inner{padding:0;border:0}
             }
             if (this.currentIndex === this.oldIndex) return;
 
-            this.hashChangeFunc();
+            this.hashUpdate();
         },
         nextClick : function () {
             this.direction = 'next';
@@ -361,9 +362,9 @@ button::-moz-focus-inner{padding:0;border:0}
             if (this.currentIndex >= this.slideTabList.length) {
                 this.currentIndex = 0;
             }
-            console.log('currentIndex :', this.currentIndex);
-            console.log('oldIndex :', this.oldIndex);
-            this.hashChangeFunc();
+            // console.log('currentIndex :', this.currentIndex);
+            // console.log('oldIndex :', this.oldIndex);
+            this.hashUpdate();
         },
         prevClick : function () {
             this.direction = 'prev';
@@ -371,50 +372,111 @@ button::-moz-focus-inner{padding:0;border:0}
             if (this.currentIndex < 0) {
                 this.currentIndex = this.slideTabList.length - 1;
             }
-            this.hashChangeFunc();
+            this.hashUpdate();
         },
         slideViewLayout : function () {
             this.slideTabList.eq(this.oldIndex).removeClass(this.opts.activeClass);
             this.slideTabList.eq(this.currentIndex).addClass(this.opts.activeClass);
-
-            console.log(this.direction)
-            if (this.direction === 'next') {
+            if (this.direction === 'default') {
                 this.slideArticle.eq(this.currentIndex).css({
-                    'display' : 'block',
-                    'left' : '100%'
-                }).stop().animate({
-                    'left' : '0'
-                }, 1000, function () {
-                    console.log('end')
-                });
-                this.slideArticle.eq(this.oldIndex).stop().animate({
-                    'left' : '-100%'
-                }, 1000, function () {
-                    $(this).hide();
-                });
-            } else if (this.direction === 'prev') {
-                this.slideArticle.eq(this.currentIndex).css({
-                    'display' : 'block',
-                    'left' : '-100%'
-                }).stop().animate({
-                    'left' : '0'
-                }, 1000);
-
-                this.slideArticle.eq(this.oldIndex).stop().animate({
-                    'left' : '100%'
-                }, 1000, function () {
-                    $(this).hide();
+                    display : 'block',
+                    left : 0
                 });
             }
+            this.nextView();
+            this.prevView();
             this.oldIndex = this.currentIndex;
+        },
+        nextView : function () {
+            if (this.direction === 'next') {
+                console.log('next');
+                if (this.opts.option === 'slide') {
+                    this.slideArticle.eq(this.currentIndex).css({
+                        display : 'block',
+                        left : '100%'
+                    }).stop().animate({
+                        left : 0
+                    }, this.opts.animateSpeed);
+                    this.slideArticle.eq(this.oldIndex).stop().animate({
+                        left : '-100%'
+                    }, this.opts.animateSpeed, function () {
+                        $(this).hide().css('left', '0');
+                    });
+                }
+                if (this.opts.option === 'fade') {
+                    // console.log('fade');
+                    this.slideArticle.eq(this.currentIndex).css({
+                        display : 'block',
+                        opacity : '0'
+                    }).stop().animate({
+                        opacity : '1'
+                    }, this.opts.animateSpeed)
+                    this.slideArticle.eq(this.oldIndex).stop().animate({
+                        opacity : '0'
+                    }, this.opts.animateSpeed, function () {
+                        $(this).hide();
+                    })
+                }
+            }
+        },
+        prevView : function () {
+            if (this.direction === 'prev') {
+                console.log('prev');
+                if (this.opts.option === 'slide') {
+                    this.slideArticle.eq(this.currentIndex).css({
+                        display: 'block',
+                        left: '-100%'
+                    }).stop().animate({
+                        left: '0'
+                    }, this.opts.animateSpeed);
+                    this.slideArticle.eq(this.oldIndex).stop().animate({
+                        left: '100%'
+                    }, this.opts.animateSpeed, function () {
+                        $(this).hide().css('left', '0');
+                    });
+                }
+                if (this.opts.option === 'fade') {
+                    // console.log('fade');
+                    this.slideArticle.eq(this.currentIndex).css({
+                        display : 'block',
+                        opacity : '0'
+                    }).stop().animate({
+                        opacity : '1'
+                    }, this.opts.animateSpeed)
+                    this.slideArticle.eq(this.oldIndex).stop().animate({
+                        opacity : '0'
+                    }, this.opts.animateSpeed, function () {
+                        $(this).hide();
+                    })
+                }
+            }   
+        },
+        autoPlayEvents : function (type) {
+            console.log(type)
+            if (!type) return;
+            this.onPlayFunc();
+            this.obj.on('mouseleave', $.proxy(this.onPlayFunc, this));
+            this.obj.on('mouseenter', $.proxy(this.onStopFunc, this));
+        },
+        onPlayFunc : function () {
+            // 2초 단위로 next뷰 체인지
+            this.autoPlay = win.setInterval($.proxy(function () {
+                this.nextBtn.trigger('click');
+                console.log('play:', this.currentIndex);
+            }, this), this.opts.animateSpeed);
+        },
+        onStopFunc : function () {
+            win.clearInterval(this.autoPlay);
+            console.log('stop:',this.currentIndex);
         }
     }
 
     $(function () {
-        // var tab = new win.examProject.tab();
-        var slide = new win.examProject.slide({
-                option : 'slide' // slide, fade
-            });
+        new win.examProject.tab();
+        new win.examProject.slide({
+            option : 'slide', // slide, fade
+            autoPlay : false // true, false
+        });
     });
 })(window, window.jQuery, window.document);
 </script>
