@@ -182,7 +182,7 @@ button::-moz-focus-inner{padding:0;border:0}
                 this.tab.on('click', $.proxy(this.tabClick, this));
                 this.prevBtn.on('click', $.proxy(this.prevClick, this));
                 this.nextBtn.on('click', $.proxy(this.nextClick, this));
-                $(window).on('hashchange', $.proxy(this.hashChangeFunc, this));
+                $(win).on('hashchange', $.proxy(this.hashChangeFunc, this));
             } else {
                 this.tab.off('click');
                 this.prevBtn.off('click');
@@ -197,7 +197,7 @@ button::-moz-focus-inner{padding:0;border:0}
                 targetContent = this.castArticle.filter(targetHash);
             this.currentIndex = (targetContent.length) ? targetContent.index() : 0; // 해당 인덱스에 해당하는 컨텐츠 없을 경우 0번째 인덱스 활성화
         },
-        initHash : function () { // 활성화된 ID값 window hash값으로 박음
+        hashUpdate : function () { // 활성화된 ID값 window hash값으로 박음
             // 해쉬값과 일치하는 컨텐츠 ID값 받아오기
             // window location hash 값 받아온 ID값으로 지정
             var targetHash = this.castArticle.eq(this.currentIndex).attr('id');
@@ -205,8 +205,8 @@ button::-moz-focus-inner{padding:0;border:0}
             // console.log(win.location.hash)
         },
         hashChangeFunc : function () {
-            // console.log('change');
-            this.initHash(); 
+            console.log('change');
+            this.filterHash();
             this.tabViewLayout();
             this.numUpdate();
         },
@@ -225,7 +225,7 @@ button::-moz-focus-inner{padding:0;border:0}
             this.currentIndex = target.closest(this.opts.castTabList).index();
             // console.log(this.oldIndex);
             // console.log(this.currentIndex);
-            this.hashChangeFunc();
+            this.hashUpdate();
         },
         prevClick : function () {
             // console.log('prevClick');
@@ -234,7 +234,7 @@ button::-moz-focus-inner{padding:0;border:0}
             if (this.currentIndex < 0) {
                 this.currentIndex = this.castTabList.length - 1;
             }
-            this.hashChangeFunc();
+            this.hashUpdate();
         },
         nextClick : function () {
             // console.log('nextClick');
@@ -243,7 +243,7 @@ button::-moz-focus-inner{padding:0;border:0}
             if (this.currentIndex >= this.castTabList.length) {
                 this.currentIndex = 0;
             }
-            this.hashChangeFunc();
+            this.hashUpdate();
         },
         tabViewLayout : function () {
             this.castTabList.eq(this.oldIndex).removeClass(this.opts.activeClass);
@@ -257,6 +257,14 @@ button::-moz-focus-inner{padding:0;border:0}
         }
     }
 
+    $(function () {
+        new win.examProject.tab();
+    });
+})(window, window.jQuery, window.document);
+(function (win, $, doc) {
+    'use strict';
+
+    win.examProject = win.examProject || {};
 
     // [Slide] slide/fade 2가지 타입으로 구현
     // [Slide] 자동재생 옵션 구현
@@ -291,21 +299,26 @@ button::-moz-focus-inner{padding:0;border:0}
             this.slideTab = this.obj.find(this.opts.slideTab);
             this.slideTabList = this.slideTab.find(this.opts.slideTabList);
             this.tab = this.slideTab.find(this.opts.tab);
-            console.log(this.obj)
-
             this.slideCont = this.obj.find(this.opts.slideCont);
             this.slideArticle = this.slideCont.find(this.opts.slideArticle);
-
             this.slideBtn = this.obj.find(this.opts.slideBtn);
             this.prevBtn = this.slideBtn.find(this.opts.prevBtn);
             this.nextBtn = this.slideBtn.find(this.opts.nextBtn);
+        },
+        initLayout : function () {
+            this.filterHash();
+            this.slideTabList.removeClass(this.opts.activeClass);
+            this.slideArticle.hide();
+            this.direction = 'default';
+            this.slideViewLayout();
+            this.autoPlayEvents(this.opts.autoPlay);
         },
         bindEvents : function (type) {
             if (type) {
                 this.tab.on('click', $.proxy(this.tabClick, this));
                 this.nextBtn.on('click', $.proxy(this.nextClick, this));
                 this.prevBtn.on('click', $.proxy(this.prevClick, this));
-                $(window).on('hashChange', $.proxy(this.hashChangeFunc, this));
+                $(win).on('hashChange', $.proxy(this.hashChangeFunc, this));
             } else {
                 this.tab.off('click');
                 this.nextBtn.off('click');
@@ -316,28 +329,15 @@ button::-moz-focus-inner{padding:0;border:0}
             var targetHash = win.location.hash,
                 targetContent = this.slideArticle.filter(targetHash);
             this.currentIndex = (targetContent.length) ? targetContent.index() : 0;
-            // console.log(targetHash)
-            // console.log(targetContent)
-            // console.log(this.currentIndex)
         },
         hashUpdate : function () {
             var targetHash = this.slideArticle.eq(this.currentIndex).attr('id');
             win.location.hash = '#' + targetHash;
-            console.log(win.location.hash)
         },
         hashChangeFunc : function () {
+            console.log('slide change');
             this.filterHash();
             this.slideViewLayout();
-        },
-        initLayout : function () {
-            this.filterHash();
-            this.slideTabList.removeClass(this.opts.activeClass);
-            this.slideArticle.hide();
-            this.direction = 'default';
-            this.slideViewLayout();
-
-            this.autoPlayEvents(this.opts.autoPlay);
-            
         },
         tabClick : function (e) {
             e.preventDefault();
@@ -472,7 +472,6 @@ button::-moz-focus-inner{padding:0;border:0}
     }
 
     $(function () {
-        new win.examProject.tab();
         new win.examProject.slide({
             option : 'slide', // slide, fade
             autoPlay : false // true, false
