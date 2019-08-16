@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>Map</title>
+<style>
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button{margin:0;padding:0}
+html,body{width:100%}
+body,input,select,textarea,button,th,td{font-family:'돋움',dotum,tahoma,sans-serif;font-size:12px;color:#000}
+fieldset,img{border:0 none}
+ul,ol,dl,li{list-style:none}
+input,select,textarea,button{vertical-align:top}
+button,input[type=button]{overflow:visible;background-color:transparent;cursor:pointer}
+button::-moz-focus-inner{padding:0;border:0}
+input,button{-webkit-appearance:none;border:0 none;border-radius:0}
+address,caption,em{font-style:normal}
+a{color:#000}
+a,a:active,a:hover{text-decoration:none}
+table{border-collapse:collapse;border-spacing:0}
+/* common */
+.blind,legend,caption span{overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:999px;white-space:nowrap}
+.sp{display:inline-block;overflow:hidden;width:10px;height:10px;background:url(../img/sp.png) no-repeat;line-height:999px;vertical-align:top}
+.elp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+.map_wrap{position:relative}
+.lavel_area{position:absolute;top:10px;left:10px;z-index:10}
+
+.option_wrap{max-width:600px;margin:20px auto 0;padding:0 20px}
+.table_wrap{border:1px solid #c5c5c5;box-sizing:border-box}
+.table_wrap table{width:100%;table-layout:fixed}
+.table_wrap th{background:#e7e7e7}
+.table_wrap th,.table_wrap td{border:solid #c5c5c5;border-width:1px 0 0 1px}
+.table_wrap th:first-child,.table_wrap td:first-child{border-left:0}
+.table_wrap tr:first-child th,.table_wrap tr:first-child td{border-top:0}
+.table_wrap .th{padding:9px 10px}
+.table_wrap .td{padding:9px 10px}
+.input_text{display:block;border:1px solid #9c9c9c}
+.input_text input{width:100%;padding:8px;background:transparent;box-sizing:border-box}
+.btn_wrap{margin-top:20px;text-align:center}
+.btn_wrap .btn_save{width:85px;height:35px;padding:6px 10px;border:1px solid #b4b4b4;border-radius:7px;box-sizing:border-box}
+</style>
+</head>
+<!-- 발급받은 APP KEY를 넣으시면 됩니다. => 생성한 앱에서 앱키 JavaScript키 복사  -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9413087df6d6c00e1b63507a8066fdd5"></script>
+
+<body>
+    <div class="map_section">
+        <div class="map_wrap">
+            <div id="map" style="width:100%;height:500px"></div>
+            <div class="lavel_area">
+                <button type="button" class="btn_zoomin" onclick="levelZoomIn()">+</button>
+                <button type="button" class="btn_zoomout" onclick="levelZoomOut()">-</button>
+            </div>
+        </div>
+        <!-- <p><em>지도를 클릭해주세요!</em></p>  -->
+        <div class="option_wrap">
+            <div class="table_wrap js-option-data">
+                <table>
+                <caption><span>타이틀</span></caption>
+                <colgroup><col style="width:120px"><col></colgroup>
+                <tbody>
+                <tr>
+                <th scope="row"><div class="th">타이틀</div></th>
+                <td><div class="td"><span class="input_text"><input type="text" id="dataTitle" placeholder="내용 넣기"></span></div></td>
+                </tr>
+                <tr>
+                <th scope="row"><div class="th">위도</div></th>
+                <td><div class="td"><span class="input_text"><input type="text" id="dataLat" placeholder="내용 넣기"></span></div></td>
+                </tr>
+                <tr>
+                <th scope="row"><div class="th">경도</div></th>
+                <td><div class="td"><span class="input_text"><input type="text" id="dataLng" placeholder="내용 넣기"></span></div></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+            <div class="btn_wrap">
+                <button type="button" class="btn_save"><span>Save</span></button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+(function (win, $, doc) {
+    'use strict';
+    win.map = win.map || {};
+
+    win.map.daum = function (container, args) {
+        var defParams = {
+            obj : container,
+            saveBtn : '.btn_save',
+            mapWrap : '.map_wrap',
+            optionWrap : '.js-option-data',
+            map : '#map',
+            mapOption : {
+                title : 'hivelab',
+                lat : '37.4004877',
+                lng : '127.1064614',
+                level : 3
+            },
+            markerData : []
+        }
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.obj = $(this.opts.obj)).length) return;
+        this.init();
+    }
+    win.map.daum.prototype = {
+        init : function () {
+            this.setElements();
+            this.initData();
+            this.initMap();
+            this.bindEvent();
+        },
+        setElements : function () {
+            this.mapContainer = this.obj.find(this.opts.mapWrap);
+            this.optionWrap = this.obj.find(this.opts.optionWrap);
+            this.optionInp = this.optionWrap.find('input');
+            this.saveBtn = this.obj.find(this.opts.saveBtn);
+        },
+        bindEvent : function () {
+            win.kakao.maps.event.addListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
+            this.saveBtn.on('click', $.proxy(this.onClickFunc, this));
+        },
+        onClickFunc : function () {
+            
+        },
+        initData : function () {
+            for (var i = 0, imax = this.optionInp.length; i < imax; i++) {
+                console.log(this.optionInp.eq(i))
+            }
+        },
+        initMap : function () {
+            var mapObj = this.mapContainer.find(this.opts.map)[0];
+            var mapOption = {
+                center : new win.kakao.maps.LatLng(this.opts.mapOption.lat, this.opts.mapOption.lng),
+                level : this.opts.mapOption.level
+            }
+            this.map = new win.kakao.maps.Map(mapObj, mapOption); // map 생성
+            
+            // this.initMarker();
+            // this.getAddMarker();
+        },
+        initMarker : function () {
+            var markerPosition = new win.kakao.maps.LatLng(this.opts.mapOption.lat, this.opts.mapOption.lng);
+            this.initMarker = new win.kakao.maps.Marker({
+                position : markerPosition
+            });
+            marker.setMap(this.map); // 마커 지도 위에 표시
+        },
+        getClickMarkerInfo : function (mouseEvent) {
+            var latLng = mouseEvent.latLng;
+            console.log('클릭한 위치 위도 :', latLng.getLat());
+            console.log('클릭한 위치 경도 :', latLng.getLng());
+        },
+        getAddMarker : function () {
+            // var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            // var imageSize = new win.kakao.maps.Size(24, 35);
+            // var markerImage = new win.kakao.maps.MarkerImage(imageSrc, imageSize);
+            var data = $.ajax({
+                url : './json/data.json',
+                type : 'get',
+                context: this,
+                success : function (res) {
+                    var _this = this;
+
+                    $.map(res, function(value, key){
+                        var posTitle = res[key].title,
+                            posX = res[key].lat,
+                            posY = res[key].lng
+
+                        // var data = {
+                        //     title : posTitle,
+                        //     posX : posX,
+                        //     posY : posY
+                        // }
+                        
+                        // console.log(data)
+
+                        var marker = new kakao.maps.Marker({
+                            map : _this.map,
+                            position : new daum.maps.LatLng(posX, posY)
+                        });
+                        // console.log(_this.map)
+                    });
+                }
+            });
+        }
+    }
+
+    $(function () {
+        var mapDaum = new win.map.daum('.map_section');
+        // console.log(win)
+    });
+})(window, window.jQuery, window.document);
+</script>
+
+</html>
