@@ -132,12 +132,12 @@ button::-moz-focus-inner{padding:0;border:0}
 (function (win, $, doc) {
     'use strict';
 
-    win.examProject = win.examProject || {};
+    win.tabObj = win.tabObj || {};
 
     // [Tab] hashchange를 사용하여 구현
     // [Tab] 주소 뒤의 hash값을 포함하여 새창에서 주소를 입력하면 해당 hash값을 가진 tab 활성화
     // [Tab] 해쉬 주소와 일치하는 content가 없는 경우 무조건 첫번째 탭 활성화
-    win.examProject.tab = function (args) {
+    win.tabObj = function (args) {
         var defParams = {
             obj : '.js-tab-wrap',
             castTab : '.cast_tab ul',
@@ -157,7 +157,7 @@ button::-moz-focus-inner{padding:0;border:0}
         if(!(this.obj = $(this.opts.obj)).length) return;
         this.init();
     }
-    win.examProject.tab.prototype = {
+    win.tabObj.prototype = {
         init : function () {
             this.setElements();
             this.initLayout();
@@ -202,10 +202,9 @@ button::-moz-focus-inner{padding:0;border:0}
             // window location hash 값 받아온 ID값으로 지정
             var targetHash = this.castArticle.eq(this.currentIndex).attr('id');
             win.location.hash = '#' + targetHash;
-            // console.log(win.location.hash)
         },
         hashChangeFunc : function () {
-            console.log('change');
+            console.log('tab change');
             this.filterHash();
             this.tabViewLayout();
             this.numUpdate();
@@ -256,20 +255,19 @@ button::-moz-focus-inner{padding:0;border:0}
             this.currentNum.text(this.currentIndex + 1);
         }
     }
-
     $(function () {
-        new win.examProject.tab();
+        new win.tabObj();
     });
 })(window, window.jQuery, window.document);
 (function (win, $, doc) {
     'use strict';
 
-    win.examProject = win.examProject || {};
+    win.slideObj = win.slideObj || {};
 
     // [Slide] slide/fade 2가지 타입으로 구현
     // [Slide] 자동재생 옵션 구현
     // [Slide] 자동재생 옵션 on인 경우, 슬라이드에 마우스 오버시 일시정지, 슬라이드 밖으로 마우스 나갈시 다시 플레이
-    win.examProject.slide = function (args) {
+    win.slideObj = function (args) {
         var defParams = {
             obj : '.js-slide-wrap',
             option : null, // slide, fade
@@ -283,13 +281,14 @@ button::-moz-focus-inner{padding:0;border:0}
             prevBtn : '.btn_prev',
             nextBtn : '.btn_next',
             activeClass : 'active',
-            animateSpeed : 2000
+            animateSpeed : 800,
+            autoPlaySpeed : 3000
         }
         this.opts = $.extend({}, defParams, (args || {}));
         if (!(this.obj = $(this.opts.obj)).length) return;
         this.init();
     }
-    win.examProject.slide.prototype = {
+    win.slideObj.prototype = {
         init : function () {
             this.setElements();
             this.initLayout();
@@ -310,15 +309,15 @@ button::-moz-focus-inner{padding:0;border:0}
             this.slideTabList.removeClass(this.opts.activeClass);
             this.slideArticle.hide();
             this.direction = 'default';
-            this.slideViewLayout();
             this.autoPlayEvents(this.opts.autoPlay);
+            this.slideViewLayout();
         },
         bindEvents : function (type) {
             if (type) {
                 this.tab.on('click', $.proxy(this.tabClick, this));
                 this.nextBtn.on('click', $.proxy(this.nextClick, this));
                 this.prevBtn.on('click', $.proxy(this.prevClick, this));
-                $(win).on('hashChange', $.proxy(this.hashChangeFunc, this));
+                $(win).on('hashchange', $.proxy(this.hashChangeFunc, this));
             } else {
                 this.tab.off('click');
                 this.nextBtn.off('click');
@@ -342,18 +341,13 @@ button::-moz-focus-inner{padding:0;border:0}
         tabClick : function (e) {
             e.preventDefault();
             var target = $(e.currentTarget);
-            this.currentIndex = target.closest(this.opts.slideTabList).index();
-
-            console.log('currentIndex :', this.currentIndex);
-            console.log('oldIndex :', this.oldIndex);
-            
+            this.currentIndex = target.closest(this.opts.slideTabList).index();            
             if (this.currentIndex > this.oldIndex) {
                 this.direction = 'next';
             } else {
                 this.direction = 'prev';
             }
             if (this.currentIndex === this.oldIndex) return;
-
             this.hashUpdate();
         },
         nextClick : function () {
@@ -362,8 +356,6 @@ button::-moz-focus-inner{padding:0;border:0}
             if (this.currentIndex >= this.slideTabList.length) {
                 this.currentIndex = 0;
             }
-            // console.log('currentIndex :', this.currentIndex);
-            // console.log('oldIndex :', this.oldIndex);
             this.hashUpdate();
         },
         prevClick : function () {
@@ -410,18 +402,17 @@ button::-moz-focus-inner{padding:0;border:0}
                         opacity : '0'
                     }).stop().animate({
                         opacity : '1'
-                    }, this.opts.animateSpeed)
+                    }, this.opts.animateSpeed);
                     this.slideArticle.eq(this.oldIndex).stop().animate({
                         opacity : '0'
                     }, this.opts.animateSpeed, function () {
                         $(this).hide();
-                    })
+                    });
                 }
             }
         },
         prevView : function () {
             if (this.direction === 'prev') {
-                console.log('prev');
                 if (this.opts.option === 'slide') {
                     this.slideArticle.eq(this.currentIndex).css({
                         display: 'block',
@@ -442,17 +433,16 @@ button::-moz-focus-inner{padding:0;border:0}
                         opacity : '0'
                     }).stop().animate({
                         opacity : '1'
-                    }, this.opts.animateSpeed)
+                    }, this.opts.animateSpeed);
                     this.slideArticle.eq(this.oldIndex).stop().animate({
                         opacity : '0'
                     }, this.opts.animateSpeed, function () {
                         $(this).hide();
-                    })
+                    });
                 }
             }   
         },
         autoPlayEvents : function (type) {
-            console.log(type)
             if (!type) return;
             this.onPlayFunc();
             this.obj.on('mouseleave', $.proxy(this.onPlayFunc, this));
@@ -462,204 +452,18 @@ button::-moz-focus-inner{padding:0;border:0}
             // 2초 단위로 next뷰 체인지
             this.autoPlay = win.setInterval($.proxy(function () {
                 this.nextBtn.trigger('click');
-                console.log('play:', this.currentIndex);
-            }, this), this.opts.animateSpeed);
+            }, this), this.opts.autoPlaySpeed);
         },
         onStopFunc : function () {
             win.clearInterval(this.autoPlay);
-            console.log('stop:',this.currentIndex);
         }
     }
 
-    var slide = {
-        init : function () {
-            this.setElements();
-            this.initLayout();
-            this.bindEvents(true);
-        },
-        setElements : function () {
-            this.obj = $('.js-slide-wrap');
-            this.option = 'slide'
-            this.slideTab = this.obj.find('.slide_tab ul');
-            this.slideTabList = this.slideTab.find('li');
-            this.tab = this.slideTab.find('a');
-            this.slideCont = this.obj.find('.slide_cont');
-            this.slideArticle = this.slideCont.find('.slide_article');
-            this.slideBtn = this.obj.find('.slide_setting');
-            this.prevBtn = this.slideBtn.find('.btn_prev');
-            this.nextBtn = this.slideBtn.find('.btn_next');
-        },
-        initLayout : function () {
-            this.filterHash();
-            this.slideTabList.removeClass('active');
-            this.slideArticle.hide();
-            this.direction = 'default';
-            this.slideViewLayout();
-            this.autoPlayEvents(false);
-        },
-        bindEvents : function (type) {
-            if (type) {
-                this.tab.on('click', $.proxy(this.tabClick, this));
-                this.nextBtn.on('click', $.proxy(this.nextClick, this));
-                this.prevBtn.on('click', $.proxy(this.prevClick, this));
-                $(win).on('hashChange', $.proxy(this.hashChangeFunc, this));
-            } else {
-                this.tab.off('click');
-                this.nextBtn.off('click');
-                this.prevBtn.off('click');
-            }
-        },
-        filterHash : function () {
-            var targetHash = win.location.hash,
-                targetContent = this.slideArticle.filter(targetHash);
-            this.currentIndex = (targetContent.length) ? targetContent.index() : 0;
-        },
-        hashUpdate : function () {
-            var targetHash = this.slideArticle.eq(this.currentIndex).attr('id');
-            win.location.hash = '#' + targetHash;
-        },
-        hashChangeFunc : function () {
-            console.log('slide change');
-            this.filterHash();
-            this.slideViewLayout();
-        },
-        tabClick : function (e) {
-            e.preventDefault();
-            var target = $(e.currentTarget);
-            this.currentIndex = target.closest('li').index();
-
-            console.log('currentIndex :', this.currentIndex);
-            console.log('oldIndex :', this.oldIndex);
-            
-            if (this.currentIndex > this.oldIndex) {
-                this.direction = 'next';
-            } else {
-                this.direction = 'prev';
-            }
-            if (this.currentIndex === this.oldIndex) return;
-
-            this.hashUpdate();
-        },
-        nextClick : function () {
-            this.direction = 'next';
-            this.currentIndex++;
-            if (this.currentIndex >= this.slideTabList.length) {
-                this.currentIndex = 0;
-            }
-            // console.log('currentIndex :', this.currentIndex);
-            // console.log('oldIndex :', this.oldIndex);
-            this.hashUpdate();
-        },
-        prevClick : function () {
-            this.direction = 'prev';
-            this.currentIndex--;
-            if (this.currentIndex < 0) {
-                this.currentIndex = this.slideTabList.length - 1;
-            }
-            this.hashUpdate();
-        },
-        slideViewLayout : function () {
-            this.slideTabList.eq(this.oldIndex).removeClass('active');
-            this.slideTabList.eq(this.currentIndex).addClass('active');
-            if (this.direction === 'default') {
-                this.slideArticle.eq(this.currentIndex).css({
-                    display : 'block',
-                    left : 0
-                });
-            }
-            this.nextView();
-            this.prevView();
-            this.oldIndex = this.currentIndex;
-        },
-        nextView : function () {
-            if (this.direction === 'next') {
-                console.log('next');
-                if (this.option === 'slide') {
-                    this.slideArticle.eq(this.currentIndex).css({
-                        display : 'block',
-                        left : '100%'
-                    }).stop().animate({
-                        left : 0
-                    }, 2000);
-                    this.slideArticle.eq(this.oldIndex).stop().animate({
-                        left : '-100%'
-                    }, 2000, function () {
-                        $(this).hide().css('left', '0');
-                    });
-                }
-                if (this.option === 'fade') {
-                    // console.log('fade');
-                    this.slideArticle.eq(this.currentIndex).css({
-                        display : 'block',
-                        opacity : '0'
-                    }).stop().animate({
-                        opacity : '1'
-                    }, 2000)
-                    this.slideArticle.eq(this.oldIndex).stop().animate({
-                        opacity : '0'
-                    }, 2000, function () {
-                        $(this).hide();
-                    })
-                }
-            }
-        },
-        prevView : function () {
-            if (this.direction === 'prev') {
-                console.log('prev');
-                if (this.option === 'slide') {
-                    this.slideArticle.eq(this.currentIndex).css({
-                        display: 'block',
-                        left: '-100%'
-                    }).stop().animate({
-                        left: '0'
-                    }, 2000);
-                    this.slideArticle.eq(this.oldIndex).stop().animate({
-                        left: '100%'
-                    }, 2000, function () {
-                        $(this).hide().css('left', '0');
-                    });
-                }
-                if (this.option === 'fade') {
-                    // console.log('fade');
-                    this.slideArticle.eq(this.currentIndex).css({
-                        display : 'block',
-                        opacity : '0'
-                    }).stop().animate({
-                        opacity : '1'
-                    }, 2000)
-                    this.slideArticle.eq(this.oldIndex).stop().animate({
-                        opacity : '0'
-                    }, 2000, function () {
-                        $(this).hide();
-                    })
-                }
-            }   
-        },
-        autoPlayEvents : function (type) {
-            console.log(type)
-            if (!type) return;
-            this.onPlayFunc();
-            this.obj.on('mouseleave', $.proxy(this.onPlayFunc, this));
-            this.obj.on('mouseenter', $.proxy(this.onStopFunc, this));
-        },
-        onPlayFunc : function () {
-            // 2초 단위로 next뷰 체인지
-            this.autoPlay = win.setInterval($.proxy(function () {
-                this.nextBtn.trigger('click');
-                console.log('play:', this.currentIndex);
-            }, this), 2000);
-        },
-        onStopFunc : function () {
-            win.clearInterval(this.autoPlay);
-            console.log('stop:',this.currentIndex);
-        }
-    }
     $(function () {
-        new win.examProject.slide({
+        new win.slideObj({
             option : 'slide', // slide, fade
             autoPlay : false // true, false
         });
-        // slide.init();
     });
 })(window, window.jQuery, window.document);
 </script>
