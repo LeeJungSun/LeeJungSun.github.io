@@ -106,9 +106,116 @@ ins{text-decoration:none}
     <!-- footer [e] -->
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+(function (win, $, doc) {
+    'use strict';
 
+    win.anchorNav = win.anchorNav || {};
+
+    win.anchorNav = function (container, args) {
+        var defParams = {
+            obj : container || '.quick_menu',
+            quickList : '.quick_list',
+            quickMenu : '>a',
+            quickTop : '.btn_top',
+            fixedClass : 'fixed',
+            activeClass : 'active',
+            offsetArr : []
+        }
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.obj = $(this.opts.obj)).length) return;
+        this.init();
+    }
+    win.anchorNav.prototype = {
+        init : function () {
+            this.setElement();
+            this.bindEvents();
+            this.createOffset();
+            this.initLayout();
+        },
+        setElement : function () {
+            this.quickList = this.obj.find(this.opts.quickList);
+            this.quickChild = this.quickList.children();
+            this.quickMenu = this.quickChild.find(this.opts.quickMenu).filter(function () {
+                var target = $(this),
+                targetHref = target.attr('href');
+                if ($(targetHref).length) return true;
+                return false;
+            });
+            this.quickTop = this.quickChild.find(this.opts.quickTop);
+        },
+        initLayout : function () {
+            this.quickMenu.removeClass(this.opts.activeClass);
+            this.onScrollFunc();
+        },
+        createOffset : function () {
+            for (var i = 0, imax = this.quickMenu.length; i < imax ; i++) {
+                var targetContent = $(this.quickMenu.eq(i).attr('href')),
+                    targetOffset = targetContent.offset().top;
+                this.opts.offsetArr[i] = targetOffset;              
+            }
+            console.log(this.opts.offsetArr);
+        },
+        bindEvents : function () {
+            this.quickMenu.on('click', $.proxy(this.onClickFunc, this));
+            this.quickTop.on('click', $.proxy(this.onClickTopFunc, this));
+            $(win).on('scroll', $.proxy(this.onScrollFunc, this));
+        },
+        onClickTopFunc : function (e) {
+            e.preventDefault();
+            $('html, body').stop().animate({
+                scrollTop : 0
+            })
+        },
+        onClickFunc : function (e) {
+            e.preventDefault();
+            var target = $(e.currentTarget),
+                targetIndex = target.parent().index();
+            $('html, body').stop().animate({
+                scrollTop : this.opts.offsetArr[targetIndex]
+            });
+        },
+        onScrollFunc : function () {
+            this.onFixedFunc();
+            win.clearTimeout(this.scrollEnd);
+            this.scrollEnd = win.setTimeout($.proxy(this.scrollEndFunc, this), 300);
+        },
+        onFixedFunc : function () {
+            var scrollTop = $(win).scrollTop();
+            if (scrollTop >= this.opts.offsetArr[0]) {
+                this.obj.addClass(this.opts.fixedClass);
+            } else if (scrollTop < this.opts.offsetArr[0]) {
+                this.obj.removeClass(this.opts.fixedClass);
+            }
+        },
+        scrollEndFunc : function () {
+            var scrollTop = $(win).scrollTop();
+            for (var i = 0, imax = this.opts.offsetArr.length; i < imax; i++) {
+                if (scrollTop >= this.opts.offsetArr[i]) {
+                    this.currentIndex = i;
+                } else if (scrollTop < this.opts.offsetArr[0]) {
+                    this.currentIndex = null;
+                }
+            }
+            if (this.oldIndex === this.currentIndex) return;
+            this.addClass();
+        },
+        addClass : function () {
+            if (this.currentIndex === null) {
+                this.quickMenu.removeClass(this.opts.activeClass);
+            } else {
+                this.quickMenu.removeClass(this.opts.activeClass);
+                this.quickMenu.eq(this.currentIndex).addClass(this.opts.activeClass);
+            }
+            this.oldIndex = this.currentIndex;
+        }
+    }
+    $(function () {
+        new win.anchorNav('.quick_menu');
+    });
+
+})(window, window.jQuery, window.document);
 </script>
 </div>
 </body>
