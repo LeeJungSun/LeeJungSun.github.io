@@ -716,9 +716,54 @@ ins{text-decoration:none}
     <!-- footer [e] -->
 <!-- [ Javascript Area ] -->
 <!-- Libs -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+(function (win, $, doc) {
+    'use strict';
 
+    win.sticky = win.sticky || {};
+
+    win.sticky = function (container, args) {
+        var defParams = {
+            obj : container || '.filter_sort_wrap',
+            stickyClass : 'sticky'
+        }
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.obj = $(this.opts.obj)).length) return;
+        this.init();
+    }
+    win.sticky.prototype = {
+        init : function () {
+            this.initLayout();
+            this.bindEvents();
+        },
+        initLayout : function () {
+            var wrapClass = 'js-' + this.obj.attr('class'),
+                objHeight = this.obj.outerHeight(true);
+            this.obj.wrap('<div class="' + wrapClass + '"></div>');
+            this.obj.parent().css('height', objHeight);
+            this.createOffset();
+        },
+        createOffset : function () {
+            this.offsetTop = this.obj.offset().top;
+        },
+        bindEvents : function () {
+            $(win).on('scroll', $.proxy(this.onScrollFunc, this));
+        },
+        onScrollFunc : function () {
+            var scrollTop = $(win).scrollTop();
+            if (scrollTop >= this.offsetTop) {
+                this.obj.addClass(this.opts.stickyClass);
+            } else if (scrollTop < this.offsetTop) {
+                this.obj.removeClass(this.opts.stickyClass);
+            }
+        }
+    }
+    $(function () {
+        new win.sticky('.filter_sort_wrap');
+    });
+
+})(window, window.jQuery, window.document)
 </script>
 </div>
 </body>
