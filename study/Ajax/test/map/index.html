@@ -25,10 +25,8 @@ table{border-collapse:collapse;border-spacing:0}
 .blind,legend,caption span{overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:999px;white-space:nowrap}
 .sp{display:inline-block;overflow:hidden;width:10px;height:10px;background:url(../img/sp.png) no-repeat;line-height:999px;vertical-align:top}
 .elp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-}
 .map_wrap{position:relative}
 .lavel_area{position:absolute;top:10px;left:10px;z-index:10}
-
 .option_wrap{max-width:600px;margin:20px auto 0;padding:0 20px}
 .table_wrap{border:1px solid #c5c5c5;box-sizing:border-box}
 .table_wrap table{width:100%;table-layout:fixed}
@@ -38,14 +36,30 @@ table{border-collapse:collapse;border-spacing:0}
 .table_wrap tr:first-child th,.table_wrap tr:first-child td{border-top:0}
 .table_wrap .th{padding:9px 10px}
 .table_wrap .td{padding:9px 10px}
-.input_text{display:block;border:1px solid #9c9c9c}
+.input_text{display:block;border:1px solid #9c9c9c;box-sizing:border-box}
 .input_text input{width:100%;padding:8px;background:transparent;box-sizing:border-box}
+.input_textarea{display:block;height:60px;border:1px solid #9c9c9c;box-sizing:border-box}
+.input_textarea textarea{width:100%;padding:8px;border:0;background:transparent;box-sizing:border-box;resize:none}
 .btn_wrap{margin-top:20px;text-align:center}
-.btn_wrap .btn_save{width:85px;height:35px;padding:6px 10px;border:1px solid #b4b4b4;border-radius:7px;box-sizing:border-box}
+.btn_save{width:85px;height:35px;padding:6px 10px;border:1px solid #b4b4b4;border-radius:7px;box-sizing:border-box}
+.btn_delete{position:absolute;top:50%;right:5px;width:43px;height:28px;padding:5px 10px;border:1px solid #b4b4b4;border-radius:5px;transform:translate(0, -50%);box-sizing:border-box}
 .history_wrap{margin-top:30px}
-.history_wrap li{margin-top:-1px;padding:10px;border:1px solid #c5c5c5;font-size:14px}
+.history_wrap li{position:relative;margin-top:-1px;padding:10px 55px 10px 10px;border:1px solid #c5c5c5;font-size:14px}
 .history_wrap li:first-child{margin-top:0}
-.history_wrap .box{display:inline-block;margin-right:10px}
+.history_wrap .option{display:table;width:100%;table-layout:fixed}
+.history_wrap .title{width:140px}
+.history_wrap .box{display:table-cell;padding-left:10px}
+.history_wrap .box:first-child{padding-left:0}
+.overlay_wrap{position:absolute;left:0;bottom:50px;width:200px;transform:translate(-50%, 0)}
+.overlay_inner{overflow:hidden;position:relative;height:80px;border:1px solid #c5c5c5;border-radius:7px;background:#fff;box-sizing:border-box}
+.overlay_title_wrap{height:30px;padding:6px 30px 5px 10px;background:#333;box-sizing:border-box}
+.overlay_title_wrap .overlay_title{font-size:14px;color:#fff}
+.overlay_content_wrap{padding:8px 10px}
+.overlay_content .desc{word-break:break-all;white-space:normal}
+.overlay_wrap .btn_close{position:absolute;top:0;right:0;width:30px;height:30px}
+.overlay_wrap .btn_close:before,.overlay_wrap .btn_close:after{position:absolute;top:4px;right:0;width:2px;height:20px;margin-right:15px;background:#fff;content:''}
+.overlay_wrap .btn_close:before{transform:rotate(45deg)}
+.overlay_wrap .btn_close:after{transform:rotate(-45deg)}
 </style>
 </head>
 <!-- 발급받은 APP KEY를 넣으시면 됩니다. => 생성한 앱에서 앱키 JavaScript키 복사  -->
@@ -73,11 +87,15 @@ table{border-collapse:collapse;border-spacing:0}
                 </tr>
                 <tr>
                 <th scope="row"><div class="th">위도</div></th>
-                <td><div class="td"><span class="input_text"><input type="text" id="data-lat" placeholder="위도값을 입력해주세요."></span></div></td>
+                <td><div class="td"><span class="input_text"><input type="number" id="data-lat" placeholder="위도값을 입력해주세요."></span></div></td>
                 </tr>
                 <tr>
                 <th scope="row"><div class="th">경도</div></th>
-                <td><div class="td"><span class="input_text"><input type="text" id="data-lng" placeholder="경도값을 입력해주세요."></span></div></td>
+                <td><div class="td"><span class="input_text"><input type="number" id="data-lng" placeholder="경도값을 입력해주세요."></span></div></td>
+                </tr>
+                <tr>
+                <th scope="row"><div class="th">설명</div></th>
+                <td><div class="td"><span class="input_textarea"><textarea id="data-desc" placeholder="설명글을 입력해주세요."></textarea></span></div></td>
                 </tr>
                 </tbody>
                 </table>
@@ -101,6 +119,8 @@ table{border-collapse:collapse;border-spacing:0}
         var defParams = {
             obj : container,
             saveBtn : '.btn_save',
+            deleteBtn : '.btn_delete',
+            closeBtn : '.btn_close',
             mapWrap : '.map_wrap',
             historyWrap : '.js-history_wrap',
             optionWrap : '.js-option-data',
@@ -111,7 +131,8 @@ table{border-collapse:collapse;border-spacing:0}
                 lng : '127.1064614',
                 level : 3
             },
-            markerData : []
+            markerData : [],
+            markerApiData : []
         }
         this.opts = $.extend({}, defParams, (args || {}));
         if (!(this.obj = $(this.opts.obj)).length) return;
@@ -128,25 +149,41 @@ table{border-collapse:collapse;border-spacing:0}
             this.mapContainer = this.obj.find(this.opts.mapWrap);
             this.optionWrap = this.obj.find(this.opts.optionWrap);
             this.optionInp = this.optionWrap.find('input');
+            this.historyWrap = this.obj.find(this.opts.historyWrap);
             this.saveBtn = this.obj.find(this.opts.saveBtn);
             // this.postBtn = this.obj.find('.btn_post');
         },
         bindEvent : function () {
             win.kakao.maps.event.addListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
             this.saveBtn.on('click', $.proxy(this.onSaveClickEvent, this));
+            this.obj.on('click', this.opts.deleteBtn, $.proxy(this.onClickDeleteHistory, this));
+
+            for (var i = 0, imax = this.opts.markerApiData.length; i < imax; i++) {
+                win.kakao.maps.event.addListener(this.opts.markerApiData[i], 'click', $.proxy(this.createOverlay, this, i));
+            }
+            this.obj.on('click', this.opts.closeBtn, $.proxy(this.onClickCloseOverlay, this));
+
             // this.postBtn.on('click', $.proxy(this.postJsonData, this));
         },
         onSaveClickEvent : function () {
             this.createMarkerData();
-            this.createDataHistory();
+            console.log(this.opts.markerData);
+            console.log(this.opts.markerApiData)
+        },
+        onClickDeleteHistory : function (e) {
+            var target = $(e.currentTarget).parent(),
+                targetIndex = target.index();
+            this.deleteMarker(targetIndex);
+            target.remove();
+            this.opts.markerData.splice(targetIndex, 1);
+            console.log(this.opts.markerData);
+            console.log(this.opts.markerApiData)
         },
         getJsonData : function () {
-            // var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-            // var imageSize = new win.kakao.maps.Size(24, 35);
-            // var markerImage = new win.kakao.maps.MarkerImage(imageSrc, imageSize);
             var data = $.ajax({
                 url : './json/data.json',
                 type : 'get',
+                async : false, // 동기방식으로 적용 (전역변수에 값을 담기 위함)
                 context: this,
                 success : function (res) {
                     var _this = this;
@@ -160,22 +197,13 @@ table{border-collapse:collapse;border-spacing:0}
                             lng : lng
                         }
                         _this.opts.markerData.push(getData);
+                        _this.createDataHistory(getData);
+                        _this.createAddMarker(getData);
                     });
                 }
             });
+            // console.log(this.opts.markerData)
         },
-        // postJsonData : function() {
-        //     var data = $.ajax({
-        //         url : 'url', //url
-        //         type : 'post',
-        //         context: this,
-        //         data : JSON.stringify(this.opts.markerData),
-    	// 	    contentType : 'application/json; charset=UTF-8',
-        //         success : function (result) {
-        //             console.log(result)
-        //         }
-        //     });
-        // },
         createMarkerData : function () {
             for (var i = 0, imax = this.optionInp.length; i < imax; i++) {
                 var target = this.optionInp.eq(i),
@@ -187,24 +215,29 @@ table{border-collapse:collapse;border-spacing:0}
                 } else if (targetId === 'data-lng') {
                     var targetLng = target.val();
                 }
+                if (!target.val()) {
+                    alert('데이터 값을 입력해주세요');
+                    return;
+                }
             }
-            this.getData = {
+            var getData = {
                 title : targetTitle,
                 lat : targetLat,
                 lng : targetLng
             };
-            this.opts.markerData.push(this.getData);
-            console.log(this.opts.markerData);
+            this.opts.markerData.push(getData);
+            this.createDataHistory(getData);
+            this.createAddMarker(getData);
+            this.optionInp.val('');
         },
-        createDataHistory : function () {
-            var historyWrap = this.obj.find(this.opts.historyWrap),
-                tag = 
-                    "<li>" +
-                    "<span class='box'><strong class='title'>타이틀 : </strong><span>" + this.getData.title + "</span></span>" +
-                    "<span class='box'><strong class='title'>위도 : </strong><span>" + this.getData.lat + "</span></span>" +
-                    "<span class='box'><strong class='title'>경도 : </strong><span>" + this.getData.lng + "</span></span>" +
-                    "</li>"
-            historyWrap.append(tag);
+        createDataHistory : function (data) {
+            var tag = '<li><div class="option">' +
+                    '<span class="box title"><strong>타이틀 : </strong><span>' + data.title + '</span></span>' +
+                    '<span class="box"><strong>위도 : </strong><span>' + data.lat + '</span></span>' +
+                    '<span class="box"><strong>경도 : </strong><span>' + data.lng + '</span></span></div>' +
+                    '<button class="btn_delete"><span>삭제</span></button>' +
+                    '</li>'
+            this.historyWrap.append(tag);
         },
         initMap : function () {
             var mapObj = this.mapContainer.find(this.opts.map)[0];
@@ -237,12 +270,57 @@ table{border-collapse:collapse;border-spacing:0}
             }
             console.log('클릭한 위치 위도 :', latLng.getLat());
             console.log('클릭한 위치 경도 :', latLng.getLng());
+        },
+        createAddMarker : function (data) {
+            var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                imageSize = new win.kakao.maps.Size(24, 35),
+                markerImage = new win.kakao.maps.MarkerImage(imageSrc, imageSize); 
+            var marker = new win.kakao.maps.Marker({
+                map : this.map,
+                title : data.title,
+                position : new win.kakao.maps.LatLng(data.lat, data.lng),
+                image : markerImage
+            });
+            this.opts.markerApiData.push(marker);
+        },
+        deleteMarker : function (index) {
+            this.opts.markerApiData[index].setMap(null);
+            this.opts.markerApiData.splice(index, 1);
+        },
+        createOverlay : function (index) {
+            // 클릭 했을때 info 위치 얻어오는 이벤트 off 시켜야하는데 안됨 씨앗
+            // win.kakao.maps.event.removeListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
+
+            var title = this.opts.markerData[index].title,
+                position = new win.kakao.maps.LatLng(this.opts.markerData[index].lat, this.opts.markerData[index].lng)
+
+            console.log(title)
+
+            var content = 
+            '<div class="overlay_wrap"><div class="overlay_inner">' +
+                '<div class="overlay_title_wrap">' +
+                    '<strong class="overlay_title">' + title + '</strong>' +
+                '</div>' +
+                '<div class="overlay_content_wrap">' +
+                    '<div class="overlay_content">' +
+                        '<p class="desc">asdfsadfasdfsafd</p>' +
+                    '</div>' +
+                '</div>' +
+                '<button type="button" class="btn_close"><span class="blind">닫기</span></button>' +
+            '</div></div>'
+
+            this.overlay = new win.kakao.maps.CustomOverlay({
+                content: content,
+                map: this.map,
+                position : position 
+            });
+        },
+        onClickCloseOverlay : function () {
+            this.overlay.setMap(null);
         }
     }
-
     $(function () {
         var mapDaum = new win.map.daum('.map_section');
-        // console.log(win)
     });
 })(window, window.jQuery, window.document);
 </script>
