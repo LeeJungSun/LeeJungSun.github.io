@@ -8,9 +8,10 @@
 <title>Map</title>
 <style>
 /* reset */
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap');
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,table,th,td,form,fieldset,legend,textarea,input,select,textarea,button{margin:0;padding:0}
 html,body{width:100%}
-body,input,select,textarea,button,th,td{font-family:'돋움',dotum,tahoma,sans-serif;font-size:12px;color:#000}
+body,input,select,textarea,button,th,td{font-family:'Nanum Gothic','Apple SD Gothic Neo','맑은 고딕','Malgun Gothic','돋움',dotum,tahoma,sans-serif;font-size:12px;color:#000}
 fieldset,img{border:0 none}
 ul,ol,dl,li{list-style:none}
 input,select,textarea,button{vertical-align:top}
@@ -27,7 +28,7 @@ table{border-collapse:collapse;border-spacing:0}
 .elp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .map_wrap{position:relative}
 .lavel_area{position:absolute;top:10px;left:10px;z-index:10}
-.option_wrap{max-width:600px;margin:20px auto 0;padding:0 20px}
+.option_wrap{max-width:600px;margin:0 auto;padding:20px}
 .table_wrap{border:1px solid #c5c5c5;box-sizing:border-box}
 .table_wrap table{width:100%;table-layout:fixed}
 .table_wrap th{background:#e7e7e7}
@@ -42,37 +43,42 @@ table{border-collapse:collapse;border-spacing:0}
 .input_textarea textarea{width:100%;padding:8px;border:0;background:transparent;box-sizing:border-box;resize:none}
 .btn_wrap{margin-top:20px;text-align:center}
 .btn_save{width:85px;height:35px;padding:6px 10px;border:1px solid #b4b4b4;border-radius:7px;box-sizing:border-box}
-.btn_delete{position:absolute;top:50%;right:5px;width:43px;height:28px;padding:5px 10px;border:1px solid #b4b4b4;border-radius:5px;transform:translate(0, -50%);box-sizing:border-box}
+.btn_delete{position:absolute;top:50%;right:5px;width:40px;height:26px;padding:4px;border:1px solid #b4b4b4;border-radius:5px;transform:translate(0, -50%);box-sizing:border-box}
+.btn_delete span{font-size:11px}
 .history_wrap{margin-top:30px}
-.history_wrap li{position:relative;margin-top:-1px;padding:10px 55px 10px 10px;border:1px solid #c5c5c5;font-size:14px}
+.history_wrap li{position:relative;margin-top:-1px;padding:12px 55px 12px 10px;border:1px solid #c5c5c5;font-size:12px}
 .history_wrap li:first-child{margin-top:0}
 .history_wrap .option{display:table;width:100%;table-layout:fixed}
 .history_wrap .title{width:140px}
 .history_wrap .box{display:table-cell;padding-left:10px}
 .history_wrap .box:first-child{padding-left:0}
-.overlay_wrap{position:absolute;left:0;bottom:50px;width:200px;transform:translate(-50%, 0)}
-.overlay_inner{overflow:hidden;position:relative;height:80px;border:1px solid #c5c5c5;border-radius:7px;background:#fff;box-sizing:border-box}
-.overlay_title_wrap{height:30px;padding:6px 30px 5px 10px;background:#333;box-sizing:border-box}
-.overlay_title_wrap .overlay_title{font-size:14px;color:#fff}
-.overlay_content_wrap{padding:8px 10px}
-.overlay_content .desc{word-break:break-all;white-space:normal}
-.overlay_wrap .btn_close{position:absolute;top:0;right:0;width:30px;height:30px}
-.overlay_wrap .btn_close:before,.overlay_wrap .btn_close:after{position:absolute;top:4px;right:0;width:2px;height:20px;margin-right:15px;background:#fff;content:''}
+
+.overlay_wrap{position:absolute;left:0;bottom:38px;width:230px;padding-bottom:7px;transform:translate(-50%, 0)}
+.overlay_wrap:after{bottom:2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid #fff}
+.overlay_wrap:before{bottom:1px;border-left:7px solid transparent;border-right:7px solid transparent;border-top:8px solid #c5c5c5}
+.overlay_wrap:after,.overlay_wrap:before{position:absolute;left:50%;transform:translate(-50%, 0);content:''}
+
+.overlay_inner{overflow:hidden;position:relative;height:105px;border:1px solid #c5c5c5;border-radius:7px;background:#fff;box-shadow:2px 2px 3px 0px rgba(0,0,0,0.3);box-sizing:border-box}
+.overlay_title_wrap{height:32px;padding:9px 30px 8px 10px;background:#333;box-sizing:border-box}
+.overlay_title_wrap .overlay_title{font-size:13px;color:#fff}
+.overlay_content_wrap{padding:12px 10px}
+.overlay_content .desc{font-size:11px;word-break:break-all;white-space:normal}
+.overlay_wrap .btn_close{position:absolute;top:0;right:0;width:30px;height:32px}
+.overlay_wrap .btn_close:before,.overlay_wrap .btn_close:after{position:absolute;top:7px;right:0;width:2px;height:18px;margin-right:15px;background:#fff;content:''}
 .overlay_wrap .btn_close:before{transform:rotate(45deg)}
 .overlay_wrap .btn_close:after{transform:rotate(-45deg)}
 </style>
 </head>
 <!-- 발급받은 APP KEY를 넣으시면 됩니다. => 생성한 앱에서 앱키 JavaScript키 복사  -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9413087df6d6c00e1b63507a8066fdd5"></script>
-
 <body>
     <div class="map_section">
         <div class="map_wrap">
             <div id="map" style="width:100%;height:500px"></div>
-            <div class="lavel_area">
+            <!-- <div class="lavel_area">
                 <button type="button" class="btn_zoomin" onclick="levelZoomIn()">+</button>
                 <button type="button" class="btn_zoomout" onclick="levelZoomOut()">-</button>
-            </div>
+            </div> -->
         </div>
         <!-- <p><em>지도를 클릭해주세요!</em></p>  -->
         <div class="option_wrap">
@@ -110,219 +116,6 @@ table{border-collapse:collapse;border-spacing:0}
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-(function (win, $, doc) {
-    'use strict';
-    win.map = win.map || {};
-
-    win.map.daum = function (container, args) {
-        var defParams = {
-            obj : container,
-            saveBtn : '.btn_save',
-            deleteBtn : '.btn_delete',
-            closeBtn : '.btn_close',
-            mapWrap : '.map_wrap',
-            historyWrap : '.js-history_wrap',
-            optionWrap : '.js-option-data',
-            map : '#map',
-            centerMarkerData : {
-                title : 'hivelab',
-                lat : '37.4004877',
-                lng : '127.1064614',
-                level : 3
-            },
-            markerData : [],
-            markerApiData : []
-        }
-        this.opts = $.extend({}, defParams, (args || {}));
-        if (!(this.obj = $(this.opts.obj)).length) return;
-        this.init();
-    }
-    win.map.daum.prototype = {
-        init : function () {
-            this.setElements();
-            this.initMap();
-            this.getJsonData();
-            this.bindEvent();
-        },
-        setElements : function () {
-            this.mapContainer = this.obj.find(this.opts.mapWrap);
-            this.optionWrap = this.obj.find(this.opts.optionWrap);
-            this.optionInp = this.optionWrap.find('input');
-            this.historyWrap = this.obj.find(this.opts.historyWrap);
-            this.saveBtn = this.obj.find(this.opts.saveBtn);
-            // this.postBtn = this.obj.find('.btn_post');
-        },
-        bindEvent : function () {
-            win.kakao.maps.event.addListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
-            this.saveBtn.on('click', $.proxy(this.onSaveClickEvent, this));
-            this.obj.on('click', this.opts.deleteBtn, $.proxy(this.onClickDeleteHistory, this));
-
-            for (var i = 0, imax = this.opts.markerApiData.length; i < imax; i++) {
-                win.kakao.maps.event.addListener(this.opts.markerApiData[i], 'click', $.proxy(this.createOverlay, this, i));
-            }
-            this.obj.on('click', this.opts.closeBtn, $.proxy(this.onClickCloseOverlay, this));
-
-            // this.postBtn.on('click', $.proxy(this.postJsonData, this));
-        },
-        onSaveClickEvent : function () {
-            this.createMarkerData();
-            console.log(this.opts.markerData);
-            console.log(this.opts.markerApiData)
-        },
-        onClickDeleteHistory : function (e) {
-            var target = $(e.currentTarget).parent(),
-                targetIndex = target.index();
-            this.deleteMarker(targetIndex);
-            target.remove();
-            this.opts.markerData.splice(targetIndex, 1);
-            console.log(this.opts.markerData);
-            console.log(this.opts.markerApiData)
-        },
-        getJsonData : function () {
-            var data = $.ajax({
-                url : './json/data.json',
-                type : 'get',
-                async : false, // 동기방식으로 적용 (전역변수에 값을 담기 위함)
-                context: this,
-                success : function (res) {
-                    var _this = this;
-                    $.map(res, function(value, key){
-                        var title = res[key].title,
-                            lat = res[key].lat,
-                            lng = res[key].lng
-                        var getData = {
-                            title : title,
-                            lat : lat,
-                            lng : lng
-                        }
-                        _this.opts.markerData.push(getData);
-                        _this.createDataHistory(getData);
-                        _this.createAddMarker(getData);
-                    });
-                }
-            });
-            // console.log(this.opts.markerData)
-        },
-        createMarkerData : function () {
-            for (var i = 0, imax = this.optionInp.length; i < imax; i++) {
-                var target = this.optionInp.eq(i),
-                    targetId = target.attr('id');
-                if (targetId === 'data-title') {
-                    var targetTitle = target.val();
-                } else if (targetId === 'data-lat') {
-                    var targetLat = target.val();
-                } else if (targetId === 'data-lng') {
-                    var targetLng = target.val();
-                }
-                if (!target.val()) {
-                    alert('데이터 값을 입력해주세요');
-                    return;
-                }
-            }
-            var getData = {
-                title : targetTitle,
-                lat : targetLat,
-                lng : targetLng
-            };
-            this.opts.markerData.push(getData);
-            this.createDataHistory(getData);
-            this.createAddMarker(getData);
-            this.optionInp.val('');
-        },
-        createDataHistory : function (data) {
-            var tag = '<li><div class="option">' +
-                    '<span class="box title"><strong>타이틀 : </strong><span>' + data.title + '</span></span>' +
-                    '<span class="box"><strong>위도 : </strong><span>' + data.lat + '</span></span>' +
-                    '<span class="box"><strong>경도 : </strong><span>' + data.lng + '</span></span></div>' +
-                    '<button class="btn_delete"><span>삭제</span></button>' +
-                    '</li>'
-            this.historyWrap.append(tag);
-        },
-        initMap : function () {
-            var mapObj = this.mapContainer.find(this.opts.map)[0];
-            var mapOption = {
-                center : new win.kakao.maps.LatLng(this.opts.centerMarkerData.lat, this.opts.centerMarkerData.lng),
-                level : this.opts.centerMarkerData.level
-            }
-            this.map = new win.kakao.maps.Map(mapObj, mapOption); // map 생성
-            
-            this.initMarker();
-            // this.getAddMarker();
-        },
-        initMarker : function () {
-            var markerPosition = new win.kakao.maps.LatLng(this.opts.centerMarkerData.lat, this.opts.centerMarkerData.lng);
-            var marker = new win.kakao.maps.Marker({
-                position : markerPosition
-            });
-            marker.setMap(this.map); // 마커 지도 위에 표시
-        },
-        getClickMarkerInfo : function (mouseEvent) {
-            var latLng = mouseEvent.latLng;
-            for (var i = 0, imax = this.optionInp.length; i < imax; i++) {
-                var target = this.optionInp.eq(i),
-                    targetId = target.attr('id');
-                if (targetId === 'data-lat') {
-                    target.val(latLng.getLat());
-                } else if (targetId === 'data-lng') {
-                    target.val(latLng.getLng());
-                }
-            }
-            console.log('클릭한 위치 위도 :', latLng.getLat());
-            console.log('클릭한 위치 경도 :', latLng.getLng());
-        },
-        createAddMarker : function (data) {
-            var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-                imageSize = new win.kakao.maps.Size(24, 35),
-                markerImage = new win.kakao.maps.MarkerImage(imageSrc, imageSize); 
-            var marker = new win.kakao.maps.Marker({
-                map : this.map,
-                title : data.title,
-                position : new win.kakao.maps.LatLng(data.lat, data.lng),
-                image : markerImage
-            });
-            this.opts.markerApiData.push(marker);
-        },
-        deleteMarker : function (index) {
-            this.opts.markerApiData[index].setMap(null);
-            this.opts.markerApiData.splice(index, 1);
-        },
-        createOverlay : function (index) {
-            // 클릭 했을때 info 위치 얻어오는 이벤트 off 시켜야하는데 안됨 씨앗
-            // win.kakao.maps.event.removeListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
-
-            var title = this.opts.markerData[index].title,
-                position = new win.kakao.maps.LatLng(this.opts.markerData[index].lat, this.opts.markerData[index].lng)
-
-            console.log(title)
-
-            var content = 
-            '<div class="overlay_wrap"><div class="overlay_inner">' +
-                '<div class="overlay_title_wrap">' +
-                    '<strong class="overlay_title">' + title + '</strong>' +
-                '</div>' +
-                '<div class="overlay_content_wrap">' +
-                    '<div class="overlay_content">' +
-                        '<p class="desc">asdfsadfasdfsafd</p>' +
-                    '</div>' +
-                '</div>' +
-                '<button type="button" class="btn_close"><span class="blind">닫기</span></button>' +
-            '</div></div>'
-
-            this.overlay = new win.kakao.maps.CustomOverlay({
-                content: content,
-                map: this.map,
-                position : position 
-            });
-        },
-        onClickCloseOverlay : function () {
-            this.overlay.setMap(null);
-        }
-    }
-    $(function () {
-        var mapDaum = new win.map.daum('.map_section');
-    });
-})(window, window.jQuery, window.document);
-</script>
-
+<script src="js/test.js"></script>
+<script src="js/map.js"></script>
 </html>
