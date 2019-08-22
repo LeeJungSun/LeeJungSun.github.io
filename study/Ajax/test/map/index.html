@@ -40,7 +40,7 @@ table{border-collapse:collapse;border-spacing:0}
 .input_text{display:block;border:1px solid #9c9c9c;box-sizing:border-box}
 .input_text input{width:100%;padding:8px;background:transparent;box-sizing:border-box}
 .input_textarea{display:block;height:60px;border:1px solid #9c9c9c;box-sizing:border-box}
-.input_textarea textarea{width:100%;padding:8px;border:0;background:transparent;box-sizing:border-box;resize:none}
+.input_textarea textarea{width:100%;height:100%;padding:8px;border:0;background:transparent;box-sizing:border-box;resize:none}
 .btn_wrap{margin-top:20px;text-align:center}
 .btn_save{width:85px;height:35px;padding:6px 10px;border:1px solid #b4b4b4;border-radius:7px;box-sizing:border-box}
 .btn_delete{position:absolute;top:50%;right:5px;width:40px;height:26px;padding:4px;border:1px solid #b4b4b4;border-radius:5px;transform:translate(0, -50%);box-sizing:border-box}
@@ -89,19 +89,19 @@ table{border-collapse:collapse;border-spacing:0}
                 <tbody>
                 <tr>
                 <th scope="row"><div class="th">타이틀</div></th>
-                <td><div class="td"><span class="input_text"><input type="text" id="data-title" placeholder="타이틀을 입력해주세요."></span></div></td>
+                <td><div class="td"><span class="input_text js-input"><input type="text" id="data-title" placeholder="타이틀을 입력해주세요."></span></div></td>
                 </tr>
                 <tr>
                 <th scope="row"><div class="th">위도</div></th>
-                <td><div class="td"><span class="input_text"><input type="number" id="data-lat" placeholder="위도값을 입력해주세요."></span></div></td>
+                <td><div class="td"><span class="input_text js-input"><input type="number" id="data-lat" placeholder="위도값을 입력해주세요."></span></div></td>
                 </tr>
                 <tr>
                 <th scope="row"><div class="th">경도</div></th>
-                <td><div class="td"><span class="input_text"><input type="number" id="data-lng" placeholder="경도값을 입력해주세요."></span></div></td>
+                <td><div class="td"><span class="input_text js-input"><input type="number" id="data-lng" placeholder="경도값을 입력해주세요."></span></div></td>
                 </tr>
                 <tr>
                 <th scope="row"><div class="th">설명</div></th>
-                <td><div class="td"><span class="input_textarea"><textarea id="data-desc" placeholder="설명글을 입력해주세요."></textarea></span></div></td>
+                <td><div class="td"><span class="input_textarea js-input"><textarea id="data-desc" placeholder="설명글을 입력해주세요."></textarea></span></div></td>
                 </tr>
                 </tbody>
                 </table>
@@ -116,6 +116,7 @@ table{border-collapse:collapse;border-spacing:0}
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/test.js"></script>
-<script src="js/map.js"></script>
+<!-- <script src="js/test.js"></script> -->
+<script src="js/test2.js"></script>
+<!-- <script src="js/map.js"></script> -->
 </html>
