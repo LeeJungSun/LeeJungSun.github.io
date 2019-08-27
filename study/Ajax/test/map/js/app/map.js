@@ -1,10 +1,19 @@
 (function (win, $, doc) {
     'use strict';
-    win.map = win.map || {};
+    win.uio = win.uio || {};
+    win.uio.components = win.uio.components || {};
+    win.uio.components.common = win.uio.components.common || {};
+    win.uio.components['commonDaumMap'] = win.uio.components['commonDaumMap'] || {};
 
-    win.map.daum = function (container, args) {
+    var COMPONENTS = win.uio.components['commonDaumMap'],
+        UTIL = win.uio.components.common.util,
+        dataURL = './json/data.json',
+        pluginName = 'daumMap';
+
+    COMPONENTS[pluginName] = function (container, args) {
         var defParams = {
             obj : container,
+            jsonURL : dataURL,
             saveBtn : '.btn_save',
             deleteBtn : '.btn_delete',
             closeBtn : '.btn_close',
@@ -24,18 +33,19 @@
             markerOverlay : [],
             markerContentInfo : [],
             imageSrc : "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-            imageSize : new win.kakao.maps.Size(24, 35)
+            imageSize : new win.kakao.maps.Size(24, 35),
+            customEvent : '.' + pluginName + (new Date()).getTime()
         }
-        this.opts = $.extend({}, defParams, (args || {}));
+        this.opts = UTIL.def({}, defParams, (args || {}));
         if (!(this.obj = $(this.opts.obj)).length) return;
         this.init();
     }
-    win.map.daum.prototype = {
+    COMPONENTS[pluginName].prototype = {
         init : function () {
             this.setElements();
             this.initMap();
-            this.getJsonData();
             this.bindEvents();
+            this.getJsonData();
         },
         setElements : function () {
             this.mapContainer = this.obj.find(this.opts.mapWrap);
@@ -47,6 +57,14 @@
             this.option = this.optionBox.children().filter(function () {
                 return $(this).attr('id');
             });
+        },
+        changeEvents : function (event) {
+            var events = [],
+            eventNames = event.split(' ');
+            for (var key in eventNames) {
+                events.push(eventNames[key] + this.opts.customEvent);
+            }
+            return events.join(' ');
         },
         initMap : function () { // 초기 맵 생성
             var mapObj = this.mapContainer.find(this.opts.map)[0];
@@ -65,12 +83,11 @@
         },
         getJsonData : function () { // JSON 데이터 받아와서 초기 마커 생성
             var getJson = $.ajax({
-                url : './json/data.json',
+                url : this.opts.jsonURL,
                 type : 'get',
                 async : false,
                 context : this,
                 success : function (res) {
-                    var _this = this;
                     for (var i = 0, imax = res.length; i < imax; i++) {
                         var data = {
                             title : res[i].title,
@@ -86,9 +103,9 @@
                 }
             });
             this.markerBindEvent(true); // 마커 클릭 이벤트 활성화
-            console.log(this.opts.markerContentInfo);
-            console.log(this.opts.markers);
-            console.log(this.opts.markerOverlay);
+            console.log('마커 :',this.opts.markers);
+            console.log('마커 오버레이 :',this.opts.markerOverlay);
+            console.log('마커 컨텐츠 :',this.opts.markerContentInfo);
         },
         getClickMarkerInfo : function (mouseEvent) { // 마우스 클릭시 해당 위치 위도,경도 값 입력창으로 받아옴
             if (this.overlayActive) return; // marker overlay 열린 상태면 실행하지 않음
@@ -114,6 +131,10 @@
             });
             this.opts.markers.push(marker); // 생성된 마커 데이터 배열에 담아둠
         },
+        deleteMarker : function (index) { // 삭제된 히스토리 인덱스 값 인자값으로 받아옴
+            this.opts.markers[index].setMap(null); // 선택된 index map에서 marker 지움
+            this.opts.markers.splice(index, 1); // marker map api data array 지움
+        },
         createMarkerContentInfo : function () {
             for (var i = 0, imax = this.option.length; i < imax; i++) {
                 var target = this.option.eq(i),
@@ -135,18 +156,14 @@
             var data = {
                 title : targetTitle,
                 lat : targetLat,
-                lng : targetLng
+                lng : targetLng,
+                desc : targetDesc
             };
             this.opts.markerContentInfo.push(data); // 마커 컨텐츠 데이터 배열에 담아둠
             this.createMarker(data);
             this.createOverlay(data);
             this.createDataHistory(data);
             this.markerBindEvent(true); // 마커 클릭 이벤트 활성화
-            this.optionInp.val('');
-        },
-        deleteMarker : function (index) { // 삭제된 히스토리 인덱스 값 인자값으로 받아옴
-            this.opts.markers[index].setMap(null); // 선택된 index map에서 marker 지움
-            this.opts.markers.splice(index, 1); // marker map api data array 지움
         },
         createDataHistory : function (data) { // 하단 마커 히스토리 생성 메소드 (마커 생성될 때마다 업데이트 됨)
             var tag = '<li><div class="option">' +
@@ -187,14 +204,14 @@
         },
         bindEvents : function () {
             win.kakao.maps.event.addListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
-            this.saveBtn.on('click', $.proxy(this.onClickCreateMarker, this));
-            this.historyWrap.on('click', this.opts.deleteBtn, $.proxy(this.onClickDeleteMarker, this));
-            this.obj.on('click', this.opts.closeBtn, $.proxy(this.onClickCloseOverlay, this));
+            this.saveBtn.on(this.changeEvents('click'), $.proxy(this.onClickCreateMarker, this));
+            this.historyWrap.on(this.changeEvents('click'), this.opts.deleteBtn, $.proxy(this.onClickDeleteMarker, this));
+            this.obj.on(this.changeEvents('click'), this.opts.closeBtn, $.proxy(this.onClickCloseOverlay, this));
         },
         markerBindEvent : function (type) {
             var marker = this.opts.markers;
-            console.log('마커 클릭 이벤트 활성화 :',type);
-            console.log('활성화된 마커 :',marker);
+            console.log('마커 클릭 이벤트 활성화 :', type);
+            console.log('활성화된 마커 :', marker);
             if (type) {
                 for (var i = 0, imax = marker.length; i < imax ; i++) {
                     win.kakao.maps.event.addListener(marker[i], 'click', $.proxy(this.onClickMarker, this, i));
@@ -245,12 +262,12 @@
             this.markerBindEvent(true); // 마커, 오버레이 제거되면 다시 이벤트 재 할당
             this.opts.markerContentInfo.splice(targetIndex, 1); // 지워진 마커 info 데이터 배열에서 제거
 
-            console.log(this.opts.markers);
-            console.log(this.opts.markerOverlay);
-            console.log(this.opts.markerContentInfo);
+            console.log('마커 :',this.opts.markers);
+            console.log('마커 오버레이 :',this.opts.markerOverlay);
+            console.log('마커 컨텐츠 :',this.opts.markerContentInfo);
         }
     }
     $(function () {
-        var mapDaum = new win.map.daum('.map_section');
+        var mapDaum = new COMPONENTS[pluginName]('.map_section');
     });
 })(window, window.jQuery, window.document);
