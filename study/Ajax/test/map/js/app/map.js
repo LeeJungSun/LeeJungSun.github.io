@@ -44,8 +44,8 @@
         init : function () {
             this.setElements();
             this.initMap();
-            this.bindEvents();
             this.getJsonData();
+            this.bindEvents();
         },
         setElements : function () {
             this.mapContainer = this.obj.find(this.opts.mapWrap);
@@ -69,8 +69,9 @@
         initMap : function () { // 초기 맵 생성
             var mapObj = this.mapContainer.find(this.opts.map)[0];
             var mapOption = {
-                center : new win.kakao.maps.LatLng(this.opts.centerMarkerData.lat, this.opts.centerMarkerData.lng),
-                level : this.opts.centerMarkerData.level
+                center : new win.kakao.maps.LatLng(this.opts.centerMarkerData.lat, this.opts.centerMarkerData.lng), // 중심 좌표
+                level : this.opts.centerMarkerData.level, // 지도 확대 수준
+                disableDoubleClickZoom : true // 더블클릭 확대 가능 여부
             };
             this.map = new win.kakao.maps.Map(mapObj, mapOption);
             this.createMainMarker();
@@ -122,7 +123,7 @@
             console.log('클릭한 위치 위도 :', latLng.getLat());
             console.log('클릭한 위치 경도 :', latLng.getLng());
         },
-        createMarker : function (data) {
+        createMarker : function (data) { // 마커 생성
             var marker = new win.kakao.maps.Marker({
                 map : this.map,
                 title : data.title,
@@ -135,7 +136,7 @@
             this.opts.markers[index].setMap(null); // 선택된 index map에서 marker 지움
             this.opts.markers.splice(index, 1); // marker map api data array 지움
         },
-        createMarkerContentInfo : function () {
+        createMarkerContent : function () {
             for (var i = 0, imax = this.option.length; i < imax; i++) {
                 var target = this.option.eq(i),
                     targetId = target.attr('id');
@@ -164,6 +165,12 @@
             this.createOverlay(data);
             this.createDataHistory(data);
             this.markerBindEvent(true); // 마커 클릭 이벤트 활성화
+            this.clearMarkerContentInfo();
+        },
+        clearMarkerContentInfo : function () { // input clear
+            for (var i = 0, imax = this.option.length; i < imax; i++) {
+                this.option.eq(i).val('');
+            }
         },
         createDataHistory : function (data) { // 하단 마커 히스토리 생성 메소드 (마커 생성될 때마다 업데이트 됨)
             var tag = '<li><div class="option">' +
@@ -174,7 +181,7 @@
                     '</li>';
             this.historyWrap.append(tag);
         },
-        createOverlay : function (data) {
+        createOverlay : function (data) { // createMarkerContent 메소드에서 생성된 data 인자값으로 받아옴
             var overlayTitle = data.title,
                 overlayDesc = data.desc,
                 overlayPosition = new win.kakao.maps.LatLng(data.lat, data.lng);
@@ -190,17 +197,17 @@
                     '</div>' +
                     '<button type="button" class="btn_close"><span class="blind">닫기</span></button>' +
                 '</div></div>';
-            var currentOverlay = new win.kakao.maps.CustomOverlay({
+            var currentOverlay = new win.kakao.maps.CustomOverlay({ // 오버레이 생성
                 content: overlayContent,
                 map: this.map,
                 position : overlayPosition
             });
-            currentOverlay.setVisible(false);
+            currentOverlay.setVisible(false); // 오버레이를 숨긴다.
             this.opts.markerOverlay.push(currentOverlay);
         },
         deleteOverlay : function (index) {
-            this.opts.markerOverlay[index].setMap(null); // 선택된 index map에서 overlay 지움
-            this.opts.markerOverlay.splice(index, 1); // overlay array 지움
+            this.opts.markerOverlay[index].setMap(null); // 선택된 index map에서 오버레이 지움
+            this.opts.markerOverlay.splice(index, 1); // 오버레이 배열에서 지움
         },
         bindEvents : function () {
             win.kakao.maps.event.addListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
@@ -210,14 +217,12 @@
         },
         markerBindEvent : function (type) {
             var marker = this.opts.markers;
-            console.log('마커 클릭 이벤트 활성화 :', type);
             console.log('활성화된 마커 :', marker);
             if (type) {
                 for (var i = 0, imax = marker.length; i < imax ; i++) {
                     win.kakao.maps.event.addListener(marker[i], 'click', $.proxy(this.onClickMarker, this, i));
                 }
             } else {
-                console.log('remove');
                 for (var i = 0, imax = marker.length; i < imax ; i++) {
                     marker[i].m = {}; // 마커 바인드 이벤트 객체 강제로 지움
                     // win.kakao.maps.event.removeListener(marker[i], 'click', this.onClickMarker);
@@ -230,11 +235,9 @@
             for (var i = 0, imax = this.opts.markerOverlay.length; i < imax; i++) { // 오버레이 전체 hidden
                 this.opts.markerOverlay[i].setVisible(false);
             }
-            console.log('oldIndex :',this.oldMarker);
             if (this.oldMarker === this.currentMarker) {
                 this.onClickCloseOverlay();
             } else {
-                console.log('currentIndex :',this.currentMarker);
                 this.overlayActive = true; // 오버레이 열린 상태에서 getClickMarkerInfo 메소드 실행하지 않게 하기 위해 사용
                 this.map.setZoomable(false); // 맵 터치, 드래그 확대 축소 기능 막음
                 this.opts.markerOverlay[this.currentMarker].setVisible(true); // 선택된 마커 오버레이 활성화
@@ -249,8 +252,8 @@
             this.oldMarker = null; // oldmarker index 초기화
         },
         onClickCreateMarker : function () {
-            this.markerBindEvent(false); // 기존 마커 바인드 이벤트 제거 후 마커 생성하면서 createMarkerContentInfo 실행하면서 다시 이벤트 재 할당
-            this.createMarkerContentInfo();
+            this.markerBindEvent(false); // 기존 마커 바인드 이벤트 제거 후 마커 생성하면서 createMarkerContent 실행하면서 다시 이벤트 재 할당
+            this.createMarkerContent();
         },
         onClickDeleteMarker : function (e) {
             var target = $(e.currentTarget).parent(),
@@ -259,7 +262,7 @@
             this.markerBindEvent(false); // 기존 마커 바인드 이벤트 제거
             this.deleteMarker(targetIndex); // 지도 마커 제거
             this.deleteOverlay(targetIndex); // 지도 overlay 제거
-            this.markerBindEvent(true); // 마커, 오버레이 제거되면 다시 이벤트 재 할당
+            this.markerBindEvent(true); // 마커, 오버레이 제거되면 마커 이벤트 재 할당
             this.opts.markerContentInfo.splice(targetIndex, 1); // 지워진 마커 info 데이터 배열에서 제거
 
             console.log('마커 :',this.opts.markers);
