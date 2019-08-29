@@ -25,6 +25,7 @@
                 <li>레이어 팝업을 열었을 때, 스크린리더기 포커스가 버튼에 Trap 되어 해당 레이어 팝업 안으로 접근하지 못하는 현상.<br> (내부 요소를 직접적으로 터치했을 때는 접근 가능.)</li>
                 <li>팝업 내에 링크 요소가 있는 경우에만 포커스가 레이어 팝업 내로 이동한다.</li>
                 <li>레이어 호출 버튼을 a태그 또는 button태그를 사용해도 동일 이슈가 발생.</li>
+                <li>role="dialog" 및 focus() 적용하여 테스트해도 동일 이슈 발생</li>
                 </ul>
             </div>
         </article>
@@ -44,13 +45,6 @@
                         }
                     </code>
                 </div>
-                <div class="notice">
-                    <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
-                    <li>Iphone5 9.3.4 버전대의 경우 이슈 개선 사항대로 수정 적용해도 동일한 이슈 발생하므로, 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
-                    <li>다양한 속성들을 추가해보면서 테스트하여 해결 방법을 알아낸 케이스로 본래 텍스트를 CSS로 transform 하면서 스크린리더기가 다시 해석하게 되고 focus가 이동 가능한 것이 아닐까 생각하였습니다.</li>
-                    </ul>
-                </div>
                 <div class="img__wrap">
                     <div class="img__area">
                         <strong class="img__title">[AS-IS]</strong>
@@ -68,6 +62,13 @@
                         <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
                         <p class="img__text">정상적으로 다음 요소 탐색 가능.</p>
                     </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>Iphone5 9.3.4 버전대의 경우 이슈 개선 사항대로 수정 적용해도 동일한 이슈 발생하므로, 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
+                    <li>다양한 속성들을 추가해보면서 테스트하여 해결 방법을 알아낸 케이스로 본래 텍스트를 CSS로 transform 하면서 스크린리더기가 다시 해석하게 되고 focus가 이동 가능한 것이 아닐까 생각하였습니다.</li>
+                    </ul>
                 </div>
             </div>
         </article>
@@ -99,13 +100,6 @@
                 <div class="example_area">
                     <code>&lt;div class="cm-s-layer__layer" tabindex="-1" <strong class="point">role="dialog"</strong>&gt;</code>
                 </div>
-                <div class="notice">
-                    <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
-                    <li>Iphone5 9.3.4 버전대의 경우 수정 적용 전, 후 동일하게 포커스 이동할 때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있습니다. 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
-                    <li>role="dialog"은 사용자에게 버튼을 클릭하여 노출된 컨텐츠가 팝업임을 나타내기 위해 사용하였습니다. 사용자에게 팝업 컨텐츠임을 제공한 이후에 role값을 지워주었기 때문에 사용자 탐색에는 이슈가 없다고 생각하여 해당 방식으로 수정하였습니다.</li>
-                    </ul>
-                </div>                
                 <div class="img__wrap">
                     <div class="img__area">
                         <strong class="img__title">[AS-IS]</strong>
@@ -123,6 +117,13 @@
                         <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
                         <p class="img__text">포커스 튕김 현상 없음.</p>
                     </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>Iphone5 9.3.4 버전대의 경우 수정 적용 전, 후 동일하게 포커스 이동할 때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있습니다. 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
+                    <li>role="dialog"은 사용자에게 버튼을 클릭하여 노출된 컨텐츠가 팝업임을 나타내기 위해 사용하였습니다. 사용자에게 팝업 컨텐츠임을 제공한 이후에 role값을 지워주었기 때문에 사용자 탐색에는 이슈가 없다고 생각하여 해당 방식으로 수정하였습니다.</li>
+                    </ul>
                 </div>
             </div>
         </article>
@@ -194,12 +195,6 @@
                         &lt;/div&gt;
                     </code>
                 </div>
-                <div class="notice">
-                    <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
-                    <li>role="option"의 값만 a태그로 옮겼을 때에도 동일한 이슈가 발생하였습니다. role="listbox" 자식 요소로 role="option"이 아닌 a태그를 감싸고 있는 div태그가 존재하여 생기는 문제로 판단하여 API가 해당 태그를 인식하지 못하도록 div태그에 role="presentation" 값을 주었습니다. 하지만 간헐적으로 동일한 이슈가 발생하여 다른 해결 방법을 찾던 도중 tabindex="-1" 값을 적용하여 이슈를 해결한 케이스입니다.</li>
-                    </ul>
-                </div>
                 <strong class="point2"></strong>
                 <div class="img__wrap type2">
                     <div class="img__area">
@@ -234,6 +229,12 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
                     &lt;/div&gt;
                     </code>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>role="option"의 값만 a태그로 옮겼을 때에도 동일한 이슈가 발생하였습니다. role="listbox" 자식 요소로 role="option"이 아닌 a태그를 감싸고 있는 div태그가 존재하여 생기는 문제로 판단하여 API가 해당 태그를 인식하지 못하도록 div태그에 role="presentation" 값을 주었습니다. 하지만 간헐적으로 동일한 이슈가 발생하여 다른 해결 방법을 찾던 도중 tabindex="-1" 값을 적용하여 이슈를 해결한 케이스입니다.</li>
+                    </ul>
                 </div>
             </div>
         </article>
@@ -283,13 +284,6 @@
                         }
                     </code>
                 </div>
-                <div class="notice">
-                    <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
-                    <li>aira-live:polite 속성은 사용자가 진행하던 작업을 마치면 변경사항을 알리도록 하는 속성으로 팝업이 열리고 slick이 호출되는 것을 변경사항으로 인식하여 해당 slick 컨텐츠 내용을 알려주는 것으로 판단하였습니다. 그래서 사용자가 컨텐츠 탐색 중이 아닐 경우엔 사용자에게 변경사항을 알려주지 않도록 off 속성으로 적용하였습니다.</li>
-                    <li>slick-slide에 선언된 option 자체가 하나의 선택 요소임을 나타내므로 해당 목록 내부에 포커스 이동이 불가한 것은 어찌 보면 당연하다고 생각합니다. 그리고 해당 slick 컨텐츠는 옵션을 선택하는 의미가 아니기에 role 값을 제거해도 이슈 없다고 판단하여 진행하였습니다.</li>
-                    </ul>
-                </div>
                 <div class="img__wrap">
                     <div class="img__area">
                         <strong class="img__title">[AS-IS]</strong>
@@ -307,6 +301,13 @@
                         <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
                         <p class="img__text">팝업 오픈 시 slick 내부 텍스트 읽어주지 않으며,<br> slick 내부 정상적으로 탐색 가능.</p>
                     </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>aira-live:polite 속성은 사용자가 진행하던 작업을 마치면 변경사항을 알리도록 하는 속성으로 팝업이 열리고 slick이 호출되는 것을 변경사항으로 인식하여 해당 slick 컨텐츠 내용을 알려주는 것으로 판단하였습니다. 그래서 사용자가 컨텐츠 탐색 중이 아닐 경우엔 사용자에게 변경사항을 알려주지 않도록 off 속성으로 적용하였습니다.</li>
+                    <li>slick-slide에 선언된 option 자체가 하나의 선택 요소임을 나타내므로 해당 목록 내부에 포커스 이동이 불가한 것은 어찌 보면 당연하다고 생각합니다. 그리고 해당 slick 컨텐츠는 옵션을 선택하는 의미가 아니기에 role 값을 제거해도 이슈 없다고 판단하여 진행하였습니다.</li>
+                    </ul>
                 </div>
             </div>
         </article>
@@ -356,12 +357,6 @@
                         }
                     </code>
                 </div>
-                <div class="notice">
-                    <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
-                    <li>aria-hidden 값이 true로 설정되어 있을 경우 화면낭독기와 같은 보조기기의 초점을 막게됩니다. 사용자에게 정상적인 정보 제공을 위하여 aria-hidden 값을 false로 선언하거나 attr 값을 제거해줍니다.</li>
-                    </ul>
-                </div>
                 <div class="img__wrap">
                     <div class="img__area">
                         <strong class="img__title">[AS-IS]</strong>
@@ -379,6 +374,12 @@
                         <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
                         <p class="img__text">정상적으로 indicator 버튼 탐색 가능.</p>
                     </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>aria-hidden 값이 true로 설정되어 있을 경우 화면낭독기와 같은 보조기기의 초점을 막게됩니다. 사용자에게 정상적인 정보 제공을 위하여 aria-hidden 값을 false로 선언하거나 attr 값을 제거해줍니다.</li>
+                    </ul>
                 </div>
             </div>
         </article>
