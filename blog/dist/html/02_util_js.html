@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>WAQA Trouble Shooting : Accessibility</title>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/blog-sass.css">
+</head>
+<body>
+<div id="wrap" class="waga_article">
+    <h1 class="main__title">WAQA Trouble Shooting 실무 적용</h1>
+    <p class="main__text">삼성닷컴 샵통합 프로젝트 buying PD 대상으로 진행되었던 웹 접근성 QA를 어떻게 실무에 적용하고 해결하였는지<br> QA 이슈 목록 중 마이너 한 이슈를 제외한 총 5가지 이슈를 선정하여 정리해보았습니다.</p>
+
+    <section class="section_wrap">
+        <h2 class="sub__title">레이어 팝업 내부 포커스 접근 이슈</h2>
+        <article class="article__wrap">
+            <h3 class="article__title">[Issue]</h3>
+            <div class="box">
+                <h4 class="box__title">이슈 환경</h4>
+                <p class="article__text">IOS</p>
+                <h4 class="box__title">이슈 내용</h4>
+                <ul class="list text_type">
+                <li>레이어 팝업을 열었을 때, 스크린리더기 포커스가 버튼에 Trap 되어 해당 레이어 팝업 안으로 접근하지 못하는 현상.<br> (내부 요소를 직접적으로 터치했을 때는 접근 가능.)</li>
+                <li>팝업 내에 링크 요소가 있는 경우에만 포커스가 레이어 팝업 내로 이동한다.</li>
+                <li>레이어 호출 버튼을 a태그 또는 button태그를 사용해도 동일 이슈가 발생.</li>
+                <li>role="dialog" 및 focus() 적용하여 테스트해도 동일 이슈 발생</li>
+                </ul>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">테스트 환경</h4>
+                <p class="article__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
+                <h4 class="box__title">이슈 개선</h4>
+                <ul class="list text_type">
+                <li>레이어 팝업 닫기 버튼 요소에 CSS <code class="code">text-transform:capitalize</code> 속성 추가. (uppercase, lowercase 값으로 적용해도 가능)</li>
+                </ul>
+                <div class="example_area">
+                    <code>
+                        .cm-s-layer.cm-s-new-layer .s-close-layer {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">text-transform: capitalize</strong><br>
+                        }
+                    </code>
+                </div>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue01_asis.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">버튼 클릭 후 레이어 팝업 노출 시 팝업 버튼에 포커스가 Trap 되어 다음 요소를 탐색하지 못함.</p>
+                    </div>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue01_tobe.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">정상적으로 다음 요소 탐색 가능.</p>
+                    </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>Iphone5 9.3.4 버전대의 경우 이슈 개선 사항대로 수정 적용해도 동일한 이슈 발생하므로, 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
+                    <li>다양한 속성들을 추가해보면서 테스트하여 해결 방법을 알아낸 케이스로 본래 텍스트를 CSS로 transform 하면서 스크린리더기가 다시 해석하게 되고 focus가 이동 가능한 것이 아닐까 생각하였습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="section_wrap">
+        <h2 class="sub__title">레이어 팝업 포커스 튕김 이슈</h2>
+        <article class="article__wrap">
+            <h3 class="article__title">[Issue]</h3>
+            <div class="box">
+                <h4 class="box__title">이슈 환경</h4>
+                <p class="box__text">IOS</p>
+                <h4 class="box__title">이슈 내용</h4>
+                <ul class="list text_type">
+                <li>팝업 내 라디오 버튼을 선택 후 체크박스 선택 시 타이틀 영역으로 포커스가 튕기는 현상.</li>
+                <li>IOS에서는 role="dialog" 영역이 활성화되면 스크린리더기가 해당 요소 영역 내부의 첫 번째 요소로 포커싱이 된다.</li>
+                </ul>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">테스트 환경</h4>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
+                <h4 class="box__title">이슈 개선</h4>
+                <ul class="list text_type">
+                <li>스크립트로 팝업이 열린 다음에 팝업에 선언된 <code class="code">role="dialog"</code>를 삭제하는 방향으로 이슈 해결.</li>
+                </ul>
+                <div class="example_area">
+                    <code>&lt;div class="cm-s-layer__layer" tabindex="-1" <strong class="point">role="dialog"</strong>&gt;</code>
+                </div>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue02_asis.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">라디오 버튼 선택 후 체크박스 선택 시<br> 상단 'Samsung Care+' 로 포커스 튕김.</p>
+                    </div>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue02_tobe.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">포커스 튕김 현상 없음.</p>
+                    </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>Iphone5 9.3.4 버전대의 경우 수정 적용 전, 후 동일하게 포커스 이동할 때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있습니다. 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
+                    <li>role="dialog"은 사용자에게 버튼을 클릭하여 노출된 컨텐츠가 팝업임을 나타내기 위해 사용하였습니다. 사용자에게 팝업 컨텐츠임을 제공한 이후에 role값을 지워주었기 때문에 사용자 탐색에는 이슈가 없다고 생각하여 해당 방식으로 수정하였습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="section_wrap">
+        <h2 class="sub__title">Thumbnail 포커스 이슈</h2>
+        <article class="article__wrap">
+            <h3 class="article__title">[Issue]</h3>
+            <div class="box">
+                <h4 class="box__title">이슈 환경</h4>
+                <p class="box__text">IE, Chrome, Opera, Firefox (Window)</p>
+                <ul class="list">
+                <li>
+                    <strong class="list__title">NVDA</strong>
+                    <ul class="list text_type">
+                    <li>Chrome : 썸네일 클릭 시 Popup이 노출되거나, 다른 요소로 포커스 이동.</li>
+                    <li>Firefox : 썸네일 클릭 시 첫 번째 썸네일로 포커스 이동.</li>
+                    <li>IE : local에서는 이슈 없으나, 개발서버에서는 버튼에 접근 불가.</li>
+                    <li>Opera : 썸네일 클릭 시 Popup이 노출되거나, 다른 요소로 포커스 이동.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong class="list__title">JAWS</strong>
+                    <ul class="list text_type">
+                    <li>Chrome : 썸네일 클릭 시 상단 네비게이션이 클릭되면서 not found 페이지로 이동 (결국은 포커스가 이상한 곳으로 튀는 이슈).</li>
+                    <li>Firefox : 정상적으로 슬라이드 기능 사용 가능.</li>
+                    <li>IE : local에서는 이슈 없으나, 개발서버에서는 버튼에 접근 불가</li>
+                    <li>Opera : 썸네일 클릭 시 Popup이 노출되거나, 다른 요소로 포커스 이동.</li>
+                    </ul>
+                </li>
+                </ul>
+                <h4 class="box__title">이슈 내용</h4>
+                <ul class="list text_type">
+                <li>스크린리더기를 사용하여 슬라이드 indicator에 접근하였을 때 다음 indicator로 정상적으로 접근이 되지 않고, 다른 요소로 포커스가 튀거나 다른 기능이 동작되는 현상.</li>
+                </ul>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">테스트 환경</h4>
+                <ul class="list text_type">
+                <li>OS : Window10</li>
+                <li>Screen Reader : NVDA, JAWS</li>
+                <li>browser : IE8~Latest, Chrome Latest, Opera Latest, Firefox Latest</li>
+                </ul>
+                <h4 class="box__title">이슈 개선</h4>
+                <ul class="list text_type">
+                <li>.s-thumb-item에 <code class="code">tabindex="-1"</code> 추가.</li>
+                <li>.s-thumb-item에 선언된 <code class="code">role</code>값을 실직적으로 active되는 요소인 a태그로 이동. (기존에 tab으로 잘못 선언된 role값 option으로 수정.)</li>
+                <li><code class="code">aria-selected, aria-hidden</code> 속성은 role과 함께 사용되어야 하므로 해당 aria 속성도 a태그로 옮겨준다.</li>
+                </ul>
+                <div class="example_area">
+                    <strong class="title">[AS-IS]</strong>
+                    <code>
+                        &lt;div class="s-thumb-wrap" role="listbox"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="s-thumb-item" <strong class="point2">aria-selected="true" role="tab" aria-hidden="false"</strong>&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="javascript"&gt;&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                        </code>
+                        <strong class="title">[TO-BE]</strong>
+                        <code>
+                        &lt;div class="s-thumb-wrap" role="listbox"&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="s-thumb-item" <strong class="point">tabindex="-1"</strong>&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="javascript" <strong class="point">role="option" aria-selected="true" aria-hidden="false"</strong>&gt;&lt;/a&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/div&gt;
+                    </code>
+                </div>
+                <strong class="point2"></strong>
+                <div class="img__wrap type2">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue03_asis.gif" alt="">
+                        </div>
+                        <p class="img__comment">테스트 환경 : Window10 Chrome Jaws</p>
+                        <p class="img__text">indicator 두 번째 썸네일 클릭 시 상단 배너로 포커스 이동 후 해당 배너가 열림.</p>
+                    </div>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue03_tobe.gif" alt="">
+                        </div>
+                        <p class="img__comment">테스트 환경 : Window10 Chrome Jaws</p>
+                        <p class="img__text">indicator 두 번째 썸네일 클릭 시 우측 슬라이드가 정상적으로 바뀜.</p>
+                    </div>
+                </div>
+            </div>
+            <h3 class="article__title">[Trouble Shooting - ETC]</h3>
+            <div class="box">
+                <h4 class="box__title">이슈 개선</h4>
+                <ul class="list text_type">
+                <li>.s-thumb-item에 선언한 tabindex="-1"을 빼고 <code class="code">role="presentation"</code>을 넣을 경우 Opera 브라우저에서 간헐적으로 썸네일이 클릭되지 않고 포커스가 튀는 이슈가 있다. (현재 <a href="https://www.apple.com/kr/shop/product/MTEH2/13%ED%98%95-macbook-air-%EB%B0%8F-macbook-pro%EC%9A%A9-%EA%B0%80%EC%A3%BD-%EC%8A%AC%EB%A6%AC%EB%B8%8C-%EB%B8%94%EB%9E%99?fnode=4c" target="_blank" title="Open in a new window">애플 사이트 참고</a>)</li>
+                </ul>
+                <div class="example_area">
+                    <code>
+                    &lt;div class="s-thumb-wrap" role="listbox"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="s-thumb-item" aria-selected="true" aria-hidden="false" <strong class="point2">role="presentation"</strong>&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="javascript" <strong class="point2">role="option"</strong>&gt;&lt;/a&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                    &lt;/div&gt;
+                    </code>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>role="option" 은 형제노드끼리 인식이 가능한 요손데, 부모로 감싸져 있어서 형제노드로 인식을 안하기 때문에, 부모에다가 tabIndex="-1" 을 주어 role="option" 끼리 접근이 가능하도록 해결한 케이스입니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="section_wrap">
+        <h2 class="sub__title">Slick 호출 후 접근 이슈</h2>
+        <article class="article__wrap">
+            <h3 class="article__title">[Issue]</h3>
+            <div class="box">
+                <h4 class="box__title">이슈 환경</h4>
+                <p class="box__text">IOS</p>
+
+                <h4 class="box__title">이슈 내용</h4>
+                <ul class="list text_type">
+                <li>slick 호출 시 해당 slide를 컨텐츠 내용을 통째로 읽어주며 slick 내부 컨텐츠 탐색이 불가능하다.<br> (slick내 링크가 있을 경우 해당 링크에 접근이 불가능.)</li>
+                </ul>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">테스트 환경</h4>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>                
+                <h4 class="box__title">이슈 개선</h4>
+                <ul class="list text_type">
+                <li>.slick-list에 선언된 <code class="code">aria-live:"polite"</code> 속성을 <code class="code">aria-live:"off"</code> 속성으로 변경.</li>
+                <li>.slick-track, .slick-slide에 선언된 <code class="code">role</code>값 제거.<br> (role값을 제거할 때 slick이 호출되는 스크립트 구문과 시간 차 이슈로 role값이 지워지지 않기 때문에 setTimeout 사용하여 제거해야 한다.)</li>
+                </ul>
+                <div class="example_area">
+                    <code>
+                        buildSlick : function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;this.slickObj.on('init afterChange', $.proxy(function (e, data) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.type === 'init') {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// init 이벤트가 실행되었을 때 aria-live 속성 off로 변경<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">data.$list.attr('aria-live', 'off');</strong><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.type === 'init' || e.type === 'afterChange') {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// init, afterChange 이벤트가 실행되었을 때 role값 remove<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">win.setTimeout($.proxy(function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.$slideTrack.removeAttr('role');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.$slides.removeAttr('role');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}, this), 30);</strong><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}, this));<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;this.slickObj.slick(defParams.slickOpts);<br>
+                        }
+                    </code>
+                </div>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue04_asis.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">팝업 오픈 시 '1. On~~' 부분을 읽어주며,<br> 'test link' 영역으로 포커스 이동하지 않음.</p>
+                    </div>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue04_tobe.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">팝업 오픈 시 slick 내부 텍스트 읽어주지 않으며,<br> slick 내부 정상적으로 탐색 가능.</p>
+                    </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>aira-live:polite 속성은 사용자가 진행하던 작업을 마치면 변경사항을 알리도록 하는 속성으로 팝업이 열리고 slick이 호출되는 것을 변경사항으로 인식하여 해당 slick 컨텐츠 내용을 알려주는 것으로 판단하였습니다. 그래서 사용자가 컨텐츠 탐색 중이 아닐 경우엔 사용자에게 변경사항을 알려주지 않도록 off 속성으로 적용하였습니다.</li>
+                    <li>slick-slide에 선언된 option 자체가 하나의 선택 요소임을 나타내므로 해당 목록 내부에 포커스 이동이 불가한 것은 어찌 보면 당연하다고 생각합니다. 그리고 해당 slick 컨텐츠는 옵션을 선택하는 의미가 아니기에 role 값을 제거해도 이슈 없다고 판단하여 진행하였습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="section_wrap">
+        <h2 class="sub__title">Slick indicator 포커스 이슈</h2>
+        <article class="article__wrap">
+            <h3 class="article__title">[Issue]</h3>
+            <div class="box">
+                <h4 class="box__title">이슈 환경</h4>
+                <p class="box__text">IOS, Android</p>                
+                <h4 class="box__title">이슈 내용</h4>
+                <ul class="list text_type">
+                <li>비활성화된 slick indicator에 포커스가 이동하지 않아서 slick 컨텐츠를 제대로 탐색하지 못하는 이슈.</li>
+                <li>indicator dot이 비활성화된 상태일 경우 해당 요소에 기본적으로 aria-hidden: true 값이 선언되어 있기 때문에 다음 dot으로 포커싱이 되지 않는다.</li>
+                </ul>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">테스트 환경</h4>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4 / GalaxyS8 7.0</p>
+                <h4 class="box__title">이슈 개선</h4>
+                <ul class="list text_type">
+                <li>스크립트로 <code class="code">aria-hidden</code> attr 값 제거</li>
+                <li>slick 호출 구문에서 init, beforeChange 상태 일 때 attr 값을 제거한다.<br> (beforeChange가 아닌 afterChange에 넣으면 슬라이드 동작 중일 때 dot 포커스를 이동시키면 다른 곳으로 포커싱이 튕김.)</li>
+                </ul>
+                <div class="example_area">
+                    <code>
+                        buildSlick : function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;this.slickObj.on('init beforeChange', $.proxy(function (e, data) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.type === 'init') {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">win.setTimeout($.proxy(function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!data.$dots || data.$dots == null) return;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.$dots.children().removeAttr('aria-hidden');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}, this), 30);</strong><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (e.type === 'beforeChange') {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">win.setTimeout($.proxy(function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!data.$dots || data.$dots == null) return;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.$dots.children().removeAttr('aria-hidden');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}, this), 30);</strong><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}, this));
+                        }
+                    </code>
+                </div>
+                <div class="img__wrap">
+                    <div class="img__area">
+                        <strong class="img__title">[AS-IS]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue05_asis.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">첫 번째 indicator 다음 버튼으로 포커스 이동하지 않고 팝업 닫기 버튼으로 포커스 이동.</p>
+                    </div>
+                    <div class="img__area">
+                        <strong class="img__title">[TO-BE]</strong>
+                        <div class="img">
+                            <img src="../img/waqa/issue05_tobe.gif" alt="">
+                        </div>
+                        <p class="img__comment">캡쳐 화면 : IphoneX 12.3.1</p>
+                        <p class="img__text">정상적으로 indicator 버튼 탐색 가능.</p>
+                    </div>
+                </div>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <ul class="notice__list">
+                    <li>aria-hidden 값이 true로 설정되어 있을 경우 화면낭독기와 같은 보조기기의 초점을 막게됩니다. 사용자에게 정상적인 정보 제공을 위하여 aria-hidden 값을 false로 선언하거나 attr 값을 제거해줍니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <section class="section_wrap">
+        <h2 class="sub__title">마치며</h2>
+        <p class="sub__text">프로젝트 웹 접근성 대응은 처음 진행해보았는데요. 검색을 해도 나오지 않아서 이슈 해결 방법이 없는 상태일 땐 다양한 속성들을 넣고 빼고 모든 경우의 수를 다 넣어서 테스트해보았던 것 같습니다. (그 중 제일 충격적이였던 이슈는 '레이어 팝업 내부 포커스 접근 이슈' 해결 방식이였어요!!)</p>
+        <p class="sub__text">저희가 진행한 이슈 해결 방법이 조금이라도 도움이 되었으면 좋겠습니다. 좀 더 좋은 해결 방식이나 있다면 언제든 말씀해주세요!</p>
+        <p class="sub__text">부족한 글 읽어주셔서 감사합니다 :)</p>
+    </section>
+</div>
+</body>
+</html>
