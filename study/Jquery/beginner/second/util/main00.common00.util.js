@@ -7,7 +7,7 @@
     var hasOwnProperty = Object.prototype.hasOwnProperty;
 
     if (win.smg.newShop.common && !$.isEmptyObject(win.smg.newShop.common)) return;
-    console.log(win.smg.newShop)
+    
     win.smg.newShop.common = (function () {
         return {
             customEvent : {
@@ -24,21 +24,28 @@
             util : {
                 isDetecting : (function () {
                     // navigator == user agent의 상태나 정보를 나타냄
+                        // 브라우저의 버전을 반환
+                        // => 왜 브라우저의 버전으로 반환받는지?
                     var isMac = (navigator.appVersion.indexOf("Mac") !== -1),
+                        // navigator.connection이고, 운영체제가 window일 때?
+                        // => navigator.connection 이부분은 왜 체크하는지 모르겠음
                         isEmulator = navigator.connection && (navigator.platform.indexOf('Win') !== -1),
+                        // window os 버전에서 safari 브라우저 일 경우 찾는 구문
                         isWinSafari = (function () {
-                            // window os 버전에서 safari 브라우저 일 경우 찾는 구문
                             var appNetscape = (navigator.appName === "Netscape"),
                                 appVersionMac = (navigator.appVersion.indexOf("Mac") !== -1),
                                 userAgentSafari = (navigator.userAgent.indexOf("Safari") !== -1),
                                 userAgentChrome = (navigator.userAgent.indexOf("Chrome") !== -1);
+                            // 브라우저 이름이 Netscape이고, 브라우저 버전이 Mac이 아니고 safari 브라우저이고 chrome이 아닐 경우 리턴
                             return (appNetscape && !appVersionMac && userAgentSafari && !userAgentChrome);
                         })();
-                    if ((isMac && !isEmulator) || isWinSafari) { // Mac OS이고 에뮬레이터가 아닐 경우 또는 윈도우 사파리 브라우저 일 경우
+                    if ((isMac && !isEmulator) || isWinSafari) { // Mac OS이고 에뮬레이터(?)가 아닐 경우 또는 윈도우 사파리 브라우저 일 경우
                         $('body').addClass('ios-safari');
                     }
                 })(),
                 isSupportTransform : (function () {
+                    console.log(doc.body.style)
+                    // css style로 transform 사용 가능한지 체크하는 구문 (IE에서 9까지 지원해서?)
                     return ('WebkitTransform' in doc.body.style || 'MozTransform' in doc.body.style || 'msTransform' in doc.body.style || 'OTransform' in doc.body.style || 'transform' in doc.body.style);
                 })(),
                 isSupportTransition : (function () {
@@ -52,12 +59,14 @@
                     return ('ontouchstart' in win || (win.DocumentTouch && doc instanceof win.DocumentTouch));
                 })(),
                 isIOS : (function () {
-                    return (/iPad|iPhone|iPod/.test(navigator.userAgent)); // userAgent 문자열에 iPad,iPhone,iPod가 포함일 경우(IOS 기종일 경우) 반환
+                    // userAgent 문자열에 iPad,iPhone,iPod가 포함일 경우(IOS 기종일 경우) 반환
+                    return (/iPad|iPhone|iPod/.test(navigator.userAgent)); 
                 })(),
                 isAemEditMode : function () {
                     return win.smg.aem.util.isAemEditMode();
                 },
-                def : function (org, src) { // $.extend 메소드 사용시 깊은 복사가 되지 않는 이슈 해결을 위해 사용하는 메소드
+                // $.extend 메소드 사용시 깊은 복사가 되지 않는 이슈 해결을 위해 사용하는 메소드
+                def : function (org, src) {
                     for (var prop in src) {
                         if (!hasOwnProperty.call(src, prop)) continue;
                         if ('object' === $.type(org[prop])) {
