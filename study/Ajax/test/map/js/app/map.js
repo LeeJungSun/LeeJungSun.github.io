@@ -54,9 +54,7 @@
             this.optionInp = this.optionWrap.find('input');
             this.historyWrap = this.obj.find(this.opts.historyWrap);
             this.saveBtn = this.obj.find(this.opts.saveBtn);
-            this.option = this.optionBox.children().filter(function () {
-                return $(this).attr('id');
-            });
+            this.option = this.optionBox.children();
         },
         changeEvents : function (event) {
             var events = [],
