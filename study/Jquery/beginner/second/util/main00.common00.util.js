@@ -49,9 +49,12 @@
                     return ('WebkitTransform' in doc.body.style || 'MozTransform' in doc.body.style || 'msTransform' in doc.body.style || 'OTransform' in doc.body.style || 'transform' in doc.body.style);
                 })(),
                 isSupportTransition : (function () {
+                    // css style로 transition 사용 가능한지 체크하는 구문 (IE에서 10까지 지원해서?)
                     return ('WebkitTransition' in doc.body.style || 'MozTransition' in doc.body.style || 'msTransition' in doc.body.style || 'OTransition' in doc.body.style || 'transition' in doc.body.style);
                 })(),
+                // Modernizr => 웹 기술의 가용성을 자동으로 감지하는 JavaScript 코드
                 isSupportTransforms3d : (window.Modernizr && Modernizr.csstransforms3d === true) || (function () {
+                    // css style로 3D Transforms 사용 가능한지 체크하는 구문 (IE에서 10까지 지원해서?)
                     var div = document.createElement('div').style;
                     return ('webkitPerspective' in div || 'MozPerspective' in div || 'OPerspective' in div || 'MsPerspective' in div || 'perspective' in div);
                 })(),
@@ -98,15 +101,15 @@
                                 w : $(win).width(),
                                 h : $(win).height()
                             };
-                            return win_wh;
+                            return win_wh; // width, height값 리턴
                         }
                     } else { // 사파리를 제외한 나머지 브라우저의 경우
                         return function () {
                             var win_wh = { // 사이즈에 스크롤바가 사이즈 영향을 주므로 추가 계산 조건 필요
-                                w : win.innerWidth || doc.documentElement.clientWidth || doc.body.clientWidth,
+                                w : win.innerWidth || doc.documentElement.clientWidth || doc.body.clientWidth, // 실제로 보여지는 컨텐츠 너비, 높이값 가져옴
                                 h : win.innerHeight || doc.documentElement.clientHeight || doc.body.clientHeight
                             };
-                            return win_wh;
+                            return win_wh; // width, height값 리턴
                         }
                     }
                 })(),
@@ -126,15 +129,18 @@
                     var _devLayout = _target.closest('#devLayout');
                     return (_devLayout.length) ? true : false; // devLayout가 있을 경우 true 반환 아닐 경우 false 반환
                 },
+                // 텍스트 말줄임
                 getRestrictBytes : function (str, maxBytes) {
-                    var strLeng = str.length,
+                    var strLeng = str.length, // 말줄임할 텍스트 string length
                         rByte = 0,
                         rLen = 0,
                         strChar = '';
-                    maxBytes = maxBytes || 100;
+                    maxBytes = maxBytes || 100; // maxBytes 인자값 저장, 인자값 없으면 100을 저장
                     for (var i = 0; i < strLeng; i++) {
+                        // charAt() 함수는 문자열에서 특정 인덱스에 위치하는  유니코드 단일문자를 반환합니다.
                         strChar = str.charAt(i);
-                        if (escape(strChar).length > 4) {
+                        // escape : 아스키문자가 아니라면 모두 유니코드 형식으로 변환한다.
+                        if (escape(strChar).length > 4) { 
                             rByte += 2;
                         } else {
                             rByte++;
@@ -148,15 +154,16 @@
                         rectLeng : rLen
                     }
                 },
+                // 이미지 로드
                 imgLoader : function (selector, callback) {
                     $(selector).each(function () {
-                        var cb = (callback || function () {});
-                        if (this.complete || $(this).height() > 0) {
-                            cb.apply(this);
+                        var cb = (callback || function () {}); // callback 인자값이 있으면 callback 인자값을 담고 없으면 빈 함수를 변수에 담는다.
+                        if (this.complete || $(this).height() > 0) { // this.complete 이거나 this의 height값이 0 보다 클 때 (this.complate는 무얼 말하는가)
+                            cb.apply(this); //이게 모야 씨앗
                         } else {
                             $(this).on('load', function () {
                                 cb.apply(this);
-                                $(this).off('load');
+                                $(this).off('load'); // load 이벤트 제거
                             });
                         }
                     });
@@ -205,6 +212,8 @@
         STICKYDATAS = win.smg.newShop.common.stickyDatas,
         UTIL = win.smg.newShop.common.util;
 
+    // win.smg.newShop.page 객체를 가지고 있을 경우
+    // isEmptyObject : 빈 객체 일 경우 true 리턴
     if (win.smg.newShop.page && !$.isEmptyObject(win.smg.newShop.page)) return;
 
     win.smg.newShop.page = (function () {
