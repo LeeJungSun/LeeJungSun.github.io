@@ -5,30 +5,33 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>테스트</title>
-<link rel="stylesheet" href="../css/test-sass.css">
+<!-- <link rel="stylesheet" href="../css/test-sass.css"> -->
 </head>
 <body>
-	<select name="" id="" style="width:100px;-webkit-appearance:none">
-	<option value="">1</option>
-	<option value="">2</option>
-	<option value="">3</option>
-	<option value="">4</option>
-	</select>
-	<select name="" id="">
-	<option value="">1</option>
-	<option value="">2</option>
-	<option value="">3</option>
-	<option value="">4</option>
-	</select>
-	<input type="text">
-	<select name="" id="">
-	<option value="">1</option>
-	<option value="">2</option>
-	<option value="">3</option>
-	<option value="">4</option>
-	</select>
+<ul class="test">
+<li><button type="button">1</button></li>
+<li><button type="button">2</button></li>
+<li><button type="button">3</button></li>
+<li><button type="button">4</button></li>
+<li><button type="button">5</button></li>
+</ul>
 
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
-
+<script>
+(function () {
+    var test = document.getElementById('test'),
+        testChild = test.getElementsByTagName('button');
+    for (var i = 0, max = testChild.length; i < max; i++) {
+        (function (index) {
+            testChild[index].onclick = function () {
+                console.log(index);
+            }
+        })(i);
+        // testChild[i].onclick = function () {
+        //     console.log(i); // '5'만 출력됨
+        // }
+    }
+})()
+</script>
 </body>
 </html>
