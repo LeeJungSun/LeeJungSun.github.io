@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>javascript util sample01</title>
+<link rel="stylesheet" href="../../css/blog-sass.css">
+<style>
+
+</style>
+</head>
+<body>
+<div id="wrap" class="example_wrap">
+    <h1 class="main__title">1. button click trigger</h1>
+
+    <h2 class="sub__title">1) Example</h2>
+    <div class="exam__box">
+        <ul class="count_area">
+        <li>Button01 Count : <span></span></li>
+        <li>Button02 Count : <span></span></li>
+        </ul>
+        <div class="btn_area">
+            <button type="button" id="button01"><span>Button01</span></button>
+            <button type="button" id="button02"><span>Button02</span></button>
+        </div>
+    </div>
+
+    <h2 class="sub__title">2) Code</h2>
+    <pre><code class="html">
+
+    </code></pre>
+
+</div>
+</body>
+<script type="text/javascript" src="../../js/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../js/apps/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+
+    (function($, win, doc) {
+        'use strict';
+        
+                var alertExample = {
+                    opts : {
+                        form : '.form',
+                        id : '#user_id',	
+                        password : '#user_password',	
+                        inputWrap : '.input_wrap',	
+                        inputText : '.input_text',
+                        alertText : '.alert_text',
+                        btnSubmit : '.btn_submit'
+                    },
+                    init : function () {
+                        this.setElements();
+                        this.RegularExpression();
+                        this.bindEvents();
+                    },
+                    setElements : function () {
+                        this.inputForm = $(this.opts.form);
+                        this.userId = $(this.opts.id);
+                        this.userPassword = $(this.opts.password);
+                        this.inputWrap = $(this.opts.inputWrap);
+                        this.inputText = $(this.opts.inputText);
+                        this.btnSubmit = $(this.opts.btnSubmit);
+                        this.input = this.inputForm.find('input');
+                    },
+                    RegularExpression : function () {
+                        this.re_id = /^[a-z0-9]{3,12}$/;
+                        this.re_pw = /^[a-z0-9]{6,18}$/;
+                    },
+                    bindEvents : function () {
+                        $(this.opts.alertText).hide();
+                        this.btnSubmit.on('click', $.proxy(this.submitAlertFunc, this));
+                    },
+                    submitAlertFunc : function (e) {
+                        e.preventDefault();
+
+                        this.inputText.removeClass('error');
+                        $(this.opts.alertText).hide();
+
+                        if (this.re_id.test(this.userId.val()) != true) {
+                            this.userId.parent(this.inputText).addClass('error');
+                            this.userId.parent(this.inputtext).siblings(this.opts.alertText).show();
+                        }
+                        if (this.re_pw.test(this.userPassword.val()) != true) {
+                            this.userPassword.parent(this.inputText).addClass('error');
+                            this.userPassword.parent(this.inputtext).siblings(this.opts.alertText).show();
+                        }
+                    }
+                }
+                alertExample.init();
+
+    })(jQuery, window, document);
+
+</script>
+</html>

@@ -26,9 +26,38 @@
     border-color: #3f86a5;
     background: #bcdbe8;
 }
+.comment {
+    font-style: italic;
+    color: #aaa;
+}
 .btn {
+    &__area {
+        margin: 15px auto;
+        .btn_view {
+            margin: 0;
+        }
+    }
     &_view {
-        display: inline-block;margin: 5px 0;padding: 0 5px;border: 1px solid #ccc;border-radius: 5px;font-size: 13px;color: #4d5256;text-align: center;text-decoration: none;
+        display: inline-block;
+        margin: 5px 0;
+        padding: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 13px;
+        color: #4d5256;
+        line-height: 26px;
+        text-align: center;
+        text-decoration: none;
+        &:after {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin: 0 2px 0 4px;
+            border: solid #a6a6a6;
+            border-width: 1px 1px 0 0;
+            transform: rotate(45deg);
+            content: '';
+        }
     }
 }
 .main {
@@ -89,7 +118,7 @@
     }
 }
 .list {
-    margin-top: 15px;
+    margin-top: 20px;
     padding-left: 20px;
     &__title {
         display: block;
@@ -108,7 +137,7 @@
         margin-top: 0;
     }
     li {
-        margin-top: 10px;
+        margin-top: 15px;
         font-size: 14px;
         color: #4d5256;
         line-height: 26px;
@@ -133,12 +162,16 @@
             margin-top: 10px;
         }
     }
+    &__text {
+
+    }
 }
 .box {
     margin: 20px 0 30px 20px;
     &__title {
         display: block;
         position: relative;
+        min-height: 17px;
         margin: 40px 0 5px;
         padding-left: 10px;
         font-size: 15px;
@@ -167,7 +200,7 @@
 }
 .example_area {
     position: relative;
-    margin-top: 15px;
+    margin-top: 12px;
     padding: 12px 15px;
     border: 1px solid #e1e4e6;
     border-radius: 4px;
@@ -204,18 +237,28 @@
     color: #777;
     &__title {
         display: block;
-        margin-bottom: 10px;
         font-size: 15px;
         font-weight: normal;
         color: #178217;
     }
+    &__text {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 24px;
+        color: #444;
+    }
     &__list {
+        margin-top: 10px;
         padding-left: 30px;
         list-style-type: disc;
         li {
+            margin-top: 5px;
             font-size: 14px;
-            line-height: 26px;
+            line-height: 24px;
             color: #444;
+            &:first-child {
+                margin: 0;
+            }
         }
     }
 }
@@ -276,8 +319,8 @@
 .img {
     display: block;
     overflow: hidden;
-    margin: 0 auto;
-    border: 1px solid #ccc;
+    margin: 15px auto;
+    border: 1px solid #e1e4e6;
     img {
         width: 100%;
         & + .img_text {
@@ -305,6 +348,10 @@
     &__area {
         display: table-cell;
         padding: 0 10px;
+        .img {
+            margin: 0 auto;
+            border-color: #ccc;
+        }
     }    
     &__title {
         display: block;
