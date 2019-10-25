@@ -1,0 +1,41 @@
+.gs-scroll-area {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    position: relative;
+    width: 50px;
+    .gs-scroll-txt {
+        display: block;
+        height: 42px;
+        background: red;
+        // background: url(../img/weapon/scroll_text.png) center no-repeat;
+    }
+    .gs-animate {
+        position: absolute;
+        left: 50%;
+        width: 24px;
+        height: 25px;
+        margin-left: -12px;
+        background: red;
+        animation-name: scrollArea;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+    .gs-scroll-down {
+        top: 47px;
+        &:after {
+            bottom: -19px;
+            transform: rotate(180deg);
+        }
+    }
+}
+@keyframes scrollArea {
+    from  {
+        top: 47px;
+    }
+    to {
+        top: 60px;
+    }
+}
