@@ -57,9 +57,7 @@
             this.optionInp = this.optionWrap.find('input');
             this.historyWrap = this.obj.find(this.opts.historyWrap);
             this.saveBtn = this.obj.find(this.opts.saveBtn);
-            this.option = this.optionBox.children().filter(function () {
-                return $(this).attr('id');
-            });
+            this.option = this.optionBox.children();
         },
         initMap : function () {
             var mapObj = this.mapContainer.find(this.opts.map)[0];
@@ -107,7 +105,7 @@
                 if (targetId === 'data-lat') {
                     target.val(latLng.lat());
                 } else if (targetId === 'data-lng') {
-                    target.val(latLng.getLng());
+                    target.val(latLng.lng());
                 }
             }
             console.log('클릭한 위치 위도 :', latLng.lat());
@@ -122,6 +120,52 @@
             });
             this.opts.markers.push(marker);
         },
+        createMarkerContent : function () {
+            for (var i = 0, imax = this.option.length; i < imax; i++) {
+                var target = this.option.eq(i),
+                    targetId = target.attr('id');
+                if (targetId === 'data-title') {
+                    var targetTitle = target.val();
+                } else if (targetId === 'data-lat') {
+                    var targetLat = target.val();
+                } else if (targetId === 'data-lng') {
+                    var targetLng = target.val();
+                } else if (targetId === 'data-desc') {
+                    var targetDesc = target.val();
+                }
+                if (!target.val().length) {
+                    alert('데이터 값을 입력해주세요');
+                    return;
+                }
+            }
+            var data = {
+                title : targetTitle,
+                lat : targetLat,
+                lng : targetLng,
+                desc : targetDesc
+            };
+            this.opts.markerContentInfo.push(data);
+            this.createMarker(data);
+            this.createDataHistory(data);
+            this.clearMarkerContentInfo();
+            console.log('마커 :',this.opts.markers);
+            console.log('마커 오버레이 :',this.opts.markerOverlay);
+            console.log('마커 컨텐츠 :',this.opts.markerContentInfo);
+        },
+        clearMarkerContentInfo : function () {
+            for (var i = 0, imax = this.option.length; i < imax; i++) {
+                this.option.eq(i).val('');
+            }
+        },
+        createDataHistory : function (data) {
+            var tag = '<li><div class="option">' +
+                    '<span class="box title"><strong>타이틀 : </strong><span>' + data.title + '</span></span>' +
+                    '<span class="box"><strong>위도 : </strong><span>' + data.lat + '</span></span>' +
+                    '<span class="box"><strong>경도 : </strong><span>' + data.lng + '</span></span></div>' +
+                    '<button class="btn_delete"><span>삭제</span></button>' +
+                    '</li>';
+            this.historyWrap.append(tag);
+        },
         changeEvents : function (event) {
             var events = [],
             eventNames = event.split(' ');
@@ -132,6 +176,10 @@
         },
         bindEvents : function () {
             google.maps.event.addListener(this.map, 'click', $.proxy(this.getClickMarkerInfo, this));
+            this.saveBtn.on(this.changeEvents('click'), $.proxy(this.onClickCreateMarker, this));
+        },
+        onClickCreateMarker : function () {
+            this.createMarkerContent();
         }
     }
 
