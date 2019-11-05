@@ -10,8 +10,8 @@
 </head>
 <body>
 <div id="wrap" class="waga_article">
-    <h1 class="main__title">타이틀</h1>
-    <p class="main__text">타이틀 부가내용</p>
+    <h1 class="main__title">뭐라고 넣징</h1>
+    <p class="main__text">부가내용 뭐라고 넣징</p>
 
     <section class="section_wrap">
         <h2 class="sub__title">trigger</h2>
@@ -24,24 +24,34 @@
         <p class="sub__text">이벤트가 바인딩된 요소에 trigger 메소드를 사용하여 이벤트를 발생시킵니다.</p>
         <div class="example_area">
             <code>
-                $('#btn').on('click', function () {<br>
+                $('#btn').on('<strong class="point">click</strong>', function () {<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;console.log('click');<br>
                 });<br>
-                $('#btn').trigger('click');<br>
+                $('#btn').<strong class="point">trigger('click')</strong>;<br>
                 <br>
-                $('#inputTest').focus(function () {<br>
+                $('#inputTest').<strong class="point">focus</strong>(function () {<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;console.log('focus');<br>
                 });<br>
-                $('#inputTest').trigger('focus');
+                $('#inputTest').<strong class="point">trigger('focus')</strong>;
             </code>
         </div>
-        <div class="btn__area">
-            <a href="./code/02_util_js01.html" target="_blank" class="btn_view">Example Code</a>
+        <div class="quote">
+            <strong class="quote__title">Example</strong>
+            <p class="quote__text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용</p>
+            <div class="img__wrap type2">
+                <div class="img__area">
+                    <div class="img">
+                        <img src="../img/util/example01.gif" alt="" style="width: auto">
+                    </div>
+                </div>
+            </div>
+            <div class="btn__area">
+                <a href="./code/02_util_js01.html" target="_blank" class="btn_view">Example Code</a>
+            </div>
         </div>
-
         <div class="notice">
             <strong class="notice__title">NOTICE :</strong>
-            <p class="notice__text">텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트</p>
+            <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
             <ul class="notice__list">
             <li>이벤트</li>
             <li>이벤트 핸들러</li>
@@ -67,7 +77,7 @@
                         </code>
                     </div>
                     <div class="img">
-                        <img src="../img/util/exam01.png" alt="">
+                        <img src="../img/util/example02.png" alt="">
                     </div>
                 </li>
                 <li>
@@ -85,7 +95,7 @@
                         </code>
                     </div>
                     <div class="img">
-                        <img src="../img/util/exam02.png" alt="">
+                        <img src="../img/util/example03.png" alt="">
                     </div>
                 </li>
                 </ul>
@@ -110,7 +120,7 @@
 
     <section class="section_wrap">
         <h2 class="sub__title">즉시 실행 함수 (IIFE)</h2>
-        <p class="sub__text">일반적으로 함수는 함수를 정의하고 변수에 함수를 저장하고 실행하는 과정을 거치지만, <strong>즉시 실행 함수(IIFE, Immediately Invoked Function Expression)</strong>는 함수를 정의하고 저장하는 과정이 없이 바로 호출이 가능합니다.</p>
+        <p class="sub__text">일반적으로 함수는 함수를 정의하고 변수에 함수를 저장하고 실행하는 과정을 거치지만, <span class="code">즉시 실행 함수(IIFE, Immediately Invoked Function Expression)</span>는 함수를 정의하고 저장하는 과정이 없이 바로 호출이 가능합니다.</p>
         <div class="example_area">
             <code>
                 <strong class="point">(function () {</strong><br>
@@ -125,7 +135,7 @@
 
         <div class="notice">
             <strong class="notice__title">NOTICE :</strong>
-            <p class="notice__text">텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트</p>
+            <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
             <ul class="notice__list">
             <li>함수 표현식, 함수 선언식</li>
             <li>변수 유효 범위 (Scope)</li>
@@ -213,12 +223,15 @@
                 <p class="article__text">for문 내에서 클로저가 생성될 경우 </p>
                 <div class="example_area">
                     <code>
-                        for (var i = 0, max = btn.length; i < max; i++) {<br>
+                        for (var i = 0, max = btn.length; i &lt; max; i++) {<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;btn[i].onclick = function () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(i);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(i);<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                         }
                     </code>
+                </div>
+                <div class="img">
+                    <img src="../img/util/example04.gif" alt="" style="width: auto">
                 </div>
 
                 <h4 class="box__title">Trouble Shooting</h4>
@@ -228,14 +241,20 @@
                     <p class="list__text"><strong>즉시 실행 함수로 익명 클로저를 추가로 생성</strong>하여 해결해주는 방법으로 변수 i를 즉시 실행 함수에 index라는 자유 변수 형태로 넣어주면, 클로저에 의해 각기 다른 환경 속에 변수가 포함되게 됩니다.</p>
                     <div class="example_area">
                         <code>
-                            for (var i = 0, max = btn.length; i < max; i++) {<br>
+                            for (var i = 0, max = btn.length; i &lt; max; i++) {<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">(function (index) {<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;btn[index].onclick = function () {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(index);</strong> <span class="comment">// 정상적으로 버튼 클릭시 0,1,2,3,4 출력</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(index);</strong> <span class="comment">// 정상적으로 버튼 클릭시 0,1,2,3,4 출력</span><br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">}<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;})(i);</strong><br>
                             }
                         </code>
+                    </div>
+                    <div class="img">
+                        <img src="../img/util/example05.gif" alt="" style="width: auto">
+                    </div>
+                    <div class="btn__area">
+                        <a href="./code/02_util_js02.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                 </li>
                 <li>
@@ -243,12 +262,18 @@
                     <p class="list__text">scope 개념으로 접근하여 <strong>function-scope 개념인 var를 block-scope인 let으로 변경</strong>하여 적용하는 방법입니다. let은 코드 블록에서만 유효한 지역 변수이면서 자유 변수로서 for문의 생명주기가 종료되어도 변수 i를 참조하는 함수가 존재하는 한 계속 유지됩니다.</p>
                     <div class="example_area">
                         <code>
-                            for (let i = 0, max = btn.length; i < max; i++) {<br>
+                            for (let i = 0, max = btn.length; i &lt; max; i++) {<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;btn[i].onclick = function () {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(i);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(i);<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                             }
                         </code>
+                    </div>
+                    <div class="img">
+                        <img src="../img/util/example06.gif" alt="" style="width: auto">
+                    </div>
+                    <div class="btn__area">
+                        <a href="./code/02_util_js03.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                 </li>
                 </ul>
