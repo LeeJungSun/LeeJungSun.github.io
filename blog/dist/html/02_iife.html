@@ -4,119 +4,14 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-<title>알아두면 쓸모있는 자바스크립트 Part.1 : Javascript</title>
+<title>즉시 실행 함수 : Javascript</title>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/blog-sass.css">
 </head>
 <body>
 <div id="wrap" class="waga_article">
-    <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.1</h1>
-    <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p>
-
-    <section class="section_wrap">
-        <h2 class="sub__title">trigger</h2>
-        <p class="sub__text"><span class="code">trigger()</span>는 지정된 이벤트나 선택한 요소에 바인딩된 이벤트를 실행시키는 jQuery 메소드입니다.</p>
-        <div class="example_area">
-            <code>
-                $('selector').trigger(eventType [, extraParameters]);
-            </code>
-        </div>
-        <p class="sub__text">이벤트가 바인딩된 요소에 trigger 메소드를 사용하여 이벤트를 발생시킵니다.</p>
-        <div class="example_area">
-            <code>
-                $('#btn').on('<strong class="point">click</strong>', function () {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;console.log('click');<br>
-                });<br>
-                $('#btn').<strong class="point">trigger('click')</strong>;<br>
-                <br>
-                $('#inputTest').<strong class="point">focus</strong>(function () {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;console.log('focus');<br>
-                });<br>
-                $('#inputTest').<strong class="point">trigger('focus')</strong>;
-            </code>
-        </div>
-        <div class="quote">
-            <strong class="quote__title">Example</strong>
-            <p class="quote__text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용하였습니다.</p>
-            <div class="img__wrap type2">
-                <div class="img__area">
-                    <div class="img">
-                        <img src="../img/util/example01.gif" alt="" style="width: auto">
-                    </div>
-                </div>
-            </div>
-            <div class="btn__area">
-                <a href="./code/02_util_js01.html" target="_blank" class="btn_view">Example Code</a>
-            </div>
-        </div>
-        <div class="notice">
-            <strong class="notice__title">NOTICE :</strong>
-            <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
-            <ul class="notice__list">
-            <li>이벤트</li>
-            <li>이벤트 핸들러</li>
-            <li>이벤트 리스너</li>
-            </ul>
-        </div>
-
-        <article class="article__wrap">
-            <h3 class="article__title">[How to use]</h3>
-            <div class="box">
-                <h4 class="box__title">다중 인자값</h4>
-                <p class="article__text">배열 형태로 인자값을 넘겨줄 경우 인자값을 따로따로 받아 올 수 있으나,<br> 객체로 넘겨줄 경우 해당 객체의 키값으로 접근해야 정상적인 인자값을 받아 올 수 있습니다.</p>
-                <ul class="list">
-                <li>
-                    <strong class="list__title">배열로 넘겨줄 경우</strong>
-                    <div class="example_area">
-                        <code>
-                            $('#test').on('wishList', function () {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[0]); <span class="comment">// eventType</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[1]); <span class="comment">// '모니터'</span><br>
-                            });
-                            $('#test').trigger('wishList', <strong class="point">['모니터', '의자', '데스크탑']</strong>);
-                        </code>
-                    </div>
-                    <div class="img">
-                        <img src="../img/util/example02.png" alt="">
-                    </div>
-                </li>
-                <li>
-                    <strong class="list__title">객체로 넘겨줄 경우</strong>
-                    <div class="example_area">
-                        <code>
-                            $('#test').on('shoppingList', function () {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[0]); <span class="comment">// eventType</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[1].item2); <span class="comment">// '의자'</span><br>
-                            });<br>
-                            $('#test').trigger('shoppingList', <strong class="point">{<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;item1 : '모니터',<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;item2 : '의자'<br>
-                            }</strong>);
-                        </code>
-                    </div>
-                    <div class="img">
-                        <img src="../img/util/example03.png" alt="">
-                    </div>
-                </li>
-                </ul>
-
-                <h4 class="box__title">이벤트 문자열 체이닝</h4>
-                <p class="article__text">문자열로 체이닝하여 만든 커스텀 이벤트도 trigger 적용이 가능합니다.</p>
-                <div class="example_area">
-                    <code>
-                        $('#test').on('<strong class="point">wishList.monitor</strong>', function () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('모니터');<br>
-                        });<br>
-                        $('#test').on('<strong class="point">wishList.chair</strong>', function () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('의자');<br>
-                        });<br>
-                        $('#test').trigger('<strong class="point">wishList.monitor</strong>');<br>
-                        $('#test').trigger('<strong class="point">wishList.chair</strong>');
-                    </code>
-                </div>
-            </div>
-        </article>
-    </section>
+    <!-- <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.2 - 즉시 실행 함수</h1>
+    <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p> -->
 
     <section class="section_wrap">
         <h2 class="sub__title">즉시 실행 함수 (IIFE)</h2>
@@ -233,7 +128,7 @@
                     </code>
                 </div>
                 <div class="img">
-                    <img src="../img/util/example04.gif" alt="" style="width: auto">
+                    <img src="../img/iife/iife_example01.gif" alt="" style="width: auto">
                 </div>
 
                 <h4 class="box__title">Trouble Shooting</h4>
@@ -253,10 +148,10 @@
                         </code>
                     </div>
                     <div class="img">
-                        <img src="../img/util/example05.gif" alt="" style="width: auto">
+                        <img src="../img/iife/iife_example02.gif" alt="" style="width: auto">
                     </div>
                     <div class="btn__area">
-                        <a href="./code/02_util_js02.html" target="_blank" class="btn_view">Example Code</a>
+                        <a href="./code/02_iife01.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                 </li>
                 <li>
@@ -272,10 +167,10 @@
                         </code>
                     </div>
                     <div class="img">
-                        <img src="../img/util/example06.gif" alt="" style="width: auto">
+                        <img src="../img/iife/iife_example03.gif" alt="" style="width: auto">
                     </div>
                     <div class="btn__area">
-                        <a href="./code/02_util_js03.html" target="_blank" class="btn_view">Example Code</a>
+                        <a href="./code/02_iife02.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                 </li>
                 </ul>
