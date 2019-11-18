@@ -13,6 +13,10 @@
     <!-- <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.1 - trigger</h1>
     <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p> -->
 
+    <!-- 
+        https://win100.tistory.com/221
+        -->
+
     <section class="section_wrap">
         <h2 class="sub__title">trigger</h2>
         <p class="sub__text"><span class="code">trigger()</span>는 지정된 이벤트나 선택한 요소에 바인딩된 이벤트를 실행시키는 jQuery 메소드입니다.</p>
@@ -35,27 +39,26 @@
                 $('#inputTest').<strong class="point">trigger('focus')</strong>;
             </code>
         </div>
-        <div class="quote">
-            <strong class="quote__title">Example</strong>
-            <p class="quote__text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용하였습니다.</p>
-            <div class="img__wrap type2">
-                <div class="img__area">
-                    <div class="img">
-                        <img src="../img/trigger/trigger_example01.gif" alt="" style="width: auto">
-                    </div>
+        <strong class="title">* Example</strong>
+        <p class="text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용하였습니다.</p>
+        <div class="img__wrap type2">
+            <div class="img__area">
+                <div class="img">
+                    <img src="../img/trigger/trigger_example01.gif" alt="" style="width: auto">
                 </div>
             </div>
-            <div class="btn__area">
-                <a href="./code/02_trigger01.html" target="_blank" class="btn_view">Example Code</a>
-            </div>
         </div>
-        <div class="notice">
-            <strong class="notice__title">NOTICE :</strong>
+        <div class="btn__area">
+            <a href="./code/02_trigger01.html" target="_blank" class="btn_view">Example Code</a>
+        </div>
+        
+        <div class="notice type2">
+            <h3 class="notice__title">NOTICE</h3>
             <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
             <ul class="list">
             <li>
                 <strong class="list__title">이벤트 (Event)</strong>
-                <p class="list__text">브라우저에서 일어나는 모든 동작, 행위를 말합니다.</p>
+                <p class="list__text">브라우저 내 특정 대상에게 일어나는 모든 동작, 행위를 말합니다.</p>
             </li>
             <li>
                 <strong class="list__title">이벤트 핸들러 (Event Handler)</strong>
@@ -63,16 +66,41 @@
             </li>
             <li>
                 <strong class="list__title">이벤트 리스너 (Event Listener)</strong>
-                <p class="list__text">해당 이벤트가 발생했을 때 등록했던 이벤트 리스너가 실행됩니다.</p>
+                <p class="list__text">해당 이벤트가 발생했을 때 등록했던 이벤트 리스너가 실행됩니다.<br> (이벤트 리스너는 항상 on + '이벤트' 명으로 명명됩니다.)</p>
             </li>
             </ul>
-            <div>
-                이벤트 = click
-                이벤트 리스너 = onclick
-                이벤트 핸들러 = function () {}
-                참고
-                https://codedragon.tistory.com/5743
-                https://www.zerocho.com/category/JavaScript/post/57432d2aa48729787807c3fc
+            <strong class="box__title">Example</strong>
+            <p class="box__text">대표적으로 아래와 같은 코드를 예로 들 수 있습니다. window의 이벤트(load)가 발생되었을 때 등록해둔 이벤트 리스너(onload)가 실행되고, 발생한 이벤트를 이벤트 핸들러가(function) 처리하게 되는 것 입니다.</p>
+            <div class="table_wrap table_type2">
+                <table>
+                <caption><span></span></caption>
+                <thead>
+                <tr>
+                <th scope="col"><div class="th">이벤트</div></th>
+                <th scope="col"><div class="th">이벤트 리스너</div></th>
+                <th scope="col"><div class="th">이벤트 핸들러</div></th>
+                </tr>
+                <tbody>
+                <tr>
+                <td><div class="td">load</div></td>
+                <td><div class="td">onload</div></td>
+                <td><div class="td">function () {}</div></td>
+                </tr>
+                </tbody>
+                </thead>
+                </table>
+            </div>
+            <div class="example_area">
+                <code>
+                    <span class="comment">// Javascript</span><br>
+                    window.onload = function () {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('load');<br>
+                    }<br>
+                    <span class="comment">// jQuery</span><br>
+                    $(window).on('load', function () {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('load');<br>
+                    });
+                </code>
             </div>
         </div>
 
@@ -80,7 +108,7 @@
             <h3 class="article__title">[How to use]</h3>
             <div class="box">
                 <h4 class="box__title">다중 인자값</h4>
-                <p class="article__text">배열 형태로 인자값을 넘겨줄 경우 인자값을 따로따로 받아 올 수 있으나,<br> 객체로 넘겨줄 경우 해당 객체의 키값으로 접근해야 정상적인 인자값을 받아 올 수 있습니다.</p>
+                <p class="box__text">배열 형태로 인자값을 넘겨줄 경우 인자값을 따로따로 받아 올 수 있으나,<br> 객체로 넘겨줄 경우 해당 객체의 키값으로 접근해야 정상적인 인자값을 받아 올 수 있습니다.</p>
                 <ul class="list">
                 <li>
                     <strong class="list__title">배열로 넘겨줄 경우</strong>
@@ -118,7 +146,7 @@
                 </ul>
 
                 <h4 class="box__title">이벤트 문자열 체이닝</h4>
-                <p class="article__text">문자열로 체이닝하여 만든 커스텀 이벤트도 trigger 적용이 가능합니다.</p>
+                <p class="box__text">문자열로 체이닝하여 만든 커스텀 이벤트도 trigger 적용이 가능합니다.</p>
                 <div class="example_area">
                     <code>
                         $('#test').on('<strong class="point">wishList.monitor</strong>', function () {<br>
@@ -132,6 +160,25 @@
                     </code>
                 </div>
             </div>
+        </article>
+
+        <article class="article__wrap">
+            <h3 class="article__title">[Why use it]</h3>
+        </article>
+
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">Issue</h4>
+                <p class="article__text">a태그에 trigger click해도 href 동작 안하는거 쓰깅</p>
+                <div class="btn__area">
+                    <a href="./code/02_trigger02.html" target="_blank" class="btn_view">Example Code</a>
+                </div>
+
+                <h4 class="box__title">Trouble Shooting</h4>
+                <p class="article__text">a태그에 trigger click해도 href 동작 안하는거 쓰깅</p>
+            </div>
+
         </article>
     </section>
 

@@ -30,6 +30,20 @@
     font-style: italic;
     color: #aaa;
 }
+.title {
+    display: block;
+    margin: 20px 0 10px;
+    font-size: 15px;
+}
+.text {
+    margin-top: 10px;
+    color: #777;
+    font-size: 14px;
+    line-height: 26px;
+    &+.img__wrap {
+        margin: 20px 0;
+    }
+}
 .btn {
     &__area {
         margin: 15px auto;
@@ -40,21 +54,30 @@
     &_view {
         display: inline-block;
         margin: 5px 0;
-        padding: 2px 8px;
-        border: 1px solid #ccc;
+        padding: 5px 12px;
         border-radius: 5px;
+        background: #e5ebf0;
         font-size: 13px;
-        color: #4d5256;
+        font-weight: bold;
+        color: #808b96;
         line-height: 26px;
         text-align: center;
         text-decoration: none;
+        transition: all .2s ease-in;
+        &:hover {
+            background: #3884fe;
+            color: #fff;
+            &:after {
+                border-color: #fff;
+            }
+        }
         &:after {
             display: inline-block;
             width: 5px;
             height: 5px;
             margin: 0 2px 0 4px;
-            border: solid #a6a6a6;
-            border-width: 1px 1px 0 0;
+            border: solid #808b96;
+            border-width: 2px 2px 0 0;
             transform: rotate(45deg);
             content: '';
         }
@@ -97,7 +120,7 @@
         padding: 0;
         font-size: 14px;
         color: #4d5256;
-        line-height: 25px;
+        line-height: 26px;
     }
 }
 .article {
@@ -130,9 +153,7 @@
         }
     }
     list-style-type: disc;
-    .list {
-        list-style-type: circle;
-    }
+
     &:first-child{
         margin-top: 0;
     }
@@ -162,8 +183,11 @@
             margin-top: 10px;
         }
     }
-    &__text {
-
+    .list {
+        list-style-type: circle;
+    }
+    .table_wrap {
+        margin: 20px auto;
     }
 }
 .box {
@@ -234,7 +258,7 @@
     padding: 23px 25px;
     border-left: 3px solid #52E052;
     background: #e9fbe9;
-    color: #777;
+    color: #444;
     &__title {
         display: block;
         font-size: 15px;
@@ -244,22 +268,56 @@
     &__text {
         margin-top: 8px;
         font-size: 14px;
-        line-height: 24px;
-        color: #444;
+        line-height: 25px;
     }
     .list {
-        margin-top: 10px;
-        padding-left: 30px;
-        list-style-type: disc;
-        li {
-            line-height: 24px;
-            &:first-child {
-                margin: 0;
-            }
-        }
         &__title {
             font-size: 14px;
             color: #555;
+        }
+    }
+    .box {
+        margin: 20px 10px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &__title {
+            margin-top: 30px;
+            &:before {
+                background: #aaa;
+            }
+        }
+    }
+    .table_wrap {
+        margin: 20px auto;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &.table_type2 {
+            border-color: #aaa;
+        }
+    }
+    &.type2 {
+        border-color: #3f87a6;
+        background: #e4f0f5;
+        .notice {
+            &__title {
+                position: relative;
+                padding-left: 22px;
+                font-weight: bold;
+                color: #666;
+                line-height: 18px;
+                &:before {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 18px;
+                    height: 18px;
+                    background: url(../img/ico_notice.png);
+                    background-size: 100% 100%;
+                    content: '';
+                }
+            }
         }
     }
 }
@@ -407,9 +465,13 @@
     }
     thead {
         th {
-            padding: 10px 16px;
             border-bottom: 1px solid #333;
             font-size: 14px;
+            text-align: center;
+            .th {
+                padding: 8px 12px;
+                line-height: normal;
+            }
         }
     }
     tbody {
@@ -419,13 +481,35 @@
             }
         }
         td {
-            padding: 10px 16px;
-            border: solid #ccc;
+            border: solid #aaa;
             border-width: 1px 0 0 1px;
             font-size: 13px;
             text-align: center;
             &:first-child {
                 border-left: 0;
+            }
+            .td {
+                padding: 8px 12px;
+                line-height: normal;
+            }
+        }
+    }
+    &.table_type2 {
+        border: 1px solid #aaa;
+        caption span {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            font-size: 0;
+            line-height: 999px;
+        }
+        thead {
+            th {
+                border: solid #aaa;
+                border-width: 0 0 1px 1px;
+                &:first-child {
+                    border-left: 0;
+                }
             }
         }
     }

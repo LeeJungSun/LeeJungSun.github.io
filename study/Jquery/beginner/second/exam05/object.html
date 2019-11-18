@@ -51,7 +51,7 @@ legend{*width:0}
                 console.log('- strict mode인 경우엔 this의 값은 undefined가 된다.');
                 console.log('- 전역객체 window를 붙여서 호출하면 strict mode에서도 this는 window를 가르키게된다.');
                 console.log('- 일반 함수는 전역객체(window)의 프로퍼티로 있음 (obj() === window.obj())');
-                console.log('2) 생성자 함수로 호출할 경우 새로운 객체가 생성이 되며, this의 값은 함수가 호출될 때 만들어지는 새 객체를 바라보게 된다.');
+                console.log('2) 생성자 함수로 호출할 경우 새로운 객체(instance)가 생성이 되며, this의 값은 함수가 호출될 때 만들어지는 새 객체를 바라보게 된다.');
 
                 'use strict';
                 var obj = function () {

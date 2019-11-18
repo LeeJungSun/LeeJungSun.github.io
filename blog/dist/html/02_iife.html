@@ -30,10 +30,10 @@
             </code>
         </div>
 
-        <div class="notice">
+        <div class="notice type2">
             <strong class="notice__title">NOTICE :</strong>
             <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
-            <ul class="notice__list">
+            <ul class="list">
             <li>함수 표현식, 함수 선언식</li>
             <li>변수 유효 범위 (Scope)</li>
             <li>클로저 (Closure)</li>
@@ -99,8 +99,9 @@
                     </code>
                 </div>
 
-                <blockquote class="quote type2">
-                    <p class="quote__text">jQuery와 Prototype 라이브러리는 동일한 $라는 글로벌 변수를 사용하는데, 이 두 가지 라이브러리를 같이 사용한다면 $ 변수에 대한 충돌이 생기게 됩니다.<br> 하지만 즉시 실행 함수 안에서는 $는 전역 변수가 아닌 jQuery object의 지역 변수가 되어 Prototype 라이브러리의 $ 변수와 충돌 없이 사용이 가능합니다.</p>
+                <div class="notice">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <p class="notice__text">jQuery와 Prototype 라이브러리는 동일한 $라는 글로벌 변수를 사용하는데, 이 두 가지 라이브러리를 같이 사용한다면 $ 변수에 대한 충돌이 생기게 됩니다.<br> 하지만 즉시 실행 함수 안에서는 $는 전역 변수가 아닌 jQuery object의 지역 변수가 되어 Prototype 라이브러리의 $ 변수와 충돌 없이 사용이 가능합니다.</p>
                     <div class="example_area">
                         <code>
                             (function ($) {<br>
@@ -108,7 +109,7 @@
                             })(jQuery);
                         </code> 
                     </div>
-                </blockquote>
+                </div>
                 
             </div>
         </article>
