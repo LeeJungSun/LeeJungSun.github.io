@@ -189,6 +189,9 @@
     .table_wrap {
         margin: 20px auto;
     }
+    .notice {
+        margin: 30px 0 25px;
+    }
 }
 .box {
     margin: 20px 0 30px 20px;
@@ -196,7 +199,7 @@
         display: block;
         position: relative;
         min-height: 17px;
-        margin: 40px 0 5px;
+        margin: 50px 0 5px;
         padding-left: 10px;
         font-size: 15px;
         font-weight: bold;
@@ -254,7 +257,7 @@
     }
 }
 .notice {
-    margin: 30px 0 25px;
+    margin: 40px 0;
     padding: 23px 25px;
     border-left: 3px solid #52E052;
     background: #e9fbe9;
