@@ -9,16 +9,17 @@
 <link rel="stylesheet" href="../css/blog-sass.css">
 </head>
 <body>
-<div id="wrap" class="waga_article">
+<div id="wrap">
     <!-- <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.1 - trigger</h1>
     <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p> -->
 
     <!-- 
         https://win100.tistory.com/221
         https://d2.naver.com/helloworld/1855209
+        https://jsperf.com/trigger-vs-not-trigger
         -->
 
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">trigger</h2>
         <p class="sub__text"><span class="code">trigger()</span>는 지정된 이벤트나 선택한 요소에 바인딩된 이벤트를 실행시키는 jQuery 메소드입니다.</p>
         <div class="example_area">
@@ -40,17 +41,20 @@
                 $('#inputTest').<strong class="point">trigger('focus')</strong>;
             </code>
         </div>
-        <strong class="title">* Example</strong>
-        <p class="text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용하였습니다.</p>
-        <div class="img__wrap type2">
-            <div class="img__area">
-                <div class="img">
-                    <img src="../img/trigger/trigger_example01.gif" alt="" style="width: auto">
+        <p class="sub__text"><span class="code">trigger()</span>가 어떻게 작동하는지 아래 예제에서 간단하게 확인할 수 있습니다.</p>
+        <div class="example__wrap">
+            <strong class="title">* Example</strong>
+            <p class="text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용하였습니다.</p>
+            <div class="img__wrap type2">
+                <div class="img__area">
+                    <div class="img">
+                        <img src="../img/trigger/trigger_example01-01.gif" alt="" style="width: auto">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="btn__area">
-            <a href="./code/02_trigger01.html" target="_blank" class="btn_view">Example Code</a>
+            <div class="btn__area">
+                <a href="./code/02_trigger01-01.html" target="_blank" class="btn_view">Example Code</a>
+            </div>
         </div>
         
         <div class="notice type2">
@@ -69,18 +73,9 @@
                 <strong class="list__title">이벤트 리스너 (Event Listener)</strong>
                 <p class="list__text">해당 이벤트가 발생했을 때 등록했던 이벤트 리스너가 실행됩니다.<br> (이벤트 리스너는 항상 on + '이벤트' 명으로 명명됩니다.)</p>
             </li>
-            <li>
-                <strong class="list__title">이벤트 네임스페이스 (Event Namespace)</strong>
-                <p class="list__text">동일한 요소에 같은 이벤트를 동일하게 사용하여 처리할 경우 jQuery에서는 이벤트를 네임스페이스로 구분하여 사용 할 수 있습니다. 네임스페이스는 {이벤트 명}.{namespace} 형식으로 사용 가능하며, 여러 개의 네임스페이스 지정이 가능합니다.</p>
-                <div class="example_area">
-                    <code>
-                        $('selector').on('click.wishlist', function () {...});
-                    </code>
-                </div>
-            </li>
             </ul>
-            <strong class="box__title">Example</strong>
-            <p class="box__text">대표적으로 아래와 같은 코드를 예로 들 수 있습니다. window의 이벤트(load)가 발생되었을 때 등록해둔 이벤트 리스너(onload)가 실행되고, 발생한 이벤트를 이벤트 핸들러가(function) 처리하게 되는 것 입니다.</p>
+            <strong class="title">* Example</strong>
+            <p class="text">대표적으로 아래와 같은 코드를 예로 들 수 있습니다. window의 이벤트(load)가 발생되었을 때 등록해둔 이벤트 리스너(onload)가 실행되고, 발생한 이벤트를 이벤트 핸들러가(function) 처리하게 되는 것 입니다.</p>
             <div class="table_wrap table_type2">
                 <table>
                 <caption><span></span></caption>
@@ -169,6 +164,26 @@
                         $('#test').trigger('<strong class="point">wishList.chair</strong>');
                     </code>
                 </div>
+
+                <div class="notice type2">
+                    <h3 class="notice__title">이벤트 네임스페이스 (Event Namespace)란?</h3>
+                    <p class="notice__text">동일한 요소에 같은 이벤트를 동일하게 사용하여 처리할 경우 jQuery에서는 이벤트를 네임스페이스로 구분하여 사용 할 수 있습니다. 네임스페이스는 {이벤트 이름}.{namespace} 형식으로 사용 가능하며, 여러 개의 네임스페이스 지정이 가능합니다.</p>
+                    <div class="example_area">
+                        <code>
+                            <span class="comment">// 아래 코드에서는 'click'이 이벤트 이름에 해당하고, 'wishlist'가 namespace에 해당하게 됩니다.</span><br>
+                            $('selector').on('<strong class="point">click.wishlist</strong>', function () {...});
+                        </code>
+                    </div>
+                    <p class="notice__text">그리고 네임스페이스는 이벤트 이름 뒤에 붙인 문자열을 기준으로 구분합니다. 여러개의 네임스페이스를 추가해도 이벤트 이름 뒤 첫번째 마침표를 기준으로 하나의 네임스페이스로 인식합니다.</p>
+                    <div class="example_area">
+                        <code>
+                            <span class="comment">// .wishlist.buy는 하나의 네임스페이스가 됩니다.</span><br>
+                            $('selector').on('<strong class="point">click.wishlist</strong>', function () {...});<br>
+                            $('selector').on('<strong class="point">click.wishlist.buy</strong>', function () {...});
+                        </code>
+                    </div>
+                    <p class="notice__text">네임스페이스를 사용하면서 생기는 이슈들은 custom event에서 좀 더 자세하게 다뤄보겠습니다.</p>
+                </div>
             </div>
         </article>
 
@@ -178,6 +193,26 @@
                 장점
                 커스텀 이벤트를 만들고 호출 할 수 있음
             </p>
+            <div class="notice type2">
+                <h3 class="notice__title">trigger() 와 triggerHandler() 차이점</h3>
+                <ul class="list text_type">
+                <li>triggerHandler() 메소드는 이벤트 버블링이 발생하지 않습니다.</li>
+                <li>triggerHandler() 메소드는 일치하는 요소 중 첫번째 요소에서만 동작합니다.</li>
+                <li>triggerHandler() 메소드는 이벤트 핸들러만 실행시키고 이벤트의 기본 기능은 실행하지 않습니다. (ex: form 전송)</li>
+                <li>triggerHandler() 메소드는 jQuery 객체를 반환하지 않고, 실행된 이벤트 핸들러의 반환값을 반환합니다.</li>
+                </ul>
+                <div class="img__wrap type2">
+                    <div class="img__area">
+                        <div class="img">
+                            <img src="../img/trigger/trigger_example01-02.gif" alt="" style="width: auto">
+                        </div>
+                    </div>
+                </div>
+                <p class="notice__text">tirgger 버튼을 클릭하였을 때 이벤트 버블링이 발생하여 모든 input에 배경색이 지정되고 마지막 요소에 focus 이동이 되지만 triggerHandler 버튼의 경우 일치하는 요소 중 첫 번째 요소에만 배경색이 지정되고 input의 이벤트 기본 기능인 focus 기능은 작동하지 않습니다.</p>
+                <div class="btn__area">
+                    <a href="./code/02_trigger01-02.html" target="_blank" class="btn_view">Example Code</a>
+                </div>
+            </div>
         </article>
 
         <article class="article__wrap">
@@ -258,9 +293,11 @@
         </article>
     </section>
 
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">마치며</h2>
-        <p class="sub__text">쏼라쏼라</p>
+        <p class="sub__text">
+            이벤트, 이벤트 핸들러, 이벤트 리스너, 이벤트 네임스페이스
+        </p>
     </section>
 </div>
 </body>
