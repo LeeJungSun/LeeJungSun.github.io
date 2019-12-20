@@ -189,17 +189,29 @@
 
         <article class="article__wrap">
             <h3 class="article__title">[Why use it]</h3>
-            <p class="articel__text">
-                장점
-                커스텀 이벤트를 만들고 호출 할 수 있음
+            <p class="article__text">
+                trigger는 커스텀 이벤트를 호출할 수 있다는 장점이 있습니다.<br> 실제로 실무에 사용되는 예를 들자면, 특정 데이터를 호출하여 데이터가 그려진 후 해당 컴포넌트의 이벤트 호출이 필요한 경우 'rerun'이라는 커스텀 이벤트를 만들고, 해당 커스텀 이벤트에 이벤트 핸들러를 연결시켜 줍니다.
             </p>
+            <div class="example__wrap">
+                <!-- <div class="img__wrap type2">
+                    <div class="img__area">
+                        <div class="img">
+                            <img src="../img/trigger/trigger_example01-02.gif" alt="" style="width: auto">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="btn__area">
+                    <a href="./code/02_trigger01-02.html" target="_blank" class="btn_view">Example Code</a>
+                </div>
+            </div>
+
             <div class="notice type2">
                 <h3 class="notice__title">trigger() 와 triggerHandler() 차이점</h3>
                 <ul class="list text_type">
                 <li>triggerHandler() 메소드는 이벤트 버블링이 발생하지 않습니다.</li>
                 <li>triggerHandler() 메소드는 일치하는 요소 중 첫번째 요소에서만 동작합니다.</li>
                 <li>triggerHandler() 메소드는 이벤트 핸들러만 실행시키고 이벤트의 기본 기능은 실행하지 않습니다. (ex: form 전송)</li>
-                <li>triggerHandler() 메소드는 jQuery 객체를 반환하지 않고, 실행된 이벤트 핸들러의 반환값을 반환합니다.</li>
+                <li>triggerHandler() 메소드는 jQuery 객체를 반환하지 않고, 실행된 마지막 이벤트 핸들러의 리턴값을 반환합니다.</li>
                 </ul>
                 <div class="img__wrap type2">
                     <div class="img__area">
@@ -208,9 +220,9 @@
                         </div>
                     </div>
                 </div>
-                <p class="notice__text">tirgger 버튼을 클릭하였을 때 이벤트 버블링이 발생하여 모든 input에 배경색이 지정되고 마지막 요소에 focus 이동이 되지만 triggerHandler 버튼의 경우 일치하는 요소 중 첫 번째 요소에만 배경색이 지정되고 input의 이벤트 기본 기능인 focus 기능은 작동하지 않습니다.</p>
+                <p class="notice__text">tirgger 버튼을 클릭하였을 때 이벤트 버블링이 발생하여 모든 input에 배경색이 지정되고 마지막 요소에 focus 이동이 되지만, triggerHandler 버튼의 경우 일치하는 요소 중 첫 번째 요소에만 배경색이 지정되고 input의 이벤트 기본 기능인 focus 기능은 작동하지 않습니다.</p>
                 <div class="btn__area">
-                    <a href="./code/02_trigger01-02.html" target="_blank" class="btn_view">Example Code</a>
+                    <a href="./code/02_trigger01-03.html" target="_blank" class="btn_view">Example Code</a>
                 </div>
             </div>
         </article>

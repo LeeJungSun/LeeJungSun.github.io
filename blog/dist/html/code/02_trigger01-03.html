@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>javascript util sample01</title>
+<link rel="stylesheet" href="../../css/blog-sass.css">
+<style>
+    .input_area{text-align:center}
+    .input_text{width:300px;margin:10px auto}
+    .input_text:first-child{margin-top:0;}
+    .input_text input{background:none}
+    .btn_area{margin-top:20px;font-size:0;text-align:center}
+    .btn_area button{margin:0 24px;padding:12px;border:1px solid #363636;border-radius:8px;background:#fff;transition-duration: 0.3s;transition-property: background, color;transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)}
+    .btn_area button span{font-size:13px;font-weight:bold}
+    .btn_area button:hover{background:#363636;color:#fff}
+</style>
+</head>
+<body>
+<div id="wrap" class="example_wrap">
+    <!-- <h1 class="main__title">1. button click trigger</h1>
+
+    <h2 class="sub__title">1) Example</h2> -->
+    <div class="exam__box">
+        <div class="input_area">
+            <div class="input_text"><input type="text" class="input" placeholder="input focus 이동!"></div>
+            <div class="input_text"><input type="text" class="input" placeholder="input focus 이동!"></div>
+            <div class="input_text"><input type="text" class="input" placeholder="input focus 이동!"></div>
+        </div>
+        <div class="btn_area">
+            <button type="button" id="button01"><span>trigger</span></button>
+            <button type="button" id="button02"><span>triggerHandler</span></button>
+        </div>        
+    </div>
+
+    <h2 class="sub__title">2) Code</h2>
+    <h3></h3>
+    <pre><code class="html">&lt;div class="exam__box"&gt;
+    &lt;div class="input_area"&gt;
+        &lt;div class="input_text"&gt;&lt;input type="text" class="input" placeholder="input focus 이동!"&gt;&lt;/div&gt;
+        &lt;div class="input_text"&gt;&lt;input type="text" class="input" placeholder="input focus 이동!"&gt;&lt;/div&gt;
+        &lt;div class="input_text"&gt;&lt;input type="text" class="input" placeholder="input focus 이동!"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="btn_area"&gt;
+        &lt;button type="button" id="button01"&gt;&lt;span&gt;trigger&lt;/span&gt;&lt;/button&gt;
+        &lt;button type="button" id="button02"&gt;&lt;span&gt;triggerHandler&lt;/span&gt;&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <pre><code class="javascript">(function($, win, doc) {
+    'use strict';
+    var example = {
+        opts : {
+            obj : '.exam__box',
+            inputArea : '.input_area',
+            inputText : '.input_text',
+            input : 'input',
+            btnArea : '.btn_area',
+            btn : 'button'
+        },
+        init : function () {
+            this.setElements();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.obj = $(this.opts.obj);
+            this.btnArea = this.obj.find(this.opts.btnArea);
+            this.inputArea = this.obj.find(this.opts.inputArea);
+            this.inputText = this.inputArea.find(this.opts.inputText);
+            this.input = this.inputText.find(this.opts.input);
+            this.btn = this.btnArea.find(this.opts.btn);
+        },
+        bindEvents : function () {
+            this.btn.on('click', $.proxy(this.clickFunc, this));
+            this.input.on('focus', $.proxy(this.inputFunc, this));
+        },
+        clickFunc : function (e) {
+            var targetIndex = $(e.currentTarget).index();
+            if (targetIndex === 1) {
+                this.input.triggerHandler('focus');
+            } else {
+                this.input.trigger('focus');
+            }
+        },
+        inputFunc : function (e) {
+            $(e.currentTarget).css('background', 'yellow');
+        }
+    }
+    example.init();
+})(jQuery, window, document);</code></pre>
+
+</div>
+</body>
+<script type="text/javascript" src="../../js/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../js/apps/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+
+    (function($, win, doc) {
+        'use strict';
+        var example = {
+            opts : {
+                obj : '.exam__box',
+                inputArea : '.input_area',
+                inputText : '.input_text',
+                input : 'input',
+                btnArea : '.btn_area',
+                btn : 'button'
+            },
+            init : function () {
+                this.setElements();
+                this.bindEvents();
+            },
+            setElements : function () {
+                this.obj = $(this.opts.obj);
+                this.btnArea = this.obj.find(this.opts.btnArea);
+                this.inputArea = this.obj.find(this.opts.inputArea);
+                this.inputText = this.inputArea.find(this.opts.inputText);
+                this.input = this.inputText.find(this.opts.input);
+                this.btn = this.btnArea.find(this.opts.btn);
+            },
+            bindEvents : function () {
+                this.btn.on('click', $.proxy(this.clickFunc, this));
+                this.input.on('focus', $.proxy(this.inputFunc, this));
+            },
+            clickFunc : function (e) {
+                var targetIndex = $(e.currentTarget).index();
+                if (targetIndex === 1) {
+                    this.input.triggerHandler('focus');
+                } else {
+                    this.input.trigger('focus');
+                }
+            },
+            inputFunc : function (e) {
+                $(e.currentTarget).css('background', 'yellow');
+            }
+        }
+        example.init();
+    })(jQuery, window, document);
+
+</script>
+</html>
