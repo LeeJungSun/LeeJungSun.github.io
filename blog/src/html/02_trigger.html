@@ -10,14 +10,8 @@
 </head>
 <body>
 <div id="wrap">
-    <!-- <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.1 - trigger</h1>
-    <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p> -->
-
-    <!-- 
-        https://win100.tistory.com/221
-        https://d2.naver.com/helloworld/1855209
-        https://jsperf.com/trigger-vs-not-trigger
-        -->
+    <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.1 - trigger</h1>
+    <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p>
 
     <section class="section__wrap">
         <h2 class="sub__title">trigger</h2>
@@ -30,21 +24,25 @@
         <p class="sub__text">이벤트가 바인딩된 요소에 trigger 메소드를 사용하여 이벤트를 발생시킵니다.</p>
         <div class="example_area">
             <code>
+                <span class="comment">// #btn 요소에 'click' 이벤트를 바인딩하여 이벤트 핸들러 등록.</span><br>
                 $('#btn').on('<strong class="point">click</strong>', function () {<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;console.log('click');<br>
                 });<br>
+                <span class="comment">// #btn 요소에 바인딩 된 'click' 이벤트를 실행시킨다.</span><br>
                 $('#btn').<strong class="point">trigger('click')</strong>;<br>
                 <br>
+                <span class="comment">// #inputTest 요소에 'focus' 이벤트를 바인딩하여 이벤트 핸들러 등록.</span><br>
                 $('#inputTest').<strong class="point">focus</strong>(function () {<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;console.log('focus');<br>
                 });<br>
+                <span class="comment">// #inputTest 요소에 바인딩 된 'focus' 이벤트를 실행시킨다.</span><br>
                 $('#inputTest').<strong class="point">trigger('focus')</strong>;
             </code>
         </div>
         <p class="sub__text"><span class="code">trigger()</span>가 어떻게 작동하는지 아래 예제에서 간단하게 확인할 수 있습니다.</p>
         <div class="example__wrap">
             <strong class="title">* Example</strong>
-            <p class="text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되도록 trigger 메소드를 사용하여 'button01' 카운트 수도같이 올라가도록 적용하였습니다.</p>
+            <p class="text">각각의 버튼 클릭 시 해당하는 버튼의 카운트 수가 올라가지만, 'button02' 클릭 시 'button01' 클릭 이벤트도 함께 실행되어 카운트 수가 같이 올라가도록 trigger 메소드를 사용하여 적용하였습니다.</p>
             <div class="img__wrap type2">
                 <div class="img__area">
                     <div class="img">
@@ -75,10 +73,9 @@
             </li>
             </ul>
             <strong class="title">* Example</strong>
-            <p class="text">대표적으로 아래와 같은 코드를 예로 들 수 있습니다. window의 이벤트(load)가 발생되었을 때 등록해둔 이벤트 리스너(onload)가 실행되고, 발생한 이벤트를 이벤트 핸들러가(function) 처리하게 되는 것 입니다.</p>
+            <p class="text">대표적으로 아래와 같은 코드를 예로 들 수 있습니다. window의 이벤트(load)가 발생되었을 때 등록해둔 이벤트 리스너(onload)가 실행되고, 발생한 이벤트를 이벤트 핸들러(function)가 처리하게 되는 것 입니다.</p>
             <div class="table_wrap table_type2">
                 <table>
-                <caption><span></span></caption>
                 <thead>
                 <tr>
                 <th scope="col"><div class="th">이벤트</div></th>
@@ -112,17 +109,19 @@
         <article class="article__wrap">
             <h3 class="article__title">[How to use]</h3>
             <div class="box">
-                <h4 class="box__title">다중 인자값</h4>
-                <p class="box__text">배열 형태로 인자값을 넘겨줄 경우 인자값을 따로따로 받아 올 수 있으나,<br> 객체로 넘겨줄 경우 해당 객체의 키값으로 접근해야 정상적인 인자값을 받아 올 수 있습니다.</p>
+                <h4 class="box__title">다중 인자 값</h4>
+                <p class="box__text">배열 및 객체로 인자 값을 전달할 수 있으며, 전달한 인자 값을 이벤트 핸들러에서 매개변수 값으로 받아 올 수 있습니다.<br> 이벤트 핸들러에서 인자 값을 받아 올 경우 첫 번째 매개변수 값은 eventType이며, 두 번째 매개변수 값부터 인자 값을 받아 올 수 있습니다.</p>
                 <ul class="list">
                 <li>
-                    <strong class="list__title">배열로 넘겨줄 경우</strong>
+                    <strong class="list__title">배열로 인자 값을 넘겨줄 경우</strong>
+                    <p class="list__text">trigger에서 배열로 넘겨준 인자 값을 매개변수로 받아 올 수 있습니다.</p>
                     <div class="example_area">
                         <code>
-                            $('#test').on('wishList', function () {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[0]); <span class="comment">// eventType</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[1]); <span class="comment">// '모니터'</span><br>
-                            });
+                            $('#test').on('wishList', function (param1, param2) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 첫 번째 매개변수 값은 eventType 입니다.</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param1); <span class="comment">// eventType</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param2); <span class="comment">// '모니터'</span><br>
+                            });<br>
                             $('#test').trigger('wishList', <strong class="point">['모니터', '의자', '데스크탑']</strong>);
                         </code>
                     </div>
@@ -131,12 +130,16 @@
                     </div>
                 </li>
                 <li>
-                    <strong class="list__title">객체로 넘겨줄 경우</strong>
+                    <strong class="list__title">객체로 인자 값을 넘겨줄 경우</strong>
+                    <p class="list__text">매개변수 와 함께 해당 객체의 키값으로 접근해야 정상적으로 인자 값을 받아 올 수 있습니다.</p>
                     <div class="example_area">
                         <code>
-                            $('#test').on('shoppingList', function () {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[0]); <span class="comment">// eventType</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(arguments[1].item2); <span class="comment">// '의자'</span><br>
+                            $('#test').on('shoppingList', function (param1, param2) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 첫 번째 매개변수 값은 eventType 입니다.</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param1); <span class="comment">// eventType</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param2); <span class="comment">// {item1: "모니터", item2: "의자"}</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 매개변수 + 키값으로 접근</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param2.item2); <span class="comment">// '의자'</span><br>
                             });<br>
                             $('#test').trigger('shoppingList', <strong class="point">{<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;item1 : '모니터',<br>
@@ -155,10 +158,10 @@
                 <div class="example_area">
                     <code>
                         $('#test').on('<strong class="point">wishList.monitor</strong>', function () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('모니터');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('모니터'); <span class="comment">// 모니터</span><br>
                         });<br>
                         $('#test').on('<strong class="point">wishList.chair</strong>', function () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('의자');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('의자'); <span class="comment">// 의자</span><br>
                         });<br>
                         $('#test').trigger('<strong class="point">wishList.monitor</strong>');<br>
                         $('#test').trigger('<strong class="point">wishList.chair</strong>');
@@ -182,24 +185,25 @@
                             $('selector').on('<strong class="point">click.wishlist.buy</strong>', function () {...});
                         </code>
                     </div>
-                    <p class="notice__text">네임스페이스를 사용하면서 생기는 이슈들은 custom event에서 좀 더 자세하게 다뤄보겠습니다.</p>
+                    <p class="notice__text">네임스페이스를 사용하면서 생기는 이슈들은 이 후에 블로깅 될 custom event에서 좀 더 자세하게 다뤄보겠습니다.</p>
                 </div>
             </div>
         </article>
 
         <article class="article__wrap">
             <h3 class="article__title">[Why use it]</h3>
-            <p class="article__text">
-                trigger는 커스텀 이벤트를 호출할 수 있다는 장점이 있습니다.<br> 실제로 실무에 사용되는 예를 들자면, 특정 데이터를 호출하여 데이터가 그려진 후 해당 컴포넌트의 이벤트 호출이 필요한 경우 'rerun'이라는 커스텀 이벤트를 만들고, 해당 커스텀 이벤트에 이벤트 핸들러를 연결시켜 줍니다.
-            </p>
+            <p class="article__text">trigger는 커스텀 이벤트를 호출할 수 있다는 장점이 있습니다.<br> 한가지 예를 들자면, <strong>이벤트가 걸려있는 요소 데이터가 동적으로 추가될 경우</strong> 해당 요소에 걸려있는 이벤트를 재호출하여 <strong>레이아웃을 다시 그려줘야 할 경우</strong>가 있습니다. 이런 경우를 대응하기 위해 'rerun'이라는 커스텀 이벤트를 만들고, 데이터가 동적으로 추가될 때 rerun 이벤트를 trigger로 호출하여 사용합니다.</p>
+            <p class="article__text">아래 예제에서 동적으로 요소를 추가하였을 때, trigger를 사용하여 레이아웃을 다시 그려주는 것을 확인할 수 있습니다.</p>
             <div class="example__wrap">
-                <!-- <div class="img__wrap type2">
+                <strong class="title">* Example</strong>
+                <p class="text">'행'별로 가장 높은 높이 값을 기준으로 높이 값을 적용해준 레이아웃에 동적으로 요소를 추가할 경우 추가된 요소의 높이 값은 맞지 않게됩니다. 이때 Height Match 버튼을 눌러주면 버튼에 걸려있는 trigger가 동작하면서 rerun 이벤트를 실행하게 되고 높이 값을 다시 맞춰주게 됩니다.</p>
+                <div class="img__wrap type2">
                     <div class="img__area">
                         <div class="img">
                             <img src="../img/trigger/trigger_example01-02.gif" alt="" style="width: auto">
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <div class="btn__area">
                     <a href="./code/02_trigger01-02.html" target="_blank" class="btn_view">Example Code</a>
                 </div>
@@ -216,7 +220,7 @@
                 <div class="img__wrap type2">
                     <div class="img__area">
                         <div class="img">
-                            <img src="../img/trigger/trigger_example01-02.gif" alt="" style="width: auto">
+                            <img src="../img/trigger/trigger_example01-03.gif" alt="" style="width: auto">
                         </div>
                     </div>
                 </div>
