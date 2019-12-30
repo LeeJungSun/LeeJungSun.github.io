@@ -31,6 +31,9 @@
     }
 }
 .live_region_article {
+    .article__wrap {
+        margin-top: 40px;
+    }
     .img__wrap {
         .img__area {
             &:first-child {
@@ -43,6 +46,9 @@
     }	
 }
 .waga_article  {
+    .box__title {
+        margin-top: 30px;
+    }
     .img__wrap {
         .img {
             width: 70%;
