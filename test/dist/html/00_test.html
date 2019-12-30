@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>테스트</title>
 <link rel="stylesheet" href="../css/test-sass.css">
+<style>
+    input:focus {background:gold}
+</style>
 </head>
 <body>
 <!-- <div class="gs-scroll-area">
@@ -23,7 +26,7 @@
 <div id="test2"></div>
 
 
-<a href="https://www.naver.com/" id="link">링크</a>
+<!-- <a href="https://www.naver.com/" id="link">링크</a> -->
 <!-- <button type="button" id="link">링크</button> -->
 
 <!-- <button id="old">.trigger( "focus" )</button>
@@ -32,13 +35,28 @@
 
 <!-- <input type="text" id="inputTest"> -->
 
+
+<button type="button" id="btn01">triggerHandler</button>
+<button type="button" id="btn02">trigger</button>
+<input type="text">
+<input type="text">
+<input type="text">
+
+
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
 (function (win, $, doc) {
-    // $('#link').on('click', function () {
-    //     console.log();
+    // $('#btn01').click(function () {
+    //     $('input').triggerHandler('focus');
     // });
-    // $('#link').trigger('click');
+    // $('#btn02').click(function () {
+    //     $('input[type]').trigger('focus');
+    // });
+
+    // $('#link').on('click', function () {
+    //     console.log('click');
+    // });
+    // $('#link').triggerHandler('click');
     // $('#link')[0].click();
     
     // $('#test').on('wishlist.monitor', function () {
@@ -76,6 +94,10 @@
     // }
     
     // 배열로 넘겨줄 경우
+    $('#test').on('wishList.monitor', function () {
+        console.log('모니터');
+    });
+    $('#test').trigger('wishList.monitor');
     // $('#test').on('rerun.test', function () {
     //     // console.log(arguments[1]);
     //     console.log('test');
