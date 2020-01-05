@@ -29,7 +29,7 @@
 
 <!-- <input type="text" id="inputTest"> -->
 
-<!-- <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script> -->
+<script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
 (function () {
     // $('#test').on('wishlist.monitor', function () {
@@ -58,15 +58,39 @@
     // });
 
 
-    var obj = document.getElementById('test'),
-        btn = obj.getElementsByTagName('button');
-    for (var i = 0, max = btn.length; i < max; i++) {
-        btn[i].onclick = function () {
-            console.log(i);
-        }
-    }
+    // var obj = document.getElementById('test'),
+    //     btn = obj.getElementsByTagName('button');
+    // for (var i = 0, max = btn.length; i < max; i++) {
+    //     btn[i].onclick = function () {
+    //         console.log(i);
+    //     }
+    // }
 
+    // jQuery
+    $('#test').on('apple', function () {
+        console.log('jQuery custom event');
+    });
+    $('#test').trigger('apple');
     
+    // javascript
+    var obj = document.getElementById('test');
+
+    // 이벤트 생성
+    // var event = new Event('banana'); // IE 제외한 최신 버전 브라우저 지원
+    var event = document.createEvent('Event'); // IE 지원
+
+    // 이벤트 이름 정의
+    event.initEvent('banana', true, true);
+
+    // 이벤트 리스너 등록
+    obj.addEventListener('banana', function (e) {
+        console.log('javascript custom event');
+    }, false);
+
+    // 이벤트 호출
+    obj.dispatchEvent(event);
+
+
     // 배열로 넘겨줄 경우
     // $('#test').on('rerun.test', function () {
     //     // console.log(arguments[1]);
