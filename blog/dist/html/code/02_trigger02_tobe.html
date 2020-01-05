@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>javascript util sample02 to-be</title>
+<link rel="stylesheet" href="../../css/blog-sass.css">
+<style>
+    .exam__box {text-align:center}
+    .btn_area{margin-top:20px;font-size:0;text-align:center}
+    .btn_area button{margin:0 24px;padding:12px;border:1px solid #363636;border-radius:8px;background:#fff;transition-duration: 0.3s;transition-property: background, color;transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)}
+    .btn_area button span{font-size:13px;font-weight:bold}
+    .btn_area button:hover{background:#363636;color:#fff}
+    .link {}
+</style>
+</head>
+<body>
+<div id="wrap" class="example_wrap">
+    <h1 class="main__title">a tag trigger (TO-BE)</h1>
+
+    <h2 class="sub__title">1) Example</h2>
+    <div class="exam__box">
+        <a href="http://www.naver.com" class="link">네이버로 이동하기!</a>
+        <div class="btn_area">
+            <button type="button" id="linkButton"><span>trigger button</span></button>
+        </div>
+    </div>
+
+    <h2 class="sub__title">2) Code</h2>
+    <h3></h3>
+    <pre><code class="html">&lt;div class="exam__box"&gt;
+    &lt;a href="https://www.naver.com/" target="_blank" class="link"&gt;a 태그 입니당!!&lt;/a&gt;
+    &lt;div class="btn_area"&gt;
+        &lt;button type="button" id="linkButton"&gt;&lt;span&gt;trigger button&lt;/span&gt;&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <pre><code class="javascript">(function($, win, doc) {
+    'use strict';
+    var example = {
+        opts : {
+            obj : '.exam__box',
+            link : '.link',
+            btnArea : '.btn_area',
+            btn : '#linkButton'
+        },
+        init : function () {
+            this.setElements();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.obj = $(this.opts.obj);
+            this.btnArea = this.obj.find(this.opts.btnArea);
+            this.btn = this.btnArea.find(this.opts.btn);
+            this.link = this.obj.find(this.opts.link);
+        },
+        bindEvents : function () {
+            this.btn.on('click', $.proxy(this.clickFunc, this));
+            this.link.on('click', $.proxy(this.linkClickFunc, this));
+        },
+        clickFunc : function (e) {
+            // jQuery 객체에서 특정 DOM 요소 액세스
+            this.link[0].click();
+
+            // .get() 메소드 사용하여 jQuery 객체에서 DOM 요소 검색
+            // this.link.get(0).click();
+
+            // DOM 요소를 선택하고 click() 메소드 호출
+            // document.querySelector('.link').click();
+        },
+        linkClickFunc : function () {
+            alert('link click!');
+        }
+    }
+    example.init();
+})(jQuery, window, document);</code></pre>
+
+</div>
+</body>
+<script type="text/javascript" src="../../js/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../js/apps/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+
+    (function($, win, doc) {
+        'use strict';
+        var example = {
+            opts : {
+                obj : '.exam__box',
+                link : '.link',
+                btnArea : '.btn_area',
+                btn : '#linkButton'
+            },
+            init : function () {
+                this.setElements();
+                this.bindEvents();
+            },
+            setElements : function () {
+                this.obj = $(this.opts.obj);
+                this.btnArea = this.obj.find(this.opts.btnArea);
+                this.btn = this.btnArea.find(this.opts.btn);
+                this.link = this.obj.find(this.opts.link);
+            },
+            bindEvents : function () {
+                this.btn.on('click', $.proxy(this.clickFunc, this));
+                this.link.on('click', $.proxy(this.linkClickFunc, this));
+            },
+            clickFunc : function () {
+                // jQuery 객체에서 특정 DOM 요소 액세스
+                this.link[0].click();
+
+                // .get() 메소드 사용하여 jQuery 객체에서 DOM 요소 검색
+                // this.link.get(0).click();
+
+                // DOM 요소를 선택하고 click() 메소드 호출
+                // document.querySelector('.link').click();
+            },
+            linkClickFunc : function () {
+                alert('Link Click!');
+            }
+        }
+        example.init();
+    })(jQuery, window, document);
+
+</script>
+</html>

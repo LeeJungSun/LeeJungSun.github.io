@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>javascript util sample01</title>
+<link rel="stylesheet" href="../../css/blog-sass.css">
+<style>
+    .exam__box{padding:20px}
+    .exam__list{overflow:hidden;margin:-12px 0 0 -12px}
+    .exam__list li{float:left;width:33.3%;padding:12px 0 0 12px;box-sizing:border-box}
+    .exam__list .item-inner{position:relative;padding:25px 10px 15px;border:2px solid #e5a83d;background:#fff;box-sizing:border-box}
+    .exam__list .item-inner:before{position:absolute;top:0;left:0;width:100%;height:15px;background:#ffbb44;content:''}
+    .exam__list .item{font-size:12px;word-break:break-all;line-height:18px}
+    .exam-edit__wrap{overflow:hidden;margin-top:30px}
+
+    .input-textarea{float:left;width:580px;height:92px;margin:0 auto;border:1px solid #363636;box-sizing:border-box}
+    .input-textarea textarea{width:100%;height:100%;padding:12px;border:0;resize:none;box-sizing:border-box}
+    .btn_area{overflow:hidden;padding-left:20px;font-size:0;text-align:center}
+    .btn_area button{width:100%;margin-top:10px;padding:12px;border:1px solid #363636;border-radius:8px;background:#fff;transition-duration: 0.3s;transition-property: background, color;transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95)}
+    .btn_area button:first-child{margin-top:0}
+    .btn_area button span{font-size:13px;font-weight:bold}
+    .btn_area button:hover{background:#363636;color:#fff}
+</style>
+</head>
+<body>
+<div id="wrap" class="example_wrap">
+    <h1 class="main__title">Custom event rerun</h1>
+    <h2 class="sub__title">1) Example</h2>
+    <div class="exam__box">
+        <div class="exam__wrap">
+            <ul class="exam__list">
+            <li><div class="item-inner"><div class="item">content01content01content01content01</div></div></li>
+            <li><div class="item-inner"><div class="item">content02content02content02content02content02content02</div></div></li>
+            <li><div class="item-inner"><div class="item">content03</div></div></li>
+            <li><div class="item-inner"><div class="item">content04content04content04content04</div></div></li>
+            <li><div class="item-inner"><div class="item">content05content05content05content05content05content05content05content05</div></div></li>
+            </ul>
+        </div>
+        <div class="exam-edit__wrap">
+            <div class="input-textarea">
+                <textarea id="examEdit" cols="30" rows="10"></textarea>
+            </div>
+            <div class="btn_area">
+                <button type="button" id="btnAddItem"><span>Add Item</span></button>
+                <button type="button" id="btnRerun"><span>Height Match</span></button>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="sub__title">2) Code</h2>
+    <h3></h3>
+    <pre><code class="html">&lt;div class="exam__box"&gt;
+    &lt;div class="exam__wrap"&gt;
+        &lt;ul class="exam__list"&gt;
+        &lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;content01content01content01content01&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;content02content02content02content02content02content02&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;content03&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;content04content04content04content04&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;content05content05content05content05content05content05content05content05&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class="exam-edit__wrap"&gt;
+        &lt;div class="input-textarea"&gt;
+            &lt;textarea id="examEdit" cols="30" rows="10"&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+        &lt;div class="btn_area"&gt;
+            &lt;button type="button" id="btnAddItem"&gt;&lt;span&gt;Add Item&lt;/span&gt;&lt;/button&gt;
+            &lt;button type="button" id="btnRerun"&gt;&lt;span&gt;Height Match&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <pre><code class="javascript">(function($, win, doc) {
+    'use strict';
+    var example = {
+        opts : {
+            obj : '.exam__box',
+            matchObj : '.exam__list',
+            matchObjChild : '.item',
+            column : 3,
+            editArea : '#examEdit',
+            btnArea : '.btn_area',
+            btnAddItem : '#btnAddItem',
+            btnRerun : '#btnRerun'
+        },
+        init : function () {
+            this.setElements();
+            this.bindEvents();
+            this.setRow();
+            this.getOuterHeight();
+        },
+        setElements : function () {
+            this.obj = $(this.opts.obj);
+            this.matchObj = this.obj.find(this.opts.matchObj);
+            this.matchObjChild = this.matchObj.find(this.opts.matchObjChild);
+            this.btnArea = this.obj.find(this.opts.btnArea);
+            this.btnAddItem = this.btnArea.find(this.opts.btnAddItem);
+            this.btnRerun = this.btnArea.find(this.opts.btnRerun);
+            this.editArea = this.obj.find(this.opts.editArea);
+        },
+        setRow : function () {
+            this.row = Math.ceil(this.matchObjChild.length / this.opts.column);
+        },
+        getOuterHeight : function () {
+            this.outerHeightArr = [];
+            for (var i = 0, max = this.row; i &lt; max; i++) {
+                this.outerHeightArr[i] = [];
+            }
+            for (var i = 0, max = this.matchObjChild.length; i &lt; max ; i++) {
+                var arrayIndex = parseInt((i / this.opts.column), 10),
+                    matchElement = this.matchObjChild.eq(i),
+                    matchHeight = matchElement.outerHeight();
+                this.outerHeightArr[arrayIndex].push(matchHeight);
+            }
+            for (var i = 0, max = this.row; i &lt; max ; i++) {
+                this.outerHeightArr[i] = Math.max.apply(null, this.outerHeightArr[i]);
+            }
+            this.setLayout();
+        },
+        setLayout : function () {
+            for (var i = 0, max = this.matchObjChild.length; i &lt; max ; i++) {
+                var arrayIndex = parseInt((i / this.opts.column), 10);
+                this.matchObjChild.eq(i).height(this.outerHeightArr[arrayIndex]);
+            }
+        },
+        bindEvents : function () {
+            this.btnAddItem.on('click', $.proxy(this.addItemFunc, this));
+            this.btnRerun.on('click', $.proxy(this.rerun, this));
+        },
+        addItemFunc : function () {
+            this.getEditText();
+        },
+        getEditText : function () {
+            var editValue = this.editArea.val(),
+                addText = '&lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;'+ editValue +'&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;';
+            this.matchObj.append(addText);
+        },
+        rerun : function () {
+            this.setElements();
+            this.setRow();
+            this.getOuterHeight();
+        }
+    }
+    example.init();
+})(jQuery, window, document);</code></pre>
+</div>
+</body>
+<script type="text/javascript" src="../../js/libs/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../js/apps/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+
+    (function($, win, doc) {
+        'use strict';
+        var example = {
+            opts : {
+                obj : '.exam__box',
+                matchObj : '.exam__list',
+                matchObjChild : '.item',
+                column : 3,
+                editArea : '#examEdit',
+                btnArea : '.btn_area',
+                btnAddItem : '#btnAddItem',
+                btnRerun : '#btnRerun'
+            },
+            init : function () {
+                this.setElements();
+                this.bindEvents();
+                this.setRow();
+                this.getOuterHeight();
+            },
+            setElements : function () {
+                this.obj = $(this.opts.obj);
+                this.matchObj = this.obj.find(this.opts.matchObj);
+                this.matchObjChild = this.matchObj.find(this.opts.matchObjChild);
+                this.btnArea = this.obj.find(this.opts.btnArea);
+                this.btnAddItem = this.btnArea.find(this.opts.btnAddItem);
+                this.btnRerun = this.btnArea.find(this.opts.btnRerun);
+                this.editArea = this.obj.find(this.opts.editArea);
+            },
+            setRow : function () {
+                this.row = Math.ceil(this.matchObjChild.length / this.opts.column);
+            },
+            getOuterHeight : function () {
+                this.outerHeightArr = [];
+                for (var i = 0, max = this.row; i < max; i++) {
+                    this.outerHeightArr[i] = [];
+                }
+                for (var i = 0, max = this.matchObjChild.length; i < max ; i++) {
+                    var arrayIndex = parseInt((i / this.opts.column), 10),
+                        matchElement = this.matchObjChild.eq(i),
+                        matchHeight = matchElement.outerHeight();
+                    this.outerHeightArr[arrayIndex].push(matchHeight);
+                }
+                for (var i = 0, max = this.row; i < max ; i++) {
+                    this.outerHeightArr[i] = Math.max.apply(null, this.outerHeightArr[i]);
+                }
+                this.setLayout();
+            },
+            setLayout : function () {
+                for (var i = 0, max = this.matchObjChild.length; i < max ; i++) {
+                    var arrayIndex = parseInt((i / this.opts.column), 10);
+                    this.matchObjChild.eq(i).height(this.outerHeightArr[arrayIndex]);
+                }
+            },
+            bindEvents : function () {
+                this.btnAddItem.on('click', $.proxy(this.addItemFunc, this));
+                this.btnRerun.on('click', $.proxy(this.rerun, this));
+            },
+            addItemFunc : function () {
+                this.getEditText();
+            },
+            getEditText : function () {
+                var editValue = this.editArea.val(),
+                    addText = '<li><div class="item-inner"><div class="item">'+ editValue +'</div></div></li>';
+                this.matchObj.append(addText);
+            },
+            rerun : function () {
+                this.setElements();
+                this.setRow();
+                this.getOuterHeight();
+            }
+        }
+        example.init();
+    })(jQuery, window, document);
+
+</script>
+</html>

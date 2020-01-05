@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
+<title>즉시 실행 함수 : Javascript</title>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/blog-sass.css">
+</head>
+<body>
+<div id="wrap" class="waga_article">
+    <!-- <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.2 - 즉시 실행 함수</h1>
+    <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p> -->
+
+    <section class="section__wrap">
+        <h2 class="sub__title">즉시 실행 함수 (IIFE)</h2>
+        <p class="sub__text">일반적으로 함수는 함수를 정의하고 변수에 함수를 저장하고 실행하는 과정을 거치지만, <span class="code">즉시 실행 함수(IIFE, Immediately Invoked Function Expression)</span>는 함수를 정의하고 저장하는 과정이 없이 바로 호출이 가능합니다.</p>
+        <p class="sub__text">아래 두 가지 형태의 즉시 실행 함수는 괄호의 위치만 다를 뿐 동일한 기능을 수행합니다.</p>
+        <div class="example_area">
+            <code>
+                <span class="comment">// 익명 즉시 실행 함수</span><br>
+                <strong class="point">(function () {</strong><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log('function');<br>
+                <strong class="point">})();</strong><br>
+                <br>
+                <strong class="point">(function () {</strong><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log('function');<br>
+                <strong class="point">}());</strong>
+            </code>
+        </div>
+        <div class="notice type2">
+            <strong class="notice__title">NOTICE :</strong>
+            <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
+            <ul class="list text_type">
+            <li>함수 표현식, 함수 선언식</li>
+            <li>변수 유효 범위 (Scope)</li>
+            <li>클로저 (Closure)</li>
+            </ul>
+        </div>
+        <article class="article__wrap">
+            <h3 class="article__title">[How to use]</h3>
+            <div class="box">
+                <h4 class="box__title">변수에 즉시 실행 함수 저장</h4>
+                <p class="box__text">즉시 실행 함수도 함수이기에 변수에 저장이 가능합니다. 변수에 저장할 경우 재호출이 가능해집니다.</p>
+                <div class="example_area">
+                    <code>
+                        (<strong class="point">banana = function</strong> (x) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log(x*x);<br>
+                        })(3);<br>
+                        <span class="comment">// 9 : 함수가 바로 실행되어 노출되는 값</span><br>
+                        banana(4);<br>
+                        <span class="comment">// 16 : 변수로 재호출하여 노출되는 값</span>
+                    </code>
+                </div>
+                <h4 class="box__title">즉시 실행 함수 리턴 값 저장</h4>
+                <p class="box__text">즉시 실행 함수도 함수이기에 리턴값 저장이 가능합니다.</p>
+                <div class="example_area">
+                    <code>
+                        <strong class="point">var apple =</strong> (function (x) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return x + x;<br>
+                        })(2);<br>
+                        console.log(apple);<br>
+                        <span class="comment">// 4</span>
+                    </code>
+                </div>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Why use it]</h3>
+            <div class="box">
+                <h4 class="box__title">초기화 코드</h4>
+                <p class="box__text"><strong>즉시 실행 함수는 함수가 선언되자마자 실행되기 때문에 같은 함수를 다시 호출할 수 없습니다.</strong><br> 이러한 즉시 실행 함수의 특성을 활용하여 한 번만 실행하는 초기화 코드 부분에 많이 사용됩니다. (변수를 전역으로 선언하는 것을 피하기 위해)</p>
+                <h4 class="box__title">전역 변수 충돌 방지</h4>
+                <p class="box__text">기본적으로 자바스크립트는 변수를 선언할 경우 전역 유효 범위를 가지지만, <strong>함수 내부에서 정의된 변수들은 함수 내부에서만 유효합니다.</strong><br> 함수 외부 코드에서 내부 함수 변수에 접근이 불가능하도록 함으로써 변수의 충돌을 방지할 수 있습니다. 때문에 주로 jQuery 또는 기타 프레임워크 소스에서 많이 사용됩니다.<br> 그러나 <strong>함수 내의 변수라도 var 문을 사용하여 변수를 정의하지 않을 경우 전역 유효 범위를 갖게 되므로 주의</strong>해야 합니다.</p>
+                <div class="example_area">
+                    <code>
+                        <strong class="point">
+                            var apple = 'red';<br>
+                            orange = 'orange';<br>
+                        </strong>
+                        (function () { <br>
+                        <strong class="point">
+                            &nbsp;&nbsp;&nbsp;&nbsp;var apple = 'green',<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;banana = 'yellow';<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;orange = 'white';<br>
+                        </strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log(apple); <span class="comment">// 'green' : scope가 다름</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log(banana); <span class="comment">// 'yellow'</span><br>
+                        })();<br>
+                        console.log(apple); <span class="comment">// 'red' : scope가 다름</span><br>
+                        console.log(orange); <span class="comment">// 'white' : 전역 유효 범위를 가지게 되어 오버라이팅 됨</span><br>
+                        console.log(banana); <span class="comment">// not defined : 즉시 실행 함수 내부에서만 유효</span>
+                    </code>
+                </div>
+                <div class="notice type2">
+                    <strong class="notice__title">NOTICE :</strong>
+                    <p class="notice__text">jQuery와 Prototype 라이브러리는 동일한 $라는 글로벌 변수를 사용하는데, 이 두 가지 라이브러리를 같이 사용한다면 $ 변수에 대한 충돌이 생기게 됩니다.<br> 하지만 즉시 실행 함수 안에서는 $는 전역 변수가 아닌 jQuery object의 지역 변수가 되어 Prototype 라이브러리의 $ 변수와 충돌 없이 사용이 가능합니다.</p>
+                    <div class="example_area">
+                        <code>
+                            (function ($) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 함수 scope 내에서 $는 jQuery object</span><br>
+                            })(jQuery);
+                        </code> 
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="article__wrap">
+            <h3 class="article__title">[Trouble Shooting]</h3>
+            <div class="box">
+                <h4 class="box__title">Issue</h4>
+                <p class="box__text">각각의 버튼을 클릭하였을 때 해당 버튼 부모요소의 index가 노출되는 것을 예상하였으나,<br> <strong>for문 내에서 클로저가 생성될 경우 일반적으로 생기는 이슈</strong>로 아래의 경우는 모든 클로저가 환경을 공유하고 있기에 모두 '5'가 찍히게 됩니다.</p>
+                <div class="example_area">
+                    <code>
+                        for (var i = 0, max = btn.length; i &lt; max; i++) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;btn[i].onclick = function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(i);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        }
+                    </code>
+                </div>
+                <div class="img">
+                    <img src="../img/iife/iife_example01.gif" alt="" style="width: auto">
+                </div>
+                <h4 class="box__title">Trouble Shooting</h4>
+                <ul class="list">
+                <li>
+                    <strong class="list__title">즉시 실행 함수 사용</strong>
+                    <p class="list__text"><strong>즉시 실행 함수로 익명 클로저를 추가로 생성</strong>하여 해결해주는 방법으로 변수 i를 즉시 실행 함수에 index라는 자유 변수 형태로 넣어주면, 클로저에 의해 각기 다른 환경 속에 변수가 포함되게 됩니다.</p>
+                    <div class="example_area">
+                        <code>
+                            for (var i = 0, max = btn.length; i &lt; max; i++) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">(function (index) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;btn[index].onclick = function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(index);</strong> <span class="comment">// 정상적으로 버튼 클릭시 0,1,2,3,4 출력</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;})(i);</strong><br>
+                            }
+                        </code>
+                    </div>
+                    <div class="img">
+                        <img src="../img/iife/iife_example02.gif" alt="" style="width: auto">
+                    </div>
+                    <div class="btn__area">
+                        <a href="./code/02_iife01.html" target="_blank" class="btn_view">Example Code</a>
+                    </div>
+                </li>
+                <li>
+                    <strong class="list__title">let 사용</strong>
+                    <p class="list__text">scope 개념으로 접근하여 <strong>function-scope 개념인 var를 block-scope인 let으로 변경</strong>하여 적용하는 방법입니다. let은 코드 블록에서만 유효한 지역 변수이면서 자유 변수로, for문의 생명주기가 종료되어도 변수 i를 참조하는 함수가 존재하는 한 계속 유지됩니다.</p>
+                    <div class="example_area">
+                        <code>
+                            for (let i = 0, max = btn.length; i &lt; max; i++) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;btn[i].onclick = function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(i);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            }
+                        </code>
+                    </div>
+                    <div class="img">
+                        <img src="../img/iife/iife_example03.gif" alt="" style="width: auto">
+                    </div>
+                    <div class="btn__area">
+                        <a href="./code/02_iife02.html" target="_blank" class="btn_view">Example Code</a>
+                    </div>
+                </li>
+                </ul>
+            </div>
+        </article>
+    </section>
+    <section class="section__wrap">
+        <h2 class="sub__title">마치며</h2>
+        <p class="sub__text">쏼라쏼라</p>
+    </section>
+</div>
+</body>
+</html>

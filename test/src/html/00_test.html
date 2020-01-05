@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>테스트</title>
 <link rel="stylesheet" href="../css/test-sass.css">
+<style>
+    input:focus {background:gold}
+</style>
 </head>
 <body>
 <!-- <div class="gs-scroll-area">
@@ -23,6 +26,9 @@
 <div id="test2"></div>
 
 
+<!-- <a href="https://www.naver.com/" id="link">링크</a> -->
+<!-- <button type="button" id="link">링크</button> -->
+
 <!-- <button id="old">.trigger( "focus" )</button>
 <button id="new">.triggerHandler( "focus" )</button><br><br>
 <input type="text" value="To Be Focused"> -->
@@ -31,7 +37,20 @@
 
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
-(function () {
+(function (win, $, doc) {
+    // $('#btn01').click(function () {
+    //     $('input').triggerHandler('focus');
+    // });
+    // $('#btn02').click(function () {
+    //     $('input[type]').trigger('focus');
+    // });
+
+    // $('#link').on('click', function () {
+    //     console.log('click');
+    // });
+    // $('#link').triggerHandler('click');
+    // $('#link')[0].click();
+    
     // $('#test').on('wishlist.monitor', function () {
     //     console.log('모니터');
     // });
@@ -92,6 +111,10 @@
 
 
     // 배열로 넘겨줄 경우
+    $('#test').on('wishList.monitor', function () {
+        console.log('모니터');
+    });
+    $('#test').trigger('wishList.monitor');
     // $('#test').on('rerun.test', function () {
     //     // console.log(arguments[1]);
     //     console.log('test');
@@ -223,7 +246,7 @@
     // (function ($) {
     //     // 함수 scope 내에서 $는 jQuery object
     // })(jQuery);
-})();
+})(window, window.jQuery, window.document);
 </script>
 <script src="../js/apps/test.js"></script>
 </body>

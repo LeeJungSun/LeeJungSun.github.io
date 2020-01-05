@@ -13,13 +13,13 @@
     <h1 class="main__title">WAQA Trouble Shooting 실무 적용</h1>
     <p class="main__text">삼성닷컴 샵통합 프로젝트 buying PD 대상으로 진행되었던 웹 접근성 QA를 어떻게 실무에 적용하고 해결하였는지<br> QA 이슈 목록 중 마이너 한 이슈를 제외한 총 5가지 이슈를 선정하여 정리해보았습니다.</p>
 
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">레이어 팝업 내부 포커스 접근 이슈</h2>
         <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
-                <p class="article__text">IOS</p>
+                <p class="box__text">IOS</p>
                 <h4 class="box__title">이슈 내용</h4>
                 <ul class="list text_type">
                 <li>레이어 팝업을 열었을 때, 스크린리더기 포커스가 버튼에 Trap 되어 해당 레이어 팝업 안으로 접근하지 못하는 현상.<br> (내부 요소를 직접적으로 터치했을 때는 접근 가능.)</li>
@@ -33,7 +33,7 @@
             <h3 class="article__title">[Trouble Shooting]</h3>
             <div class="box">
                 <h4 class="box__title">테스트 환경</h4>
-                <p class="article__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
+                <p class="box__text">IphoneX 12.3.1 / IphoneXS 12.1 / Iphone6 10.3.3 / Iphone5 9.3.4</p>
                 <h4 class="box__title">이슈 개선</h4>
                 <ul class="list text_type">
                 <li>레이어 팝업 닫기 버튼 요소에 CSS <code class="code">text-transform:capitalize</code> 속성 추가. (uppercase, lowercase 값으로 적용해도 가능)</li>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="notice">
                     <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
+                    <ul class="list text_type">
                     <li>Iphone5 9.3.4 버전대의 경우 이슈 개선 사항대로 수정 적용해도 동일한 이슈 발생하므로, 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
                     <li>다양한 속성들을 추가해보면서 테스트하여 해결 방법을 알아낸 케이스로 본래 텍스트를 CSS로 transform 하면서 스크린리더기가 다시 해석하게 되고 focus가 이동 가능한 것이 아닐까 생각하였습니다.</li>
                     </ul>
@@ -73,8 +73,7 @@
             </div>
         </article>
     </section>
-
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">레이어 팝업 포커스 튕김 이슈</h2>
         <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
@@ -120,7 +119,7 @@
                 </div>
                 <div class="notice">
                     <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
+                    <ul class="list text_type">
                     <li>Iphone5 9.3.4 버전대의 경우 수정 적용 전, 후 동일하게 포커스 이동할 때마다 포커스가 계속 다른 요소로 튀었다가 다시 돌아오는 현상이 있습니다. 해당 기종 버전대의 대응이 필요할 경우 추가적으로 이슈 해결 방법 확인 필요합니다.</li>
                     <li>role="dialog"은 사용자에게 버튼을 클릭하여 노출된 컨텐츠가 팝업임을 나타내기 위해 사용하였습니다. 사용자에게 팝업 컨텐츠임을 제공한 이후에 role값을 지워주었기 때문에 사용자 탐색에는 이슈가 없다고 생각하여 해당 방식으로 수정하였습니다.</li>
                     </ul>
@@ -128,8 +127,7 @@
             </div>
         </article>
     </section>
-
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">Thumbnail 포커스 이슈</h2>
         <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
@@ -195,7 +193,6 @@
                         &lt;/div&gt;
                     </code>
                 </div>
-                <strong class="point2"></strong>
                 <div class="img__wrap type2">
                     <div class="img__area">
                         <strong class="img__title">[AS-IS]</strong>
@@ -232,22 +229,19 @@
                 </div>
                 <div class="notice">
                     <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
+                    <ul class="list text_type">
                     <li>role="option" 은 형제노드끼리 인식이 가능한 요손데, 부모로 감싸져 있어서 형제노드로 인식을 안하기 때문에, 부모에다가 tabIndex="-1" 을 주어 role="option" 끼리 접근이 가능하도록 해결한 케이스입니다.</li>
                     </ul>
                 </div>
             </div>
         </article>
     </section>
-
-    <section class="section_wrap">
-        <h2 class="sub__title">Slick 호출 후 접근 이슈</h2>
+    <section class="section__wrap">        <h2 class="sub__title">Slick 호출 후 접근 이슈</h2>
         <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
                 <p class="box__text">IOS</p>
-
                 <h4 class="box__title">이슈 내용</h4>
                 <ul class="list text_type">
                 <li>slick 호출 시 해당 slide를 컨텐츠 내용을 통째로 읽어주며 slick 내부 컨텐츠 탐색이 불가능하다.<br> (slick내 링크가 있을 경우 해당 링크에 접근이 불가능.)</li>
@@ -304,7 +298,7 @@
                 </div>
                 <div class="notice">
                     <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
+                    <ul class="list text_type">
                     <li>aira-live:polite 속성은 사용자가 진행하던 작업을 마치면 변경사항을 알리도록 하는 속성으로 팝업이 열리고 slick이 호출되는 것을 변경사항으로 인식하여 해당 slick 컨텐츠 내용을 알려주는 것으로 판단하였습니다. 그래서 사용자가 컨텐츠 탐색 중이 아닐 경우엔 사용자에게 변경사항을 알려주지 않도록 off 속성으로 적용하였습니다.</li>
                     <li>slick-slide에 선언된 option 자체가 하나의 선택 요소임을 나타내므로 해당 목록 내부에 포커스 이동이 불가한 것은 어찌 보면 당연하다고 생각합니다. 그리고 해당 slick 컨텐츠는 옵션을 선택하는 의미가 아니기에 role 값을 제거해도 이슈 없다고 판단하여 진행하였습니다.</li>
                     </ul>
@@ -312,14 +306,13 @@
             </div>
         </article>
     </section>
-
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">Slick indicator 포커스 이슈</h2>
         <article class="article__wrap">
             <h3 class="article__title">[Issue]</h3>
             <div class="box">
                 <h4 class="box__title">이슈 환경</h4>
-                <p class="box__text">IOS, Android</p>                
+                <p class="box__text">IOS, Android</p>
                 <h4 class="box__title">이슈 내용</h4>
                 <ul class="list text_type">
                 <li>비활성화된 slick indicator에 포커스가 이동하지 않아서 slick 컨텐츠를 제대로 탐색하지 못하는 이슈.</li>
@@ -377,7 +370,7 @@
                 </div>
                 <div class="notice">
                     <strong class="notice__title">NOTICE :</strong>
-                    <ul class="notice__list">
+                    <ul class="list text_type">
                     <li>aria-hidden 값이 true로 설정되어 있을 경우 화면낭독기와 같은 보조기기의 초점을 막게됩니다. 사용자에게 정상적인 정보 제공을 위하여 aria-hidden 값을 false로 선언하거나 attr 값을 제거해줍니다.</li>
                     </ul>
                 </div>
@@ -385,7 +378,7 @@
         </article>
     </section>
 
-    <section class="section_wrap">
+    <section class="section__wrap">
         <h2 class="sub__title">마치며</h2>
         <p class="sub__text">프로젝트 웹 접근성 대응은 처음 진행해보았는데요. 검색을 해도 나오지 않아서 이슈 해결 방법이 없는 상태일 땐 다양한 속성들을 넣고 빼고 모든 경우의 수를 다 넣어서 테스트해보았던 것 같습니다. (그 중 제일 충격적이였던 이슈는 '레이어 팝업 내부 포커스 접근 이슈' 해결 방식이였어요!!)</p>
         <p class="sub__text">저희가 진행한 이슈 해결 방법이 조금이라도 도움이 되었으면 좋겠습니다. 좀 더 좋은 해결 방식이나 있다면 언제든 말씀해주세요!</p>
