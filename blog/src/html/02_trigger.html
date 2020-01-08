@@ -121,27 +121,45 @@
             <h3 class="article__title">[How to use]</h3>
             <div class="box">
                 <h4 class="box__title">다중 인자 값</h4>
-                <p class="box__text">배열 및 객체로 인자 값을 전달할 수 있으며, 전달한 인자 값을 이벤트 핸들러에서 매개변수 값으로 받아 올 수 있습니다.<br> 이벤트 핸들러에서 인자 값을 받아 올 경우 첫 번째 매개변수 값은 eventType이며, 두 번째 매개변수 값부터 인자 값을 받아 올 수 있습니다.</p>
+                <p class="box__text">trigger에서는 기본적으로 인자 값을 두 개 이상 전달해야 할 경우 배열 형태로 전달해야 파라미터값을 정상적으로 받아 올 수 있습니다. 그리고 배열 이외에 객체로도 인자 값을 전달할 수 있습니다.</p>
+                <p class="box__text">전달한 인자 값은 이벤트 핸들러에서 매개변수 값으로 받아 올 수 있으며, 이벤트 핸들러에서 인자 값을 받아 올 경우 첫 번째 매개변수 값은 eventType이고, 두 번째 매개변수 값부터 인자 값을 받아 올 수 있습니다.</p>
                 <ul class="list">
                 <li>
-                    <strong class="list__title">배열로 인자 값을 넘겨줄 경우</strong>
+                    <h5 class="list__title">배열로 인자 값을 넘겨줄 경우</h5>
                     <p class="list__text">trigger에서 배열로 넘겨준 인자 값을 매개변수로 받아 올 수 있습니다.</p>
+                    <h6 class="title2">* 배열 미사용</h6>
                     <div class="example_area">
                         <code>
-                            $('#test').on('wishList', function (param1, param2) {<br>
+                            $('#test').on('wishList', function (param1, param2, param3, param4) {<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 첫 번째 매개변수 값은 eventType 입니다.</span><br>
                             &nbsp;&nbsp;&nbsp;&nbsp;console.log(param1); <span class="comment">// eventType</span><br>
                             &nbsp;&nbsp;&nbsp;&nbsp;console.log(param2); <span class="comment">// '모니터'</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param3); <span class="comment">// undefined</span><br>
                             });<br>
-                            $('#test').trigger('wishList', <strong class="point">['모니터', '의자', '데스크탑']</strong>);
+                            $('#test').trigger('wishList', <strong class="point">'모니터', '의자'</strong>);
                         </code>
                     </div>
                     <div class="img">
                         <img src="../img/trigger/trigger_example02.png" alt="">
                     </div>
+                    <h6 class="title2">* 배열 사용</h6>
+                    <div class="example_area">
+                        <code>
+                            $('#test').on('wishList', function (param1, param2, param3) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 첫 번째 매개변수 값은 eventType 입니다.</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param1); <span class="comment">// eventType</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param2); <span class="comment">// '모니터'</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(param3); <span class="comment">// '의자'</span><br>
+                            });<br>
+                            $('#test').trigger('wishList', <strong class="point">['모니터', '의자']</strong>);
+                        </code>
+                    </div>
+                    <div class="img">
+                        <img src="../img/trigger/trigger_example02-01.png" alt="">
+                    </div>
                 </li>
                 <li>
-                    <strong class="list__title">객체로 인자 값을 넘겨줄 경우</strong>
+                    <h5 class="list__title">객체로 인자 값을 넘겨줄 경우</h5>
                     <p class="list__text">매개변수 와 함께 해당 객체의 키값으로 접근해야 정상적으로 인자 값을 받아 올 수 있습니다.</p>
                     <div class="example_area">
                         <code>
@@ -163,6 +181,55 @@
                     </div>
                 </li>
                 </ul>
+
+                <h4 class="box__title"><span class="bar"></span>커스텀 이벤트</h4>
+                <p class="box__text">jQuery에서는 HTML DOM Events 이외에 간단하게 문자열로 만든 커스텀 이벤트를 trigger로 호출이 가능합니다.</p>
+                <div class="example_area">
+                    <code>
+                        <span class="comment">// wishList 커스텀 이벤트 생성</span><br>
+                        $('#test').on('<strong class="point">wishList</strong>', function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('모니터'); <span class="comment">// 모니터</span><br>
+                        });<br>
+                        <span class="comment">// wishList 커스텀 이벤트 trigger</span><br>
+                        $('#test').trigger('<strong class="point">wishList</strong>');
+                    </code>
+                </div>
+                <div class="notice type2">
+                    <h3 class="notice__title">커스텀 이벤트란?</h3>
+                    <p class="notice__text">커스텀 이벤트란 사용자 정의 이벤트라고도 하며, HTML DOM Events 이외에 사용자가 직접 이벤트를 만들 수 있습니다.</p>
+                    <p class="notice__text">작업자가 의도한대로 해당 이벤트만 on, off가 가능해집니다. (이벤트 네임스페이스와 같이 활용하면 더욱 유니크해지겠죠?) 그리고 이렇게 생성한 커스텀 이벤트는 A라는 파일에서 커스텀 이벤트를 생성하고 등록하면 B라는 파일에서 호출하는 방식의 사용이 가능합니다.</p>
+                    <p class="notice__text">jQuery의 경우 간단하게 문자열로 이벤트를 등록하고 trigger로 이벤트를 호출하면 되지만, javascript의 경우 별도 이벤트 생성, 호출 과정을 거쳐야합니다.</p>
+                    <strong class="title2">* jQuery</strong>
+                    <div class="example_area">
+                        <code>
+                            $('#test').on('apple', function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log('jQuery custom event');<br>
+                            });<br>
+                            $('#test').trigger('apple');
+                        </code>
+                    </div>
+                    <strong class="title2">* javascript</strong>
+                    <div class="example_area">
+                        <code>
+                            var obj = document.getElementById('test');<br><br>
+
+                            <span class="comment">// 이벤트 생성</span><br>
+                            var event = new Event('banana'); <span class="comment">// IE 제외한 최신 버전 브라우저 지원</span><br>
+                            var event = document.createEvent('Event'); <span class="comment">// IE 지원</span><br><br>
+
+                            <span class="comment">// 이벤트 이름 정의</span><br>
+                            event.initEvent('banana', true, true);<br><br>
+
+                            <span class="comment">// 이벤트 리스너 등록</span><br>
+                            obj.addEventListener('banana', function (e) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log('javascript custom event');<br>
+                            }, false);<br><br>
+
+                            <span class="comment">// 이벤트 호출</span><br>
+                            obj.dispatchEvent(event);
+                        </code>
+                    </div>
+                </div>
 
                 <h4 class="box__title">이벤트 네임스페이스</h4>
                 <p class="box__text">네임스페이스를 사용한 이벤트에도 trigger 적용이 가능합니다.</p>

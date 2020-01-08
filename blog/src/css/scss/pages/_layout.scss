@@ -49,6 +49,15 @@
         margin-top: 0;
     }
 }
+.title2 {
+    display: block;
+    margin: 20px 0 5px;
+    font-size: 13px;
+    line-height: 1.3em;
+    &:first-child {
+        margin-top: 0;
+    }
+}
 .text {
     margin-top: 10px;
     color: #4d5256;

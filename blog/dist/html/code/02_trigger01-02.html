@@ -89,6 +89,7 @@
             this.bindEvents();
             this.setRow();
             this.getOuterHeight();
+            this.bindCallBackEvents();
         },
         setElements : function () {
             this.obj = $(this.opts.obj);
@@ -126,7 +127,10 @@
         },
         bindEvents : function () {
             this.btnAddItem.on('click', $.proxy(this.addItemFunc, this));
-            this.btnRerun.on('click', $.proxy(this.rerun, this));
+            this.btnRerun.on('click', $.proxy(this.heightMatchFunc, this));
+        },
+        bindCallBackEvents : function () {
+            this.obj.on('rerun', $.proxy(this.rerun, this));
         },
         addItemFunc : function () {
             this.getEditText();
@@ -135,6 +139,9 @@
             var editValue = this.editArea.val(),
                 addText = '&lt;li&gt;&lt;div class="item-inner"&gt;&lt;div class="item"&gt;'+ editValue +'&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;';
             this.matchObj.append(addText);
+        },
+        heightMatchFunc : function () {
+            this.obj.trigger('rerun');
         },
         rerun : function () {
             this.setElements();
@@ -174,6 +181,7 @@
                 this.bindEvents();
                 this.setRow();
                 this.getOuterHeight();
+                this.bindCallBackEvents();
             },
             setElements : function () {
                 this.obj = $(this.opts.obj);
@@ -211,7 +219,10 @@
             },
             bindEvents : function () {
                 this.btnAddItem.on('click', $.proxy(this.addItemFunc, this));
-                this.btnRerun.on('click', $.proxy(this.rerun, this));
+                this.btnRerun.on('click', $.proxy(this.heightMatchFunc, this));
+            },
+            bindCallBackEvents : function () {
+                this.obj.on('rerun', $.proxy(this.rerun, this));
             },
             addItemFunc : function () {
                 this.getEditText();
@@ -220,6 +231,9 @@
                 var editValue = this.editArea.val(),
                     addText = '<li><div class="item-inner"><div class="item">'+ editValue +'</div></div></li>';
                 this.matchObj.append(addText);
+            },
+            heightMatchFunc : function () {
+                this.obj.trigger('rerun');
             },
             rerun : function () {
                 this.setElements();
