@@ -13,6 +13,18 @@
     <!-- <h1 class="main__title">알아두면 쓸모있는 자바스크립트 Part.2 - 즉시 실행 함수</h1>
     <p class="main__text">삼성 스크립트 업무를 진행하면서 많이 사용되고 유용하게 사용되는 개념들이지만 왜 쓰는지? 어떤 경우에 사용되는지? 잘 몰랐던 개념들을 몇가지 선정하여 정리해보았습니다.</p> -->
 
+    <!-- <section class="section__wrap">
+        <div class="quote">
+            <p class="notice__text">알아두면 쓸모있는 자바스크립트 블로깅은 아래 순서대로 공유 예정입니다.</p>
+            <ul class="list text_type">
+            <li><strong><a href="http://staging.hivelab.co.kr/aemui1/javascript/blog/workspace/dist/html/01_01_customevent.html" target="_blank">1. Custom Event</a></strong></li>
+            <li><strong><a href="http://staging.hivelab.co.kr/aemui1/javascript/blog/workspace/dist/html/01_02_trigger.html" target="_blank">2. trigger</a></strong></li>
+            <li class="point5">3. 즉시 실행 함수</li>
+            <li class="point5">4. Event Delegation</li>
+            </ul>
+        </div>
+    </section> -->
+
     <section class="section__wrap">
         <h2 class="sub__title">즉시 실행 함수 (IIFE)</h2>
         <p class="sub__text">일반적으로 함수는 함수를 정의하고 변수에 함수를 저장하고 실행하는 과정을 거치지만, <span class="code">즉시 실행 함수(IIFE, Immediately Invoked Function Expression)</span>는 함수를 정의하고 저장하는 과정이 없이 바로 호출이 가능합니다.</p>
@@ -32,10 +44,47 @@
         <div class="notice type2">
             <strong class="notice__title">NOTICE :</strong>
             <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
-            <ul class="list text_type">
-            <li>함수 표현식, 함수 선언식</li>
-            <li>변수 유효 범위 (Scope)</li>
-            <li>클로저 (Closure)</li>
+            <ul class="list">
+            <li>
+                <strong class="list__title">함수 표현식</strong>
+                <ul class="list text_type">
+                <li>함수를 변수 값에 담아둔 형태입니다.</li>
+                <li>함수 식별자가 존재하는 기명 함수 표현 식과 존재하지 않는 익명 함수 표현 식으로 나누어집니다.</li>
+                <li>변수 명을 통해 호출합니다.</li>
+                <li>함수 호이스팅의 영향을 받지 않습니다.</li>
+                </ul>
+                <div class="example_area">
+                    <code>
+                        <span class="comment">// 익명 함수 표현식 </span><br>
+                        var <strong class="point">banana</strong> = function () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
+                        }<br>
+                        banana();<br><br>
+                        <span class="comment">// 기명 함수 표현식 </span><br>
+                        var <strong class="point">grape</strong> = function <strong class="point">purple</strong> () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
+                        }<br>
+                        grape();
+                    </code>
+                </div>
+            </li>
+            <li>
+                <strong class="list__title">함수 선언식</strong>
+                <ul class="list text_type">
+                <li>함수 리터럴 형식과 같습니다.</li>
+                <li>필수적으로 함수 이름이 선언되어야 합니다.</li>
+                <li>함수 이름을 통해 호출합니다.</li>
+                <li>함수 호이스팅의 영향을 받습니다.</li>
+                </ul>
+                <div class="example_area">
+                    <code>
+                        function <strong class="point">apple</strong> () {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
+                        }<br>
+                        apple();
+                    </code>
+                </div>
+            </li>
             </ul>
         </div>
         <article class="article__wrap">
@@ -93,16 +142,17 @@
                         console.log(banana); <span class="comment">// not defined : 즉시 실행 함수 내부에서만 유효</span>
                     </code>
                 </div>
+                <p class="box__text">한가지 예를 들면,<br> jQuery와 Prototype 라이브러리는 동일한 $라는 글로벌 변수를 사용하는데, 이 두 가지 라이브러리를 같이 사용한다면 $ 변수에 대한 충돌이 생기게 됩니다.<br> 하지만 즉시 실행 함수 안에서는 $는 전역 변수가 아닌 jQuery object의 지역 변수가 되어 Prototype 라이브러리의 $ 변수와 충돌 없이 사용이 가능합니다.</p>
+                <div class="example_area">
+                    <code>
+                        (function ($) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 함수 scope 내에서 $는 jQuery object</span><br>
+                        })(jQuery);
+                    </code> 
+                </div>
                 <div class="notice type2">
-                    <strong class="notice__title">NOTICE :</strong>
-                    <p class="notice__text">jQuery와 Prototype 라이브러리는 동일한 $라는 글로벌 변수를 사용하는데, 이 두 가지 라이브러리를 같이 사용한다면 $ 변수에 대한 충돌이 생기게 됩니다.<br> 하지만 즉시 실행 함수 안에서는 $는 전역 변수가 아닌 jQuery object의 지역 변수가 되어 Prototype 라이브러리의 $ 변수와 충돌 없이 사용이 가능합니다.</p>
-                    <div class="example_area">
-                        <code>
-                            (function ($) {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 함수 scope 내에서 $는 jQuery object</span><br>
-                            })(jQuery);
-                        </code> 
-                    </div>
+                    <strong class="notice__title">변수 유효 범위 (Scope) 란?</strong>
+                    <p class="notice__text">스코프 쏼라쏼라</p>
                 </div>
             </div>
         </article>
@@ -151,7 +201,7 @@
                     <p class="list__text">scope 개념으로 접근하여 <strong>function-scope 개념인 var를 block-scope인 let으로 변경</strong>하여 적용하는 방법입니다. let은 코드 블록에서만 유효한 지역 변수이면서 자유 변수로, for문의 생명주기가 종료되어도 변수 i를 참조하는 함수가 존재하는 한 계속 유지됩니다.</p>
                     <div class="example_area">
                         <code>
-                            for (let i = 0, max = btn.length; i &lt; max; i++) {<br>
+                            for (<strong class="point">let</strong> i = 0, max = btn.length; i &lt; max; i++) {<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;btn[i].onclick = function () {<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(i);<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;}<br>
@@ -166,6 +216,10 @@
                     </div>
                 </li>
                 </ul>
+                <div class="notice type2">
+                    <strong class="notice__title">클로저 (Closure) 란?</strong>
+                    <p class="notice__text">클로저 쏼라쏼라</p>
+                </div>
             </div>
         </article>
     </section>

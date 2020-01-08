@@ -79,7 +79,7 @@
         background: #e5ebf0;
         font-size: 13px;
         font-weight: bold;
-        color: #808b96;
+        color: #808b96 !important;
         line-height: 26px;
         text-align: center;
         text-decoration: none;
@@ -603,4 +603,10 @@
 }
 .sub__title + .article__wrap {
     margin-top: 40px;
+}
+.title2 + .example_area {
+    margin-top: 8px;
+}
+.title2 + .list {
+    margin-top: 8px;
 }
