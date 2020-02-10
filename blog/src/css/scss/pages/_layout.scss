@@ -86,7 +86,7 @@
         transition: all .2s ease-in;
         &:hover {
             background: #3884fe;
-            color: #fff;
+            color: #fff !important;
             &:after {
                 border-color: #fff;
             }
@@ -186,12 +186,13 @@
         margin-bottom: 5px;
         font-size: 15px;
         font-weight: bold;
+        line-height: 1.5;
         & + .list {
             margin-top: 10px;
         }
     }
     &__text {
-        //
+        line-height: 1.8;
     }
     list-style-type: disc;
     a {
@@ -331,6 +332,7 @@
     &__text {
         margin-top: 8px;
         font-size: 14px;
+        color: #555;
         line-height: 25px;
         &:first-child {
             margin-top: 0;
@@ -366,6 +368,9 @@
     &.type2 {
         border-color: #3f87a6;
         background: #e4f0f5;
+        .title {
+            color: #555;
+        }
         .btn_view {
             background: #dce2e7;
             &:hover {
@@ -375,6 +380,7 @@
         .notice {
             &__title {
                 position: relative;
+                margin-bottom: 18px;
                 padding: 1px 0 0 22px;
                 font-weight: bold;
                 color: #666;
@@ -609,4 +615,7 @@
 }
 .title2 + .list {
     margin-top: 8px;
+}
+.notice__text + .title {
+    margin-top: 40px;
 }

@@ -44,48 +44,42 @@
         <div class="notice type2">
             <strong class="notice__title">NOTICE :</strong>
             <p class="notice__text">미리 알아두면 좀 더 이해하기 쉬운 개념 목록입니다.</p>
-            <ul class="list">
-            <li>
-                <strong class="list__title">함수 표현식</strong>
-                <ul class="list text_type">
-                <li>함수를 변수 값에 담아둔 형태입니다.</li>
-                <li>함수 식별자가 존재하는 기명 함수 표현 식과 존재하지 않는 익명 함수 표현 식으로 나누어집니다.</li>
-                <li>변수 명을 통해 호출합니다.</li>
-                <li>함수 호이스팅의 영향을 받지 않습니다.</li>
-                </ul>
-                <div class="example_area">
-                    <code>
-                        <span class="comment">// 익명 함수 표현식 </span><br>
-                        var <strong class="point">banana</strong> = function () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
-                        }<br>
-                        banana();<br><br>
-                        <span class="comment">// 기명 함수 표현식 </span><br>
-                        var <strong class="point">grape</strong> = function <strong class="point">purple</strong> () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
-                        }<br>
-                        grape();
-                    </code>
-                </div>
-            </li>
-            <li>
-                <strong class="list__title">함수 선언식</strong>
-                <ul class="list text_type">
-                <li>함수 리터럴 형식과 같습니다.</li>
-                <li>필수적으로 함수 이름이 선언되어야 합니다.</li>
-                <li>함수 이름을 통해 호출합니다.</li>
-                <li>함수 호이스팅의 영향을 받습니다.</li>
-                </ul>
-                <div class="example_area">
-                    <code>
-                        function <strong class="point">apple</strong> () {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
-                        }<br>
-                        apple();
-                    </code>
-                </div>
-            </li>
+            <strong class="title">* 함수 표현식</strong>
+            <ul class="list text_type">
+            <li>함수를 변수 값에 담아둔 형태입니다.</li>
+            <li>함수 식별자가 존재하는 기명 함수 표현 식과 존재하지 않는 익명 함수 표현 식으로 나누어집니다.</li>
+            <li>변수 명을 통해 호출합니다.</li>
+            <li>함수 호이스팅의 영향을 받지 않습니다.</li>
             </ul>
+            <div class="example_area">
+                <code>
+                    <span class="comment">// 익명 함수 표현식 </span><br>
+                    var <strong class="point">banana</strong> = function () {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
+                    }<br>
+                    banana();<br><br>
+                    <span class="comment">// 기명 함수 표현식 </span><br>
+                    var <strong class="point">grape</strong> = function <strong class="point">purple</strong> () {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
+                    }<br>
+                    grape();
+                </code>
+            </div>
+            <strong class="title">* 함수 선언식</strong>
+            <ul class="list text_type">
+            <li>함수 리터럴 형식과 같습니다.</li>
+            <li>필수적으로 함수 이름이 선언되어야 합니다.</li>
+            <li>함수 이름을 통해 호출합니다.</li>
+            <li>함수 호이스팅의 영향을 받습니다.</li>
+            </ul>
+            <div class="example_area">
+                <code>
+                    function <strong class="point">apple</strong> () {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('code');<br>
+                    }<br>
+                    apple();
+                </code>
+            </div>
         </div>
         <article class="article__wrap">
             <h3 class="article__title">[How to use]</h3>
@@ -150,9 +144,89 @@
                         })(jQuery);
                     </code> 
                 </div>
+
                 <div class="notice type2">
                     <strong class="notice__title">변수 유효 범위 (Scope) 란?</strong>
-                    <p class="notice__text">스코프 쏼라쏼라</p>
+                    <p class="notice__text">스코프란 변수가 코드에 영향을 미치는 범위를 말합니다.</p>
+
+                    <strong class="title">* 변수 (Variable)</strong>
+                    <ul class="list text_type">
+                    <li>
+                        <strong class="list__title">전역 변수 (Global Variable)</strong>
+                        <p class="list__text">전역으로 선언되어 함수에 포함되지 않는 변수로 window 객체에 변수를 만든다.</p>
+                    </li>
+                    <li>
+                        <strong class="list__title">지역 변수 (Local Variable)</strong>
+                        <p class="list__text">특정 스코프 내에 선언된 변수</p>
+                    </li>
+                    </ul>
+                    <div class="example_area">
+                        <code>
+                            <strong class="point">var color = 'red';</strong> <span class="comment">// 전역 변수</span><br>
+                            function variableTest () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">var color = 'yellow';</strong> <span class="comment">// 지역 변수</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">color = 'green';</strong> <span class="comment">// 지역 변수</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">fruit = 'apple';</strong> <span class="comment">// 전역 변수</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;console.log(color) <span class="comment">// 'green'</span><br>
+                            }<br>
+                            variableTest();<br>
+                            console.log(color); <span class="comment">// 'red';</span><br>
+                            console.log(fruit); <span class="comment">// 'apple';</span>
+                        </code>
+                    </div>
+                    <p class="notice__text">variableTest 함수 내부에 있는 변수 color는 지역 변수이고, variableTest 함수 외부에 있는 color 변수는 전역 변수 입니다.</p>
+                    <p class="notice__text">variableTest 함수 내의 var가 선언되지 않은 fruit 변수는 같은 지역 스코프 내에 var가 선언된 동일한 변수가 있으므로 해당 지역 스코프의 지역 변수가 되지만, fruit 변수의 경우 지역 스코프내에 var가 선언된 변수가 없으므로 최상위 전역 스코프까지 탐색하여 해당 스코프에도 없으면 전역 스코프에 fruit라는 전역 변수를 생성하게 됩니다.</p>
+
+                    <strong class="title">* 스코프 (Scope)</strong>
+                    <ul class="list text_type">
+                    <li>
+                        <strong class="list__title">전역 스코프 (Global Scope)</strong>
+                        <p class="list__text">변수가 함수 또는 중괄호 {} 바깥에 선언 된 경우</p>
+                    </li>
+                    <li>
+                        <strong class="list__title">지역 스코프 (Local Scope)</strong>
+                        <p class="list__text">변수가 함수 또는 중괄호 {} 내부에 선언되어 특정 코드 부분에서만 사용 가능할 경우</p>
+                    </li>
+                    </ul>
+                    <div class="example_area">
+                        <code>
+                            var fruit = 'apple'; <span class="comment">// 전역 스코프의 변수</span><br>
+                            <strong class="point">function scopeTest () {</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;var fruit = 'banana'; <span class="comment">// 지역 스코프의 변수</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">function scopeInner() {</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(fruit); <span class="comment">// 하위 스코프 참조 가능</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">}</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;scopeInner();<br>
+                            <strong class="point">}</strong><br>
+                            scopeTest();<br>
+                            console.log(fruit); // 'apple'
+                        </code>
+                    </div>
+                    <p class="notice__text">scopeTest 함수 외부에 있는 변수 fruit은 전역 스코프를 가지는 전역 변수로 전역에서 참조가 가능하며, 함수 내부에 있는 변수 fruit은 지역 스코프를 가지는 지역 변수로 해당 지역(함수 또는 블록) 내부나 그 하위 스코프에서 참조가 가능합니다.</p>
+
+                    <ul class="list text_type">
+                    <li>
+                        <strong class="list__title">블록 스코프 (Block Scope)</strong>
+                        <p class="list__text">블록 스코프는 if, for, function에서 사용한 중괄호 {}로 감싸진 코드 범위를 말함</p>
+                    </li>
+                    <li>
+                        <strong class="list__title">함수 스코프 (Function Scope)</strong>
+                        <p class="list__text">함수 스코프는 function의 블록 범위를 갖는 스코프를 말함</p>
+                    </li>
+                    </ul>
+                    <div class="example_area">
+                        <code>
+                            <strong class="point">if (true) {</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">var</strong> fruit1 = 'apple'; <span class="comment">// 함수 스코프</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">let</strong> fruit2 = 'banana'; <span class="comment">// 블록 스코프</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">const</strong> fruit3 = 'grape'; <span class="comment">// 블록 스코프</span><br>
+                            <strong class="point">}</strong><br>
+                            console.log(fruit1);<br>
+                            console.log(fruit2);<br>
+                            console.log(fruit3); 
+                        </code>
+                    </div>
+                    <p class="notice__text">자바스크립트의 var는 함수 스코프 내에서만 유효하여 if 외부에서도 해당 변수에 접근이 가능하지만, ES6 문법인 let과 const는 블록 스코프 내에서만 유효하기 때문에 블록 스코프인 if 외부에서는 해당 변수에 접근이 불가능합니다.</p>
                 </div>
             </div>
         </article>

@@ -6,246 +6,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
 <title>테스트</title>
 <link rel="stylesheet" href="../css/test-sass.css">
-<style>
-    input:focus {background:gold}
-</style>
 </head>
 <body>
-<!-- <div class="gs-scroll-area">
-    <span class="gs-scroll-txt"><span class="blind">Scroll</span></span>
-    <span class="gs-animate gs-scroll-down"></span>
-</div> -->
 
-<ul id="test">
+<!-- <ul id="test">
 <li><button type="button" id="btn">1</button></li>
 <li><button type="button">2</button></li>
 <li><button type="button">3</button></li>
 <li><button type="button">4</button></li>
 <li><button type="button">5</button></li>
 </ul>
-<div id="test2"></div>
+<div id="test2"></div> -->
 
-
-<!-- <a href="https://www.naver.com/" id="link">링크</a> -->
-<!-- <button type="button" id="link">링크</button> -->
-
-<!-- <button id="old">.trigger( "focus" )</button>
-<button id="new">.triggerHandler( "focus" )</button><br><br>
-<input type="text" value="To Be Focused"> -->
-
-<!-- <input type="text" id="inputTest"> -->
 
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
 (function (win, $, doc) {
-    // $('#btn01').click(function () {
-    //     $('input').triggerHandler('focus');
-    // });
-    // $('#btn02').click(function () {
-    //     $('input[type]').trigger('focus');
-    // });
 
-    // $('#link').on('click', function () {
-    //     console.log('click');
-    // });
-    // $('#link').triggerHandler('click');
-    // $('#link')[0].click();
-    
-    // $('#test').on('wishlist.monitor', function () {
-    //     console.log('모니터');
-    // });
-    // $('#test').on('wishlist.chair', function () {
-    //     console.log('의자');
-    // });
-    // $('#test').trigger('wishlist.monitor');
-    // $('#test').trigger('wishlist.chair');
-
-
-    // $('#inputTest').focus(function () {
-    //     console.log('focus');
-    // });
-    // $('#inputTest').trigger('focus');
-
-    // $( "#old" ).click(function() {
-    //     $( "input" ).trigger("focus");
-    // });
-    // $( "#new" ).click(function() {
-    //     $( "input" ).triggerHandler("focus");
-    // });
-    // $( "input" ).focus(function() {
-    //     $( "<span>Focused!</span>" ).appendTo( "body" ).fadeOut( 1000 );
-    // });
-
-
-    // var obj = document.getElementById('test'),
-    //     btn = obj.getElementsByTagName('button');
-    // for (var i = 0, max = btn.length; i < max; i++) {
-    //     btn[i].onclick = function () {
-    //         console.log(i);
+    // function scopeTest () {
+    //     var a = 0;
+    //     if (true) {
+    //         var b = 1;
+    //         a = 2;
     //     }
+    //     console.log(a);
+    //     console.log(b);
     // }
-
-    // jQuery
-    $('#test').on('apple', function () {
-        console.log('jQuery custom event');
-    });
-    $('#test').trigger('apple');
-    
-    // javascript
-    var obj = document.getElementById('test');
-
-    // 이벤트 생성
-    // var event = new Event('banana'); // IE 제외한 최신 버전 브라우저 지원
-    var event = document.createEvent('Event'); // IE 지원
-
-    // 이벤트 이름 정의
-    event.initEvent('banana', true, true);
-
-    // 이벤트 리스너 등록
-    obj.addEventListener('banana', function (e) {
-        console.log('javascript custom event');
-    }, false);
-
-    // 이벤트 호출
-    obj.dispatchEvent(event);
+    // scopeTest();
 
 
-    // 배열로 넘겨줄 경우
-    $('#test').on('wishList.monitor', function () {
-        console.log('모니터');
-    });
-    $('#test').trigger('wishList.monitor');
-    // $('#test').on('rerun.test', function () {
-    //     // console.log(arguments[1]);
-    //     console.log('test');
-    // });
-    // $('#test').on('rerun.test2', function () {
-    //     console.log('test2');
-    // });
-    // $('#test').trigger('wishList', ['모니터', '의자', '데스크탑']);
-
-    // 객체로 넘겨줄 경우
-    // $('#test').on('shoppingList', function () {
-    //     console.log(arguments[2]);
-    // });
-    // $('#test').trigger('shoppingList', [{
-    //     test1 : '모니터',
-    //     test2 : '의자'
-    // }, '2'])
-
-    // var funcs = [];
-    // for (var i = 0; i < 3; i++) {
-    //     funcs[i] = function () {
-    //         console.log(i);
+    // var fruit = 'apple'; // 전역 스코프의 변수
+    // function scopeTest () {
+    //     var fruit = 'banana'; // 지역 스코프의 변수
+    //     function scopeInner() {
+    //         console.log(fruit); // 하위 스코프 참조 가능
     //     }
+    //     scopeInner();
     // }
-    // for (var j = 0; j < 3; j++) {
-    //     funcs[j]();
-    // }
-
-    // var initText;
-    // (function (number) {
-    //     var textLIst = ['is Odd Text', 'is Even Text'];
-    //     if (number % 2 == 0) {
-    //         initText = textLIst[1];
-    //     } else {
-    //         initText = textLIst[0];
-    //     }
-    // })(5);
-    // console.log(initText)
-    // console.log(textLIst)
+    // scopeTest();
+    // console.log(fruit); // 'apple'
 
 
-    // var color =  (function () {
-    //     return {
-    //         apple : (function () {
-    //             return 'red';
-    //         })(),
-    //         banana : function () {
-    //             return 'yellow';
-    //         }
-    //     }
-    // })();
-    // console.log(color.apple);
-    // console.log(color.banana());
-
-    // var initText;
-    // (function (number) {
-    //     var textList = ['is Odd Text', 'is Even Text'];
-    //     if (number % 2 == 0) {
-    //         initText = textList[1];
-    //     } else {
-    //         initText = textList[0];
-    //     }
-    // })(5);
-    // console.log(initText);
-    // console.log(textList);
+    var color = 'red';
+    function variableTest () {
+        var color = 'yellow';
+        color = 'green';
+        fruit = 'apple'; 
+        console.log(color) // 'green'
+    }
+    variableTest();
+    console.log(color); // 'red';
+    console.log(fruit) // 'apple'
 
 
-    
-
-    // var apple = (function (x) {
-    //     return x + x;
-    // })(2);
-    // console.log(apple);
-
-
-    // (function test () {
-    //     console.log('aaa');
-    // })();
-
-    // function factory_movie(title){
-    //     return {
-    //         get_title : function (){
-    //             return title;
-    //         },
-    //         set_title : function(_title){
-    //             title = _title
-    //         }
-    //     }
-    // }
-    // ghost = factory_movie('Ghost in the shell');
-    // matrix = factory_movie('Matrix');
-
-    // console.log(ghost.set_title())
-
-
-    // (banana = function (x) {
-    //     console.log(x * x);
-    // })(3);
-    // banana(4);
-
-    // var apple = 'red';
-    // orange = 'orange';
-    // (function () {
-    //     var banana = 'yellow',
-    //         apple = 'green';
-    //     orange = 'white';
-    //     console.log(apple); // 'red'
-    //     console.log(banana); // 'red'
-    // })();
-
-    // console.log(apple); // 'red'
-    // console.log(orange); // 'white'
-    // console.log(banana); // not defined
-
-    // ({
-    //     maxWidth: 600,
-    //     maxHeight: 400,
-        
-    //     gimmeMax : function () {
-    //         return this.maxWidth + this.maxHeight;
-    //     },
-    //     init : function () {
-    //         console.log(this.gimmeMax());
-    //     }
-    // }).init();
-
-
-    // // 즉시 실행 함수를 사용하여 파라미터를 전달
-    // (function ($) {
-    //     // 함수 scope 내에서 $는 jQuery object
-    // })(jQuery);
 })(window, window.jQuery, window.document);
 </script>
 <script src="../js/apps/test.js"></script>
