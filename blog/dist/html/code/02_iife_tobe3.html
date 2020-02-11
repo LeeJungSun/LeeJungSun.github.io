@@ -17,7 +17,7 @@
 </head>
 <body>
 <div id="wrap" class="example_wrap">
-    <h1 class="main__title">2. 클로저 추가 : 즉시 실행 함수 사용</h1>
+    <h1 class="main__title">3. let 사용</h1>
 
     <h2 class="sub__title">1) Example</h2>
     <div class="exam__box">
@@ -44,12 +44,10 @@
     <pre><code class="javascript">(function () {
     var obj = document.getElementById('test');
         btn = obj.getElementsByTagName('button');
-    for (var i = 0, max = btn.length; i &lt; max; i++) {
-        (function (index) {
-            btn[index].onclick = function () {
-                alert(index); // 버튼 클릭 시 정상적으로 0,1,2,3,4 출력
-            }
-        })(i);
+    for (let i = 0, max = btn.length; i &lt; max; i++) {
+        btn[i].onclick = function () {
+            alert(i); // 버튼 클릭 시 정상적으로 0,1,2,3,4 출력
+        }
     }
 })();</code></pre>
 
@@ -68,12 +66,10 @@
     (function () {
         var obj = document.getElementById('test');
             btn = obj.getElementsByTagName('button');
-        for (var i = 0, max = btn.length; i < max; i++) {
-            (function (index) {
-                btn[index].onclick = function () {
-                    alert(index); // 버튼 클릭 시 정상적으로 0,1,2,3,4 출력
-                }
-            })(i);
+        for (let i = 0, max = btn.length; i < max; i++) {
+            btn[i].onclick = function () {
+                alert(i); // 버튼 클릭 시 정상적으로 0,1,2,3,4 출력
+            }
         }
     })();
 
