@@ -15,49 +15,65 @@
 <li><button type="button">3</button></li>
 <li><button type="button">4</button></li>
 <li><button type="button">5</button></li>
-</ul>
-<div id="test2"></div> -->
-
+</ul> -->
+<button type="button" id="btn" style="width:100px;height:100px;background:red;"></button>
+<p class="text">0</p>
 
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
 (function (win, $, doc) {
 
-    // function scopeTest () {
-    //     var a = 0;
-    //     if (true) {
-    //         var b = 1;
-    //         a = 2;
-    //     }
-    //     console.log(a);
-    //     console.log(b);
+//     스크립트가 실행되면 즉시실행함수(immediately-invoked function expression)가 호출되고 변수 increase에는 함수 function () { return ++counter; }가 할당된다. 이 함수는 자신이 생성됐을 때의 렉시컬 환경(Lexical environment)을 기억하는 클로저다. 즉시실행함수는 호출된 이후 소멸되지만 즉시실행함수가 반환한 함수는 변수 increase에 할당되어 inclease 버튼을 클릭하면 클릭 이벤트 핸들러 내부에서 호출된다. 이때 클로저인 이 함수는 자신이 선언됐을 때의 렉시컬 환경인 즉시실행함수의 스코프에 속한 지역변수 counter를 기억한다. 따라서 즉시실행함수의 변수 counter에 접근할 수 있고 변수 counter는 자신을 참조하는 함수가 소멸될 때가지 유지된다.
+
+// 즉시실행함수는 한번만 실행되므로 increase가 호출될 때마다 변수 counter가 재차 초기화될 일은 없을 것이다. 변수 counter는 외부에서 직접 접근할 수 없는 private 변수이므로 전역 변수를 사용했을 때와 같이 의도되지 않은 변경을 걱정할 필요도 없기 때문이 보다 안정적인 프로그래밍이 가능하다.
+
+    var btn = $('#btn');
+    var countFunc = (function () {
+        var count = 0;
+        return function () {
+            return ++count;
+        }
+    })();
+    btn.on('click', function () {
+        $('.text').html(countFunc())
+    });
+
+    // var btn = $('#btn');
+    // function countFunc () {
+    //     var count = 0;
+    //     return ++count;
     // }
-    // scopeTest();
+    // btn.on('click', function () {
+    //     $('.text').html(countFunc())
+    // });
 
-
-    // var fruit = 'apple'; // 전역 스코프의 변수
-    // function scopeTest () {
-    //     var fruit = 'banana'; // 지역 스코프의 변수
-    //     function scopeInner() {
-    //         console.log(fruit); // 하위 스코프 참조 가능
-    //     }
-    //     scopeInner();
+    // var btn = $('#btn');
+    // var count = 0;
+    // function countFunc () {
+    //     return ++count;
     // }
-    // scopeTest();
-    // console.log(fruit); // 'apple'
+    // btn.on('click', function () {
+    //     $('.text').html(countFunc())
+    // });
 
 
-    var color = 'red';
-    function variableTest () {
-        var color = 'yellow';
-        color = 'green';
-        fruit = 'apple'; 
-        console.log(color) // 'green'
-    }
-    variableTest();
-    console.log(color); // 'red';
-    console.log(fruit) // 'apple'
-
+    // var test = (function () {
+    //     function setClosure (name) {
+    //         this.privateVar = name || 'aaa';
+    //     }
+    //     setClosure.prototype = {
+    //         publicFunc : function () {
+    //             console.log(privateVar);
+    //         }
+    //     }
+    //     return setClosure;
+    // })();
+        
+    // var closure = new test('red')
+    // console.log(closure);
+    // closure.publicFunc(); // 'red'
+    // closure.privateVar = 'yellow';
+    // closure.publicFunc(); // 'yellow'
 
 })(window, window.jQuery, window.document);
 </script>
