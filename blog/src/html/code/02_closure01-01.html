@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-<title>javascript util sample01</title>
+<title>javascript closure sample01</title>
 <link rel="stylesheet" href="../../css/blog-sass.css">
 <style>
     .count_area{font-size:0;text-align:center}
@@ -18,77 +18,37 @@
 </head>
 <body>
 <div id="wrap" class="example_wrap">
-    <h1 class="main__title">Button click trigger</h1>
+    <h1 class="main__title">변경된 최신 상태 유지</h1>
     <h2 class="sub__title">1) Example</h2>
     <div class="exam__box">
-        <ul class="count_area">
-        <li>Button01 Count <span class="count"></span></li>
-        <li>Button02 Count <span class="count"></span></li>
-        </ul>
+        <div class="count_area">
+            <span class="count">0</span>
+        </div>
         <div class="btn_area">
-            <button type="button" id="button01"><span>Button01</span></button>
-            <button type="button" id="button02"><span>Button02</span></button>
+            <button type="button" id="btn_count"><span>Button</span></button>
         </div>
     </div>
 
     <h2 class="sub__title">2) Code</h2>
     <h3></h3>
     <pre><code class="html">&lt;div class="exam__box"&gt;
-    &lt;ul class="count_area"&gt;
-    &lt;li&gt;Button01 Count &lt;span class="count"&gt;&lt;/span&gt;&lt;/li&gt;
-    &lt;li&gt;Button02 Count &lt;span class="count"&gt;&lt;/span&gt;&lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;div class="count_area"&gt;
+    &lt;span class="count"&gt;0&lt;/span&gt;
+    &lt;/div&gt;
     &lt;div class="btn_area"&gt;
-        &lt;button type="button" id="button01"&gt;&lt;span&gt;Button01&lt;/span&gt;&lt;/button&gt;
-        &lt;button type="button" id="button02"&gt;&lt;span&gt;Button02&lt;/span&gt;&lt;/button&gt;
+        &lt;button type="button" id="button01"&gt;&lt;span&gt;Button&lt;/span&gt;&lt;/button&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
     <pre><code class="javascript">(function($, win, doc) {
     'use strict';
-    var example = {
-        opts : {
-            obj : '.exam__box',
-            countArea : '.count_area',
-            countItem : '&gt;li',
-            btnArea : '.btn_area',
-            btn : 'button',
-            count : '.count',
-            countNum : 0
-        },
-        init : function () {
-            this.setElements();
-            this.bindEvents();
-            this.initLayout();
-        },
-        setElements : function () {
-            this.obj = $(this.opts.obj);
-            this.btnArea = this.obj.find(this.opts.btnArea);
-            this.countArea = this.obj.find(this.opts.countArea);
-            this.countItem = this.countArea.find(this.opts.countItem);
-            this.btn = this.btnArea.find(this.opts.btn);
-            this.count = this.obj.find(this.opts.count);
-        },
-        bindEvents : function () {
-            this.btn.on('click', $.proxy(this.clickFunc, this));
-        },
-        initLayout : function () {
-            this.count.html(this.opts.countNum);
-        },
-        clickFunc : function (e) {
-            var targetIndex = $(e.currentTarget).index();
-            this.countInit(targetIndex);
-            if (targetIndex === 1) {
-                // button01 trigger
-                this.btn.eq(0).trigger('click');
-            }
-        },
-        countInit : function (index) {
-            var countObj = this.countItem.eq(index).find(this.count),
-                count = parseInt(countObj.text(), 10);
-            countObj.text(count+1);
-        }
-    }
-    example.init();
+    var btn = $('#btn_count'),
+        count = 0;    
+    function countFunc () {
+        return ++count;
+    };
+    btn.on('click', function () {
+        $('.count').html(countFunc());
+    });
 })(jQuery, window, document);</code></pre>
 
 </div>
@@ -102,53 +62,16 @@
             hljs.highlightBlock(block);
         });
     });
-
     (function($, win, doc) {
         'use strict';
-        var example = {
-            opts : {
-                obj : '.exam__box',
-                countArea : '.count_area',
-                countItem : '>li',
-                btnArea : '.btn_area',
-                btn : 'button',
-                count : '.count',
-                countNum : 0
-            },
-            init : function () {
-                this.setElements();
-                this.bindEvents();
-                this.initLayout();
-            },
-            setElements : function () {
-                this.obj = $(this.opts.obj);
-                this.btnArea = this.obj.find(this.opts.btnArea);
-                this.countArea = this.obj.find(this.opts.countArea);
-                this.countItem = this.countArea.find(this.opts.countItem);
-                this.btn = this.btnArea.find(this.opts.btn);
-                this.count = this.obj.find(this.opts.count);
-            },
-            bindEvents : function () {
-                this.btn.on('click', $.proxy(this.clickFunc, this));
-            },
-            initLayout : function () {
-                this.count.html(this.opts.countNum);
-            },
-            clickFunc : function (e) {
-                var targetIndex = $(e.currentTarget).index();
-                this.countInit(targetIndex);
-                if (targetIndex === 1) {
-                    // button01 trigger
-                    this.btn.eq(0).trigger('click');
-                }
-            },
-            countInit : function (index) {
-                var countObj = this.countItem.eq(index).find(this.count),
-                    count = parseInt(countObj.text(), 10);
-                countObj.text(count+1);
-            }
-        }
-        example.init();
+        var btn = $('#btn_count'),
+            count = 0; // 전역 변수
+        function countFunc () {
+            return ++count;
+        };
+        btn.on('click', function () {
+            $('.count').html(countFunc());
+        });
     })(jQuery, window, document);
 
 </script>

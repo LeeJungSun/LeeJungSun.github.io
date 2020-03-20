@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-<title>javascript closure sample02</title>
+<title>javascript closure sample03</title>
 <link rel="stylesheet" href="../../css/blog-sass.css">
 <style>
     .count_area{font-size:0;text-align:center}
@@ -41,14 +41,18 @@
 &lt;/div&gt;</code></pre>
     <pre><code class="javascript">(function($, win, doc) {
     'use strict';
-    var btn = $('#btn_count');    
+
+    var btn = $('#btn_count');
+    
     function countFunc () {
         var count = 0;
         return ++count;
     };
+
     btn.on('click', function () {
         $('.count').html(countFunc());
     });
+
 })(jQuery, window, document);</code></pre>
 
 </div>
@@ -62,14 +66,15 @@
             hljs.highlightBlock(block);
         });
     });
-
     (function($, win, doc) {
         'use strict';
         var btn = $('#btn_count');
-        function countFunc () {
-            var count = 0; // 지역 변수
-            return ++count;
-        };
+        var countFunc = (function () {
+            var count = 0; // 지역 변수이자 자유 변수
+            return function () {
+                return ++count;
+            }
+        })();
         btn.on('click', function () {
             $('.count').html(countFunc());
         });

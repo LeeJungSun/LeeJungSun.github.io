@@ -103,7 +103,7 @@
                 <p class="box__text">현재 상태를 기억하고 변경된 최신 상태를 유지해야 하는 상황일 때 유용하게 사용됩니다.</p>
                 <div class="example__wrap">
                     <strong class="title">* Example</strong>
-                    <p class="text">먼저 아래 예제에서 count 변수는 글로벌 변수이기에 언제든 변경이 가능합니다. 변수의 값이 변경될 경우 본래의 의도와 다른 값이 나오므로 이는 오류로 이어집니다. 그러므로 count 변수를 countFunc 함수내에서 지역변수로 관리하여야 합니다.</p>
+                    <p class="text">먼저 아래 예제에서 count 변수는 전역 변수이기에 언제든 변경이 가능합니다. 변수의 값이 변경될 경우 본래의 의도와 다른 값이 나오므로 이는 오류로 이어집니다. 그러므로 count 변수를 countFunc 함수내에서 지역 변수로 관리하여야 합니다.</p>
                     <div class="img__wrap type2">
                         <div class="img__area">
                             <div class="img">
@@ -114,7 +114,8 @@
                     <div class="btn__area">
                         <a href="./code/02_closure01-01.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
-                    <p class="text">count 변수를 countFunc함수 지역 변수로 추가하였지만, 클로저가 생성되지 않아 같은 환경을 공유하므로 값이 계속 동일하게 노출됩니다.</p>
+                    <p class="text">count 변수를 countFunc함수 지역 변수로 추가하였지만, 클로저는 생성되지 않아 countFunc 함수가 호출될 때 마다 지역 변수의 값은 초기화 시키고 return 구문이 실행되어 결과값은 계속 동일하게 노출되게됩니다.</p>
+                    <p class="text">변경되는 count값을 유지하기 위하여 지역 변수를 자유 변수(독립적인 변수) 형태로 변경해주고, 클로저를 생성해야 정상적으로 값이 노출됩니다.</p>
                     <div class="img__wrap type2">
                         <div class="img__area">
                             <div class="img">
@@ -124,6 +125,19 @@
                     </div>
                     <div class="btn__area">
                         <a href="./code/02_closure01-02.html" target="_blank" class="btn_view">Example Code</a>
+                    </div>
+                    <p class="text"></p>
+                    <!-- 
+                        countFunc 함수 내부에 함수를 추가로 생성하여 해당 함수를 return 시켜준다. 그리고   -->
+                    <div class="img__wrap type2">
+                        <div class="img__area">
+                            <div class="img">
+                                <img src="../img/closure/closure_example01-03.gif" alt="" style="width: auto">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn__area">
+                        <a href="./code/02_closure01-03.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                 </div>
             </div>
