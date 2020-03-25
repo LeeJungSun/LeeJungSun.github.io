@@ -128,7 +128,11 @@
                     </div>
                     <p class="text"></p>
                     <!-- 
-                        countFunc 함수 내부에 함수를 추가로 생성하여 해당 함수를 return 시켜준다. 그리고   -->
+                        
+                        countFunc를 호출하면 즉시실행함수가 실행되고 소멸되지만, 반환된 내부 함수는 countFunc 변수에 할당되어 함수 호출시 실행됩니다. 그리고 내부 함수는 자신의 환경(렉시컬 환경)을 기억하여 상위 범위 변수인 count 변수를 참조할 수 있게됩니다.
+                        count 변수는 자신을 참조하는 내부 함수가 소멸될 때까지 존재합니다.
+                        값이 초기화될 경우가 없다.
+                          -->
                     <div class="img__wrap type2">
                         <div class="img__area">
                             <div class="img">

@@ -127,7 +127,14 @@
                         <a href="./code/02_closure01-02.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                     <p class="text"></p>
-                    <!-- 즉시실행함수를 통해   -->
+                    <!-- 
+                        
+                        countFunc를 호출하면 즉시실행함수가 실행이되고 소멸되지만,
+                        반환된 내부 함수는 countFunc 변수에 할당되어
+
+                        count 변수는 자신을 참조하는 내부 함수가 소멸될 때까지 존재합니다.
+                        값이 초기화될 경우가 없다.
+                          -->
                     <div class="img__wrap type2">
                         <div class="img__area">
                             <div class="img">

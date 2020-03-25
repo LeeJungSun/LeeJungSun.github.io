@@ -44,11 +44,13 @@
 
     var btn = $('#btn_count');
     
-    function countFunc () {
-        var count = 0;
-        return ++count;
-    };
-
+    var countFunc = (function () {
+        var count = 0; // 지역 변수이자 자유 변수
+        return function () { // 클로저 반환
+            return ++count;
+        }
+    })();
+    
     btn.on('click', function () {
         $('.count').html(countFunc());
     });
@@ -71,7 +73,7 @@
         var btn = $('#btn_count');
         var countFunc = (function () {
             var count = 0; // 지역 변수이자 자유 변수
-            return function () {
+            return function () { // 클로저 반환
                 return ++count;
             }
         })();
