@@ -22,39 +22,179 @@
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
 (function (win, $, doc) {
+    // var arrFunc = function () {
+    //     var arr = [1,2,3];
+    //     function deepCopy (args) {
+    //         if (args === null || typeof args !== 'object') {
+    //             return args;
+    //         }
+    //         var result = Array.isArray(args) ? [] : {};
+    //         for (var prop in args) {
+    //             result[prop] = deepCopy(args[prop]);
+    //         }
+    //         return result;
+    //     };
+    //     return {
+    //         get : function () {
+    //             return deepCopy(arr);
+    //         }
+    //     }
+    // };
+    // var closure = new arrFunc();
+    // console.log(closure.get())
+    // closure.get().push(5);
+    // console.log(closure.get())
 
-//     스크립트가 실행되면 즉시실행함수(immediately-invoked function expression)가 호출되고 변수 increase에는 함수 function () { return ++counter; }가 할당된다. 이 함수는 자신이 생성됐을 때의 렉시컬 환경(Lexical environment)을 기억하는 클로저다. 즉시실행함수는 호출된 이후 소멸되지만 즉시실행함수가 반환한 함수는 변수 increase에 할당되어 inclease 버튼을 클릭하면 클릭 이벤트 핸들러 내부에서 호출된다. 이때 클로저인 이 함수는 자신이 선언됐을 때의 렉시컬 환경인 즉시실행함수의 스코프에 속한 지역변수 counter를 기억한다. 따라서 즉시실행함수의 변수 counter에 접근할 수 있고 변수 counter는 자신을 참조하는 함수가 소멸될 때가지 유지된다.
 
-// 즉시실행함수는 한번만 실행되므로 increase가 호출될 때마다 변수 counter가 재차 초기화될 일은 없을 것이다. 변수 counter는 외부에서 직접 접근할 수 없는 private 변수이므로 전역 변수를 사용했을 때와 같이 의도되지 않은 변경을 걱정할 필요도 없기 때문이 보다 안정적인 프로그래밍이 가능하다.
-
-    var btn = $('#btn');
-    var countFunc = (function () {
-        var count = 0;
-        return function () {
-            return ++count;
+    var obj = {
+        number : 1,
+        string : 'abc',
+        array : [1,2,3],
+        object : {
+            obj : 'obj'
+        },
+        func : function () {
+            console.log('function');
         }
-    })();
-    btn.on('click', function () {
-        $('.text').html(countFunc())
-    });
+    };
 
-    // var btn = $('#btn');
-    // function countFunc () {
-    //     var count = 0;
-    //     return ++count;
+    function deepCopy (args) {
+        if (args === null || typeof args !== 'object') { // Array, Object (null은 'object'로 나오므로 조건문 추가)
+            return args;
+        }
+        var result = Array.isArray(args) ? [] : {};
+        for (var prop in args) {
+            result[prop] = deepCopy(args[prop]);
+        }
+        return result;
+    };
+    var test = deepCopy(obj);
+    console.log(test);
+    
+    // function def (org, src) {
+    //     // console.log(obj, src);
+    //     console.log(org, src);
+    //     for (var prop in src) {
+    //         if (!hasOwnProperty.call(src, prop)) continue;
+    //         if ('object' === $.type(org[prop])) {
+    //             org[prop] = ('array' === $.type(org[prop])) ? src[prop].slice(0) : this.def(org[prop], src[prop]);
+    //         } else {
+    //             org[prop] = src[prop];
+    //         }
+    //     }
+    //     return org;
+    //     var result = {};
+    //     for (var key in obj) {
+    //         console.log(result);
+    //         console.log(key);
+    //         console.log(obj);
+    //         console.log(typeof obj[key]);
+    //         if (typeof obj[key] === 'object') {
+    //             console.log(result[key], typeof result[key]);
+    //             console.log(obj[key]);
+    //             result[key] = def(obj[key]);
+    //         } else {
+    //             console.log(result[key]);
+    //             console.log(obj[key]);
+    //             result[key] = obj[key];
+    //         }
+    //     }
+    //     console.log(result);
+    //     return result;
     // }
-    // btn.on('click', function () {
-    //     $('.text').html(countFunc())
-    // });
 
-    // var btn = $('#btn');
-    // var count = 0;
-    // function countFunc () {
-    //     return ++count;
+    // test.apple.c = 'aaa';
+    // console.log(obj)
+    // console.log(test)
+    // console.log(obj.apple.c === test.apple.c)
+
+    // const obj = {
+    // a: 1,
+    // b: {
+    //     c: 2,
+    // },
+    // };
+
+    // function copyObj(obj) {
+    // const result = {};
+
+    // for (let key in obj) {
+    //     if (typeof obj[key] === 'object') {
+    //     result[key] = copyObj(obj[key]);
+    //     } else {
+    //     result[key] = obj[key];
+    //     }
     // }
-    // btn.on('click', function () {
-    //     $('.text').html(countFunc())
-    // });
+
+    // return result;
+    // }
+
+    // const copiedObj = copyObj(obj);
+
+    // copiedObj.b.c = 3
+
+    // console.log(obj.b.c === copiedObj.b.c)
+
+    // var test = function () {
+    //     var obj = {
+    //         arr : [1,2,3]
+    //     };
+    //     return {
+    //         get : function () {
+    //             return arr;
+    //         }
+    //     }
+    // };
+
+
+    // var test = function () {
+    //     function arr () {
+    //         var arr = [1,2,3];
+    //         return arr;
+    //     }
+    //     return {
+    //         get : function () {
+    //             return arr();
+    //         }
+    //     }
+    // };
+
+    // var test = function () {
+    //     var arr = [1,2,3];
+    //     return {
+    //         get : function () {
+    //             return arr;
+    //         }
+    //     }
+    // };
+
+    // var arrFunc = function () {
+    //     var arr = {
+    //         a : [1,2,3]
+    //     };
+    //     return {
+    //         get : function () {
+    //             return arr;
+    //         }
+    //     }
+    // };
+
+    // var closure = new arrFunc();
+    // console.log(closure.get().a);
+    // closure.get().a.push(5);
+    // console.log(closure.get().a);
+
+
+    // var fruitFunc = function () {
+    //     var fruitName = 'apple';
+    //     return {
+    //         get : function () {
+    //             return fruitName;
+    //         }
+    //     }
+    // };
+    // var closure = new fruitFunc();
+    // console.log(closure.get());
 
 
     // var test = (function () {
@@ -74,6 +214,52 @@
     // closure.publicFunc(); // 'red'
     // closure.privateVar = 'yellow';
     // closure.publicFunc(); // 'yellow'
+
+    // var fruitFunc = function (args) {
+    //     fruitName = args ? args : 'apple';
+    //     return {
+    //         get : function () {
+    //             return fruitName;
+    //         },
+    //         set : function (args) {
+    //             fruitName = args;
+    //         }
+    //     }
+    // }
+
+    // var buying = fruitFunc();
+    // console.log(buying.get());
+
+
+    // var btn = $('#btn');
+    // var countFunc = (function () {
+    //     var count = 0;
+    //     return function () {
+    //         return ++count;
+    //     }
+    // })();
+    // btn.on('click', function () {
+    //     $('.text').html(countFunc())
+    // });
+
+    // var btn = $('#btn');
+    // function countFunc () {
+    //     var count = 0;
+    //     return ++count;
+    // }
+    // btn.on('click', function () {
+    //     $('.text').html(countFunc())
+    // });
+
+    // var btn = $('#btn');
+    // var count = 0;
+    // function countFunc () {
+    //     return ++count;
+    // }
+    // btn.on('click', function () {
+    //     $('.text').html(countFunc())
+    // });
+
 
 })(window, window.jQuery, window.document);
 </script>

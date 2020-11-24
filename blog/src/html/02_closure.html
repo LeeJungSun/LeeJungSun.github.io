@@ -84,19 +84,10 @@
         </div>
 
         <article class="article__wrap">
-            <h3 class="article__title">[How to use]</h3>
-            <div class="box">
-                <h4 class="box__title">타이틀</h4>
-                <p class="box__text">내용.</p>
-                
-            </div>
-        </article>
-
-        <article class="article__wrap">
             <h3 class="article__title">[Why use it]</h3>
             <div class="box">
                 <h4 class="box__title">정보의 은닉과 캡슐화</h4>
-                <p class="box__text">자바스크립트는 자바와 같이 private, public를 지원하지 않지만 클로저를 사용하여 구현가능합니다.</p>
+                <p class="box__text">자바스크립트는 자바와 같이 private, public를 지원하지 않지만 closure를 사용하여 구현가능합니다.</p>
                 <div class="example__wrap">
                     <strong class="title">* Example</strong>
                     <p class="text">리턴된 객체에 포함되지 않은 지역 변수, 함수는 private한 특성을 가지고, 리턴된 객체에 포함된 변수와 함수는 public한 특성을 가지게 됩니다.</p>
@@ -114,11 +105,52 @@
                             console.log(closure.get()); <span class="comment">// 'apple'</span><br>
                         </code>
                     </div>
+                    <p class="text">하지만, 접근하는 private 멤버가 참조형(객체, 배열)이라면 사용자가 값을 손 쉽게 변경할 수 있습니다.</p>
+                    <div class="example_area">
+                        <code>
+                            var arrFunc = function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">var arr = [1,2,3];</strong> <span class="comment">// private</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get : function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return arr;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            };<br>
+                            var closure = new arrFunc();<br>
+                            console.log(closure.get()); <span class="comment">// [1,2,3]</span><br>
+                            <strong class="point">closure.get().push(5);</strong><br>
+                            console.log(closure.get()); <span class="comment">// [1,2,3,5] =&gt; 값이 변경됨</span>
+                        </code>
+                    </div>
+                    <p class="text">위와 같이 값을 변경할 수 있기 때문에, 객체나 배열이 반환되어야 하는 경우 얕은 복사가 아닌 <strong>깊은 복사로 복사본을 만들어 리턴</strong>해 주어야 합니다.<br> 아래 코드는 깊은 복사 방법 중 하나로 재귀 함수를 이용한 복사 방법입니다.<br> (이 외에도 JSON.stringify()나 lodash 라이브러리 등을 사용하여 복사가 가능합니다.)</p>
+                    <div class="example_area">
+                        <code>
+                            var arrFunc = function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;var arr = [1,2,3];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">function deepCopy (args) {</strong> <span class="comment">// 재귀 함수를 이용한 깊은 복사</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (args === null || typeof args !== 'object') {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return args;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var result = Array.isArray(args) ? [] : {};<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (var prop in args) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">result[prop] = deepCopy(args[prop]);</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">};</strong><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get : function () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong class="point">return deepCopy(arr);</strong> <span class="comment">// 복사본 return</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            };<br>
+                            var closure = new arrFunc();<br>
+                            console.log(closure.get()) <span class="comment">// [1,2,3]</span><br>
+                            closure.get().push(5);<br>
+                            console.log(closure.get()) <span class="comment">// [1,2,3]</span>
+                        </code>
+                    </div>
                 </div>
-                <!-- 
-                    접근하는 private 멤버가 객체나 배열이면 사용자가 값을 손 쉽게 변경할 수 있음
-                    -> 객체나 배열이 반환되어야 하는 경우
-                 -->
+
                 <h4 class="box__title">변경된 최신 상태 유지</h4>
                 <p class="box__text">현재 상태를 기억하고 변경된 최신 상태를 유지해야 하는 상황일 때 유용하게 사용됩니다.</p>
                 <div class="example__wrap">
@@ -159,11 +191,23 @@
                         <a href="./code/02_closure01-03.html" target="_blank" class="btn_view">Example Code</a>
                     </div>
                 </div>
+
+                <div class="notice type2">
+                    <h3 class="notice__title">클로저와 메모리 누수</h3>
+                    <p class="notice__text">asdfasdfasdfsdafs</p>
+
+                    <!-- 
+                        자바스크립트 메모리 누수
+                        1. 전역 변수
+                        2. 타이머와 콜백
+                        3. DOM 외부에서 참조
+                     -->
+                </div>
             </div>
         </article>
 
         <article class="article__wrap">
-            <h3 class="article__title">[Trouble Shooting]</h3>
+            <h3 class="article__title">[Practical Use]</h3>
             <p class="article__text">롸롸롸</p>
             <div class="box">
                 <h4 class="box__title">Issue</h4>
@@ -213,7 +257,9 @@
     <section class="section__wrap">
         <h2 class="sub__title">참고 사이트</h2>
         <ul class="list text_type">
-        <li><a href="https://api.jquery.com/trigger/">https://api.jquery.com/trigger/</a></li>
+        <li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Closures">https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Closures</a></li>
+        <li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/typeof">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/typeof</a></li>
+        <li><a href="https://velog.io/@ddalpange/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EA%B0%9D%EC%B2%B4-%EB%B3%B5%EC%82%AC%ED%95%98%EA%B8%B0">https://velog.io/@ddalpange/자바스크립트-객체-복사하기</a></li>
         </ul>
     </section>
 </div>
