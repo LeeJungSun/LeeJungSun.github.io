@@ -21,6 +21,61 @@
 
 <script type="text/javascript" src="../js/libs/jquery/jquery-3.2.1.min.js"></script>
 <script>
+(function (global, factory) {
+    global = global;
+    global.projectName = global.projectName || {};
+    global.projectName.component = factory();
+    $(function () {
+        new global.projectName.component();
+    });
+}(this, function () { 'use strict';
+    var Component = (function () {
+        var win = window,
+            doc = win.document,
+            $ = win.jQuery;
+        function Component () {
+            this.init();
+        }
+        Component.prototype = {
+            init : function () {
+                this.buildTest();
+            },
+            buildTest : function () {
+                console.log(win.test)
+            }
+        }
+        return Component;
+    })();
+    return Component;
+}));
+
+
+(function (global, factory) {
+    global = global;
+    global.test = factory();
+}(this, function () { 'use strict';
+    var test = (function () {
+        var win = window,
+            doc = win.document,
+            $ = win.jQuery,
+            hasTest = null;
+        function test () {
+            if (hasTest != null) {
+                hasTest = null;
+            }
+            hasTest = this;
+            this.init();
+        } 
+        test.prototype = {
+            init : function () {
+                console.log(hasTest);
+            }
+        }
+        return test;
+    })();
+    return test;
+}));
+
 (function (win, $, doc) {
     // var arrFunc = function () {
     //     var arr = [1,2,3];
@@ -46,30 +101,31 @@
     // console.log(closure.get())
 
 
-    var obj = {
-        number : 1,
-        string : 'abc',
-        array : [1,2,3],
-        object : {
-            obj : 'obj'
-        },
-        func : function () {
-            console.log('function');
-        }
-    };
+    // var obj = {
+    //     number : 1,
+    //     string : 'abc',
+    //     array : [1,2,3],
+    //     object : {
+    //         obj : 'obj'
+    //     },
+    //     func : function () {
+    //         console.log('function');
+    //     }
+    // };
 
-    function deepCopy (args) {
-        if (args === null || typeof args !== 'object') { // Array, Object (null은 'object'로 나오므로 조건문 추가)
-            return args;
-        }
-        var result = Array.isArray(args) ? [] : {};
-        for (var prop in args) {
-            result[prop] = deepCopy(args[prop]);
-        }
-        return result;
-    };
-    var test = deepCopy(obj);
-    console.log(test);
+    // function deepCopy (args) {
+    //     // Array, Object (null은 'object'로 나오므로 조건문 추가)
+    //     if (args === null || typeof args !== 'object') { 
+    //         return args;
+    //     }
+    //     var result = Array.isArray(args) ? [] : {};
+    //     for (var prop in args) {
+    //         result[prop] = deepCopy(args[prop]);
+    //     }
+    //     return result;
+    // };
+    // var test = deepCopy(obj);
+    // console.log(test);
     
     // function def (org, src) {
     //     // console.log(obj, src);
